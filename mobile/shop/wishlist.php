@@ -14,78 +14,112 @@ if(defined('G5_THEME_SHOP_PATH')) {
 $g5['title'] = "단골 상담사";
 include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
-<div class="sub_banner" id="sub_mypage">
-  <h2>단골 상담사</h2>
+<div class="c_hero">
+	<strong>신선운세 <mark>단골 상담사</mark></strong>
 </div>
-
-    <ul class="mypage-tab">
+<div class="c_list">
+	<div class="cl_menu t1">
+		<span>마이페이지</span>
+		<span><mark>단골 상담사</mark></span>
+	</div>
+	<button type="button" class="cl_btn"><span class="blind"></span></button>
+</div>
+<ul id="mypage-tab">
 	<?php
 	include_once(G5_SHOP_PATH.'/mymenu.php');
 	?>
-      <li><a>&nbsp;</a></li>
-    </ul>
-<div id="sod_ws">
+</ul>
+<div class="c_area mypage">
+		<div class="wrap">
+			<ul class="ca_function">
+				<li><span><?php echo $member['mb_name']; ?>님</span></li>
+					<?php
+				switch($member['mb_grade']) {
+					case "1" :
+						echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank01.svg"></div><b>나그네회원</b></span></li>';
+						break;
+					case "2" :
+						echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank02.svg"></div><b>열심회원</b></span></li>';
+						break;
+					case "3" :
+						echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank03.svg"></div><b>성실회원</b></span></li>';
+						break;
+					case "4" :
+						echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank04.svg"></div><b>충성회원</b></span></li>';
+						break;
+					case "5" :
+					case "6" :
+						echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank05.svg"></div><b>신선회원</b></span></li>';
+						break;
+					default :
+						echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank01.svg"></div><b>나그네회원</b></span></li>';
+						break;
+				}
+				//보유 포인트 확인
+				$sql = "select * from {$g5['point_table']} where mb_id = '{$member['mb_id']}' order by po_id DESC";
+				$row = sql_fetch($sql);
+				?>
+				<li><span><i class="icon money"></i>보유 <mark class="cs"><?=number_format($row['po_mb_point'])?></mark> coin</span></li>
+			</ul>
+			<div id="mypage-content">
 
-    <form name="fwishlist" method="post" action="./cartupdate.php">
-    <input type="hidden" name="act"       value="multi">
-    <input type="hidden" name="sw_direct" value="">
-    <input type="hidden" name="prog"      value="wish">
-    <ul id="wish_li">
-    <?php
-        $sql  = " select a.wi_id, a.wi_time, b.* from {$g5['g5_shop_wish_table']} a left join {$g5['member_table']} b on ( a.it_id = b.mb_no ) ";
-		$sql .= " where a.mb_id = '{$member['mb_id']}' order by a.wi_id desc ";
-		$result = sql_query($sql);
-        for ($i=0; $row = sql_fetch_array($result); $i++) {
-//print_r($row);
-            //$out_cd = '';
-            //$sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
-            //$tmp = sql_fetch($sql);
-            //if($tmp['cnt'])
-            //    $out_cd = 'no';
+				<p>나의 상담문의</p>
+				<div class="ca_board">
+					<table class="cab_table">
+				<thead>
+					<tr>
+						<th scope="col">상담사</th>
+						<th scope="col">상담상태</th>
+						<th scope="col">등록일시</th>
+						<th class="w40"></th>
+					</tr>
+				</thead>
+				<form name="fwishlist" method="post" action="./cartupdate.php">
+				<input type="hidden" name="act"       value="multi">
+				<input type="hidden" name="sw_direct" value="">
+				<input type="hidden" name="prog"      value="wish">
 
-            //$it_price = get_price($row);
 
-            //if ($row['it_tel_inq']) $out_cd = 'tel_inq';
+				  <tbody>
+				<?php
+				$sql  = " select a.wi_id, a.wi_time, b.* from {$g5['g5_shop_wish_table']} a left join {$g5['member_table']} b on ( a.it_id = b.mb_no ) ";
+				$sql .= " where a.mb_id = '{$member['mb_id']}' order by a.wi_id desc ";
+				$result = sql_query($sql);
+				for ($i=0; $row = sql_fetch_array($result); $i++) {
 
-            //$image = get_it_image($row['it_id'], 70, 70);
-			$image = '<img src="'.G5_DATA_URL.'/temp/'.$row['mb_no'].'/'.$row['mb_8'].'" width="70" alt="">';
-    ?>
+					//$out_cd = '';
+					//$sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
+					//$tmp = sql_fetch($sql);
+					//if($tmp['cnt'])
+						//$out_cd = 'no';
 
-        <li>
-            <div class="wish_img teacher_back_common back_taro">
-              <!-- 선생님 배경이미지 : 클래스, 배경이미지 바뀜(sct_img 뒤에 클래스 추가)
-              타로 일때 : back_taro (현재 예시로 설정해 놓음)
-              꿈해몽 일떄 : back_dream
-              펫타로 일때 : back_taro
-              사주 일떄 : back_saju
-              신점 일때 : back_shinjeom -->
-              <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $row['mb_no']; ?>"><?php echo $image; ?></a>
-            </div>
-            <div class="wish_info">
-                <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $row['mb_no']; ?>" class="wish_prd"><?php echo stripslashes($row['mb_nick']); ?></a>
-                <span class="info_date"> <?php echo substr($row['wi_time'], 2, 17); ?></span>
+					//$it_price = get_price($row);
 
-                <div class="wish_chk">
-                    <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['mb_no']; ?>">
-                    <input type="hidden" name="io_type[<?php echo $row['mb_no']; ?>][0]" value="0">
-                    <input type="hidden" name="io_id[<?php echo $row['mb_no']; ?>][0]" value="">
-                    <input type="hidden" name="io_value[<?php echo $row['mb_no']; ?>][0]" value="<?php echo $row['mb_nick']; ?>">
-                    <input type="hidden"   name="ct_qty[<?php echo $row['mb_no']; ?>][0]" value="1">
-                </div>
-                <span class="wish_del"><a href="<?php echo G5_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a></span>
-            </div>
+					if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
-        </li>
-        <?php
-        }
-        if ($i == 0)
-            echo '<li class="empty_table">보관함이 비었습니다.</li>';
-        ?>
-    </ul>
+					//$image = get_it_image($row['it_id'],230, 230);
+				?>
 
-    </form>
-</div>
+					<tr>
 
+					  <td><strong>상담사</strong><a href="./item.php?it_id=<?php echo $row['mb_no']; ?>" class="info_link"><?php echo stripslashes($row['mb_nick']); ?></a></td>
+					  <td><strong>상담상태</strong>상담중</td><!--상담중/상담대기-->
+					  <td><strong>등록일시</strong><div class="info_date"><?php echo $row['wi_time']; ?></div></td>
+					  <td><strong>등록취소</strong><a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>" class="wish_del"><i class="cabt_trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a></td>
+					</tr>
+
+						  <?php
+						  }
+
+						  if ($i == 0)
+							  echo '<tr><td colspan=4><li class="empty_table">보관함이 비었습니다.</li></td></tr>';
+						  ?>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div><!--order-wr-->
+</div> <!--inner-->
 <script>
 <!--
     function out_cd_check(fld, out_cd)
@@ -133,7 +167,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     }
 //-->
 </script>
+<!-- } 위시리스트 끝 -->
 
 <?php
-include_once(G5_MSHOP_PATH.'/_tail.php');
+include_once('./_tail.php');
 ?>

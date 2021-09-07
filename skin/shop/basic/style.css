@@ -508,7 +508,7 @@
 #sit_use_write_star li{float:left;width:33.333%}
 #sit_use_write_star li img{width:100px}
 
-/* 상품 상세보기 - 상담문의 */
+/* 상품 상세보기 - 상품문의 */
 #sit_qa {margin:20px 0}
 #sit_qa h2 {position:absolute;font-size:0;line-height:0;content:""}
 #sit_qa h3 {position:absolute;font-size:0;line-height:0;content:""}
@@ -590,7 +590,7 @@
 .sps_con_btn button:hover{background:#6b99ee;border-color:#6b99ee;color:#fff}
 
 
-/* 상담문의 모음 */
+/* 상품문의 모음 */
 #sqa_sch {margin:0 0 10px}
 #sqa_sch a {display:inline-block;padding:0 8px;height:40px;line-height:40px;vertical-align:top;border-radius:3px;background:#fff;color:#3059c7;font-weight:bold;border:1px solid #3059c7;text-decoration:none;}
 #sqa_sch .sch_wr{border:1px solid #6d7892;border-radius:3px;display:inline-block}

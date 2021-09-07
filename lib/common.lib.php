@@ -53,6 +53,56 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
     else
         return "";
 }
+// 한페이지에 보여줄 행, 현재페이지, 총페이지수, URL
+function get_paging_moblie($write_pages, $cur_page, $total_page, $url, $add="")
+{
+    //$url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
+    $url = preg_replace('#&amp;page=[0-9]*#', '', $url) . '&amp;page=';
+
+    $str = '';
+
+ 
+
+    $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
+    $end_page = $start_page + $write_pages - 1;
+
+    if ($end_page >= $total_page) $end_page = $total_page;
+	
+	if(($start_page > 1) || ($cur_page > 1) || ($total_page > $end_page) || ($cur_page < $total_page))
+		$str .= '<ul class="t1 mb10">'.PHP_EOL;
+	if ($cur_page > 1) {
+        $str .= '<li class="t1"><a href="'.$url.'1'.$add.'" class="pg_page pg_start">처음</a></li>'.PHP_EOL;
+    }
+
+    if ($start_page > 1) $str .= '<li class="t1"><a href="'.$url.($start_page-1).$add.'" class="pg_page pg_prev">이전</a></li>'.PHP_EOL;
+
+	if ($cur_page < $total_page) {
+        $str .= '<li class="t2"><a href="'.$url.$total_page.$add.'" class="pg_page pg_end">맨끝</a></li>'.PHP_EOL;
+    }
+
+	if ($total_page > $end_page) $str .= '<li class="t2"><a href="'.$url.($end_page+1).$add.'" class="pg_page pg_next">다음</a></li>'.PHP_EOL;
+
+  
+	if(($start_page > 1) || ($cur_page > 1) || ($total_page > $end_page) || ($cur_page < $total_page))
+		$str .= '</ul>'.PHP_EOL;
+
+	$str .= '<ul>'.PHP_EOL;
+    if ($total_page > 1) {
+        for ($k=$start_page;$k<=$end_page;$k++) {
+            if ($cur_page != $k)
+                $str .= '<li><a href="'.$url.$k.$add.'" class="pg_page">'.$k.'<span class="sound_only">페이지</span></a></li>'.PHP_EOL;
+            else
+                $str .= '<li><span class="sound_only">열린</span><strong class="pg_current">'.$k.'</strong><span class="sound_only">페이지</span></li>'.PHP_EOL;
+        }
+    }
+	$str .= '</ul>'.PHP_EOL;
+   
+
+    if ($str)
+        return "<nav class=\"pg_wrap\"><span class=\"pg\">{$str}</span></nav>";
+    else
+        return "";
+}
 
 // 페이징 코드의 <nav><span> 태그 다음에 코드를 삽입
 function page_insertbefore($paging_html, $insert_html)
@@ -116,7 +166,7 @@ function set_session($session_name, $value)
     if (PHP_VERSION < '5.3.0')
         session_register($session_name);
     // PHP 버전별 차이를 없애기 위한 방법
-    $$session_name = $_SESSION[$session_name] = $value;
+    $session_name = $_SESSION[$session_name] = $value;
 }
 
 
@@ -885,7 +935,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     global $config;
     global $g5;
     global $is_admin;
-//	global $cp, $svc, $chk_telnum_addr, $new_user_addr, $user_prepay_addr;	// 포인트 추가 시 휴먼정보에 시간추가 1초당 10포인트
+	global $cp, $svc, $chk_telnum_addr, $new_user_addr, $user_prepay_addr;	// 포인트 추가 시 휴먼정보에 시간추가 1초당 10포인트
 
     // 포인트 사용을 하지 않는다면 return
     if (!$config['cf_use_point']) { return 0; }
@@ -910,7 +960,6 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
                     and po_rel_id = '$rel_id'
                     and po_rel_action = '$rel_action' ";
         $row = sql_fetch($sql);
-        echo '이미 등록된:'.$sql;
         if ($row['cnt'])
             return -1;
     }
@@ -938,6 +987,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
             $p_od_id = 0;
             break;
     }
+    
     $sql = " insert into {$g5['point_table']}
                 set mb_id = '$mb_id',
                     po_datetime = '".G5_TIME_YMDHIS."',
@@ -952,13 +1002,14 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
                     od_id = '$p_od_id',
                     po_rel_action = '$rel_action' ";
     sql_query($sql);
-    echo 'od_id 빼오기:'.$sql;
-/*
+
+    
     // 포인트를 사용한 경우 포인트 내역에 사용금액 기록
+    /*
     if($point < 0) {
         //insert_use_point($mb_id, $point);
     }
-    else {
+	else {
 		// 포인트 추가 시 휴먼정보에 시간추가 1초당 10포인트
 		if ( $rel_table != "@charge" ) {
 			$tel = str_replace("-", "", trim($mb['mb_hp']));
@@ -984,6 +1035,10 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 				curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 				$ret2 = curl_exec($ch2);
 				curl_close($ch2);
+                                
+                                //관리자 주문내역에 추가하는 코드.
+                                
+                                
 			}
 			else {				// 등록되지 않은 번호이면
 				$params = "cp=$cp&svc=$svc&tel=$tel&pwd=$pwd&amt=0&sec=$sec";
@@ -994,15 +1049,17 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 				curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 				$ret2 = curl_exec($ch2);
 				curl_close($ch2);
+                                
+                                //관리자 주문내역에 추가하는 코드.
 			}
 		}
 		// 포인트 추가 시 휴먼정보에 시간추가 1초당 10포인트
 	}
-*/
+        */
     // 포인트 UPDATE
     $sql = " update {$g5['member_table']} set mb_point = '$po_mb_point' where mb_id = '$mb_id' ";
     sql_query($sql);
-    echo "포인트 UPDATE:".$sql;
+
     return 1;
 }
 
@@ -3821,15 +3878,14 @@ function counsel_stat($cp_code) {
 		} else if ( $val == '000' || $val == '001' ) {
 			$data[$key] = '3';   //상담불가(예약대기)
 		} else if ( $val == '100' || $val == '101' ) {
-			$data[$key] = '2'; //상담시간 아님
+			$data[$key] = '3'; //상담시간 아님
 		} else {
 			$data[$key] = '2';    //상담가능(대기중)
 		}
 
 		//if ($key == $cp_code) return $data[$key];
 	}
-
-	//return $ret;
+	//return $data[$cp_code];
 }
 
 // 회원이 접속하면 상담사의 상태값이 상담중, 예약대기 인 경우 휴먼정보의 상태값으로 변경
@@ -3867,10 +3923,10 @@ function counsel_stat_update() {
 
 [상태값 해석]
 
-- 상담중(통화중): 010, 011, 110, 111
-- 상담불가(예약대기): 000, 001
-- 상담시간 아님: 100
-- 상담가능(대기중): 101
+- 상담중(통화중): 010, 011, 110, 111 = 1 = 상담중
+- 상담불가(예약대기): 000, 001 = 3 = 예약대기
+- 상담시간 아님: 100 = 3 = 예약대기
+- 상담가능(대기중): 101 = 2 = 상담가능
 
 */
 
@@ -3893,7 +3949,7 @@ function counsel_stat_update() {
 		if ( $data[$key] == "3" && ( $arr2[$key] == "010" || $arr2[$key] == "011" || $arr2[$key] == "110" || $arr2[$key] == "111" ) ) $data[$key] = 1;
 		// 할인상담이 상담가능이고 인 경우 일반상담이 상담중이면 상담중 
 		else if ( $data[$key] == "2" && ( $arr2[$key] == "010" || $arr2[$key] == "011" || $arr2[$key] == "110" || $arr2[$key] == "111" ) )  $data[$key] = 1;
-		// 할인상담이 상담가능이고 인 경우 일반상담이 예약대기이면 예약대기
+		// 할인상담이 상담가능이고 인 경우 일반상담이 예약대기이면 예약대기 
 		else if ( $data[$key] == "2" && ( $arr2[$key] == "000" || $arr2[$key] == "001" ) )  $data[$key] = 3;
 		// 상태값 고정 mb_lock 가 1 이 아닌 상담사 회원 모두 060 상태값으로 변경
 		sql_query( "UPDATE ".$g5['member_table']." SET mb_status='".$data[$key]."' WHERE mb_id='".$key."' AND mb_lock<>'1'" );
@@ -3906,5 +3962,13 @@ function ptr2($var) {
 	if ( $_SERVER['REMOTE_ADDR'] == "175.114.22.192" ) {
 		print_r($var);
 	}
+}
+
+function SQLFiltering($str){
+    // SQL INJECTION 대비.
+    $str=preg_replace("/\s{1,}1\=(.*)+/","",$str); // 공백이후 1=1이 있을 경우 제거
+    $str=preg_replace("/\s{1,}(or|and|null|where|limit)/i"," ",$str); // 공백이후 or, and 등이 있을 경우 제거
+    $str=preg_replace("/[\s\t\'\;\=]+/","", $str); // 공백이나 탭 제거, 특수문자 제거
+    return $str;
 }
 ?>

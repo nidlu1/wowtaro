@@ -89,13 +89,7 @@ $(function() {
     });
 });
 </script>
-<!--S:SDCOMM log Analytics 스크립트 (부정클릭 방지스크립트)--> 
-<script type="text/javascript">
-        var code ="l_aac4s_00000f49"
-</script> 
-<script type="text/javascript" src="//sdcomm.co.kr/ip_trace/bot.js"></script> 
-<!--F:SDCOMM log Analytics 스크립트-->
-<div id="footer"></div> 
+
 <?php
 include_once(G5_PATH."/tail.sub.php");
 ?>

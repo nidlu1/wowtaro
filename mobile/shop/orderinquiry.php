@@ -56,25 +56,61 @@ $g5['title'] = '상담내역';
 include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
 
-<div class="sub_banner" id="sub_mypage">
-  <h2>상담내역</h2>
+<div class="c_hero">
+	<strong>신선운세 <mark>결제내역</mark></strong>
 </div>
+<div class="c_list">
+	<div class="cl_menu t1">
+		<span>마이페이지</span>
+		<span><mark>결제내역</mark></span>
+	</div>
+	<button type="button" class="cl_btn"><span class="blind"></span></button>
 
-<ul class="mypage-tab">
-<?php
-include_once(G5_SHOP_PATH.'/mymenu.php');
-?>
+</div>
+<ul id="mypage-tab">
+	<?php
+	include_once(G5_SHOP_PATH.'/mymenu.php');
+	?>
 </ul>
+<div class="c_area mypage">
+	<div class="wrap">
+		<ul class="ca_function">
+			<li><span><?php echo $member['mb_name']; ?>님</span></li>
+				<?php
+			switch($member['mb_grade']) {
+				case "1" :
+					echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank01.svg"></div><b>나그네회원</b></span></li>';
+					break;
+				case "2" :
+					echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank02.svg"></div><b>열심회원</b></span></li>';
+					break;
+				case "3" :
+					echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank03.svg"></div><b>성실회원</b></span></li>';
+					break;
+				case "4" :
+					echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank04.svg"></div><b>충성회원</b></span></li>';
+					break;
+				case "5" :
+				case "6" :
+					echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank05.svg"></div><b>신선회원</b></span></li>';
+					break;
+				default :
+					echo '<li><span><div class="caf_rank"><img src="/images/common/icon_rank01.svg"></div><b>나그네회원</b></span></li>';
+					break;
+			}
+			//보유 포인트 확인
+			$sql = "select * from {$g5['point_table']} where mb_id = '{$member['mb_id']}' order by po_id DESC";
+			$row = sql_fetch($sql);
+			?>
+			<li><span><i class="icon money"></i>보유 <mark class="cs"><?=number_format($row['po_mb_point'])?></mark> coin</span></li>
+		</ul>
+		<?php
+		$limit = " limit $from_record, $rows ";
+		include G5_MSHOP_PATH.'/orderinquiry.sub.php';
+		?>
 
-<div id="sod_v">
-    <!-- <p id="sod_v_info">주문서번호를 누르시면 주문상세내역을 조회하실 수 있습니다.</p> -->
-
-    <?php
-    $limit = " limit $from_record, $rows ";
-    include G5_MSHOP_PATH.'/orderinquiry.sub.php';
-    ?>
-
-    <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
+		<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
+	</div>
 </div>
 
 <?php

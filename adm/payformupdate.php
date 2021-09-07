@@ -27,7 +27,6 @@ $pa_point = str_replace(",","",trim($pa_point));
 
 $error_msg = '';
 
-
 //20210129 결제상품 문구
 $pa_mungu = $_REQUEST['pa_mungu'];
 
@@ -36,6 +35,7 @@ $sql_common = " pa_amt          = '$pa_amt'
                 ,pa_point       = '$pa_point'
                 ,pa_use         = '$pa_use'
                 ,pa_mungu       = '$pa_mungu'
+                                    
 			";
 
 if ($w == "")

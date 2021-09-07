@@ -342,7 +342,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
     <ul class="tab_tit">
         <li><button type="button" rel="#sit_inf" class="selected">상품정보</button></li>
         <li><button type="button" rel="#sit_use">사용후기</button></li>
-        <li><button type="button" rel="#sit_qa">상담문의</button></li>
+        <li><button type="button" rel="#sit_qa">상품문의</button></li>
         <li><button type="button" rel="#sit_dvex">배송/교환</button></li>
     </ul>
     <ul class="tab_con">
@@ -400,13 +400,13 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
         </li>
         <!-- } 사용후기 끝 -->
 
-        <!-- 상담문의 시작 { -->
+        <!-- 상품문의 시작 { -->
         <li id="sit_qa">
-            <h2>상담문의</h2>
+            <h2>상품문의</h2>
 
             <div id="itemqa"><?php include_once(G5_SHOP_PATH.'/itemqa.php'); ?></div>
         </li>
-        <!-- } 상담문의 끝 -->
+        <!-- } 상품문의 끝 -->
 
         <?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>
         <!-- 배송정보 시작 { -->

@@ -19,7 +19,7 @@ else // 일괄삭제
 $chk_count = count($tmp_array);
 
 if($chk_count > (G5_IS_MOBILE ? $board['bo_mobile_page_rows'] : $board['bo_page_rows']))
-    alert('올바른 방법으로 이용해 주십시오.');
+    alert('올바른 방법으로 이용해 주십시오.bo_page_rows');
 
 // 사용자 코드 실행
 @include_once($board_skin_path.'/delete_all.skin.php');

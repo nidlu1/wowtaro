@@ -10,6 +10,7 @@ $menu['menu100'] = array (
 	array('100320', '5분/10분무료 설정', G5_ADMIN_URL.'/event.php', 'cf_event'),
 	array('100390', '상담분야관리', G5_ADMIN_URL.'/shop_admin/categorylist.php', 'scf_cate'),
 	array('100400', '세부분야관리', G5_ADMIN_URL.'/hashtaglist.php', 'scf_hashtag'),
+	array('100500', '해시태그관리', G5_ADMIN_URL.'/hashtaglist_v1.php', 'scf_hashtag'),
 	array('100700', '결제상품관리', G5_ADMIN_URL.'/paylist.php', 'scf_pay'),
 	array('100600', '추천해시태그관리', G5_ADMIN_URL.'/recommhashlist.php', 'scf_recommhash'),
     //array('100800', '세션파일 일괄삭제',G5_ADMIN_URL.'/session_file_delete.php', 'cf_session', 1),

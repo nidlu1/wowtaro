@@ -161,98 +161,87 @@ $(document).ready(function() {
 <?php
 }
 ?>
-<header id="hd">
-    <?php if ((!$bo_table || $w == 's' ) && defined('_INDEX_')) { ?><h1><?php echo $config['cf_title'] ?></h1><?php } ?>
+<div id="wrap" class="<?php if(!defined('_INDEX_')){ ?>sub<?php } ?>">
 
-    <div id="skip_to_container" class="sound_only"><a href="#container">본문 바로가기</a></div>
+<!-- 상단 시작 { -->
+    <h1 id="hd_h1" class="blind"><?php echo $g5['title'] ?></h1>
 
-    <?php if(defined('_INDEX_')) { // index에서만 실행
-        include G5_MOBILE_PATH.'/newwin.inc.php'; // 팝업레이어
-    } ?>
-    <!-- <ul id="hd_mb">
-        <li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
-        <?php if ($is_member) { ?>
-        <?php if ($is_admin) {  ?>
-        <li><a href="<?php echo G5_ADMIN_URL ?>/shop_admin/"><b>관리자</b></a></li>
-        <?php } else { ?>
-        <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php">정보수정</a></li>
-        <?php } ?>
-        <li><a href="<?php echo G5_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
-        <?php } else { ?>
-        <li><a href="<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
-        <li><a href="<?php echo G5_BBS_URL ?>/register.php" id="snb_join">회원가입</a></li>
-        <?php } ?>
-        <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
-    </ul> -->
+    <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
-    <ul class="top-banner clearfix">
-      <li>
-        누적고객수 <b>
-			<?php
-			$visit_arr = explode(",", $config['cf_visit']);
-			echo number_format(str_replace("전체:", "", $visit_arr[3])+$config['cf_3'])."명";
-			?></b>
-      </li>
-      <li class="color">
-        <a href="<?php echo $event_href; ?>"><?php echo $config['cf_1']; ?>분 무료상담</a>
-      </li>
-      <!--10분무료-->
-      <!-- <li class="color">
-        <a href="/free_counsel_10min.php">10분 무료상담</a>
-      </li> -->
-        <!--//10분무료-->
-    </ul>
-
-
-<!-- 헤더영역 -->
-    <div id="hd_wr">
-        <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="/m-fortune-img/logo.png" alt="신선운세"></a></div>
-        <div id="hd_btn" class="clearfix">
-            <button type="button" id="btn_hdcate"><img src="/m-fortune-img/ham_btn.png" alt="메뉴 열기"></button>
-            <button type="button" name="button" id="mainSch">
-              <img src="/m-fortune-img/sch_btn.png" alt="검색 하기">
-            </button>
-            <button type="button" name="button" id="mainSchClose">
-                <i class="xi-close" ></i>
-            </button>
-            <!-- <a href="<?php echo G5_SHOP_URL; ?>/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="sound_only">장바구니</span><span class="cart-count"><?php echo get_boxcart_datas_count(); ?></span></a> -->
-          </div>
-
-          <form name="frmsearch1" action="<?php echo G5_SHOP_URL; ?>/search.php" onsubmit="return search_submit(this);">
-            <aside id="hd_sch">
-                <div class="sch_inner">
-                    <h2>선생님 검색</h2>
-                    <label for="sch_str" class="sound_only">상품명<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="q" value="<?php echo stripslashes(get_text(get_search_string($q))); ?>" id="sch_str" required class="frm_input" placeholder="선생님 검색" >
-                    <button type="submit" value="검색" class="sch_submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </div>
-            </aside>
-            </form>
-            <script>
-            function search_submit(f) {
-                if (f.q.value.length < 2) {
-                    alert("검색어는 두글자 이상 입력하십시오.");
-                    f.q.select();
-                    f.q.focus();
-                    return false;
-                }
-
-                return true;
-            }
-
-            </script>
-
-
-    </div>
-
-
-
-
-    <?php include_once(G5_THEME_MSHOP_PATH.'/category.php'); // 분류 ?>
-
-
+	<?php
+	// if (defined('_INDEX_')) { // index에서만 실행
+		include G5_MOBILE_PATH.'/newwin.inc.php'; // 팝업레이어
+	// }
+	?>
+	<hr>
+	<header id="header">
+		<div class="h_wrap">
+			<div class="h_logo">
+				<a href="<?php echo G5_URL; ?>" title="신선운세"><h1 class="blind">신선운세</h1></a>
+			</div>
+			<nav class="h_menu">
+				<h2 class="blind">MENU</h2>
+				<div class="hm_all">
+					<button type="button" class="hma_btn"><i></i><span class="blind">전체메뉴</span></button>
+					<div class="hma_wrap <?php if ($_COOKIE["topbanner"]){ ?>onbanner<?php } ?>">
+						<div class="hma_title">
+							<img src="/images/m/ratio_9x1.png"/>
+							<button type="button" class="hma_btn"><i></i><span class="blind">메뉴 닫기</span></button>
+							<?php if(!$is_member){?>
+							<a href="/bbs/login.php" class="t1">로그인</a>
+							<a href="/bbs/register.php" class="t2">회원 가입</a>
+							<?php } else {	?>
+							<a href="<?php echo G5_BBS_URL; ?>/logout.php?" class="t1">로그아웃</a>
+							<?php if ($member['mb_level'] == 3) { ?>
+							<a href="<?php echo G5_SHOP_URL; ?>/orderinquiry2.php" class="t2"><span>마이페이지</span></a>
+							<?php } else { ?>
+							<a href="<?php echo G5_URL; ?>/mypage_payment_list.php" class="t2"><span>마이페이지</span></a>
+							<?php } ?>
+							<?php } ?>
+							
+							<h3 class="title t1 font cb">신선운세 <strong class="bold cb">전체메뉴</strong></h3>
+						</div>
+						<div class="hma_list main">
+							<ul>
+								<li><a href="<?php echo G5_URL; ?>/shop/list.php?ca_id=20">신점</a></li>
+								<li><a href="<?php echo G5_URL; ?>/shop/list.php?ca_id=10">타로</a></li>
+								<li><a href="<?php echo G5_URL; ?>/shop/list.php?ca_id=30">사주</a></li>
+								<li><a href="<?php echo G5_URL; ?>/shop/list.php?ca_id=40">펫타로</a></li>
+								<li><a href="<?php echo G5_URL; ?>/shop/list.php?ca_id=50">꿈해몽</a></li>
+							</ul>
+						</div>
+						<div class="hma_list sub">
+							<ul>
+								<li><a href="<?php echo G5_SHOP_URL; ?>/itemuselist.php">상담후기</a></li>
+								<li><a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=best">상담사례</a></li>
+								<li><a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=event">이벤트/혜택</a></li>
+								<li><a href="<?php echo G5_URL; ?>/shop/itemuselist.php?gubun=best">베스트후기</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="hm_search">
+					<h2 class="blind">SEARCH</h2>
+					<a href="#search" class="hms_btn"><i></i><span class="blind">검색열기</span></a>
+				</div>
+			</nav>
+		</div>
+	</header>
+	<hr>
+	<nav id="nav">
+		<ul>
+			<li><a href="#help" class="n_btn n_menu"><span>도우미</span></a></li>
+			<?php if ($member['mb_level'] == 3) { ?>
+			<li><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry2.php" class="n_btn n_mypage"><span>마이페이지</span></a></li>
+			<?php } else { ?>
+			<li><a href="<?php echo G5_URL; ?>/mypage_payment_list.php" class="n_btn n_mypage"><span>마이페이지</span></a></li>
+			<?php } ?>
+			<li><a href="<?php echo G5_URL; ?>/payment.php" class="n_btn n_coin"><span>코인충전</span></a></li>
+			<li><a href="<?php echo G5_BBS_URL; ?>/faq2.php?fm_id=3" class="n_btn n_customer"><span>고객센터</span></a></li>
+		</ul>
+	</nav>
     <script>
-    $( document ).ready( function() {
+   /* $( document ).ready( function() {
         var jbOffset = $( '#hd_wr' ).offset();
         $( window ).scroll( function() {
             if ( $( document ).scrollTop() > jbOffset.top ) {
@@ -274,9 +263,7 @@ $(document).ready(function() {
       });
     });
 
-    $("#btn_hdcate").on("click", function() {
-        $("#category").show();
-    });
+
 
     $(".menu_close").on("click", function() {
         $(".menu").hide();
@@ -285,27 +272,17 @@ $(document).ready(function() {
         $(".menu").hide();
     });
 
-    $("#mainSch").on("click", function(){
-      $("#hd_sch").show();
-      $("#mainSchClose").show();
-
-    });
+//    $("#mainSch").on("click", function(){
+//      $("#hd_sch").show();
+//      $("#mainSchClose").show();
+//    });
     $("#mainSchClose").on("click", function(){
       $("#hd_sch").hide();
       $("#mainSchClose").hide();
     });
-
+*/
    </script>
-<!-- Doyouad Start 삭제 하지 마세요. -->
-<script type="text/javascript">
-(function (w, d, s, n, t) {n = d.createElement(s);n.type = "text/javascript";n.setAttribute("id",
-"doyouadScript");n.setAttribute("data-user", "<?=$member['mb_id']?>");n.setAttribute("data-page", "main");n.async
-= !0;n.defer = !0;n.src = "https://cdn.doyouad.com/js/dyadTracker.js?v=" + new
-Date().toISOString().slice(0, 10).replace(/-/g, "");t =
-d.getElementsByTagName(s)[0];t.parentNode.insertBefore(n, t);})(window, document, "script");
-</script>
-<!-- Doyouad End --> 
 </header>
 
-<div id="container">
+<div id="contents" <?php if(defined('_INDEX_')){ ?>class="c_main"<?php } ?>>
     <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><h1 id="container_title"><?php echo $g5['title'] ?></h1><?php } ?>

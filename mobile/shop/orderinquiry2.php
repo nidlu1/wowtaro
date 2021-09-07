@@ -56,26 +56,36 @@ $g5['title'] = '상담내역';
 include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
 
-<div class="sub_banner" id="sub_mypage">
-  <h2>상담내역</h2>
-    <h3 style="color: white "><?=$member['mb_name']?> / <?=$member['mb_nick']?></h3>
+<div class="c_hero">
+	<strong>신선운세 <mark>상담내역</mark></strong>
 </div>
+<div class="c_list">
+	<div class="cl_menu t1">
+		<span>마이페이지</span>
+		<span><mark>상담내역</mark></span>
+	</div>
+	<button type="button" class="cl_btn"><span class="blind"></span></button>
 
-<ul class="mypage-tab">
-<?php
-include_once(G5_SHOP_PATH.'/mymenu.php');
-?>
+</div>
+<ul id="mypage-tab">
+	<?php
+	include_once(G5_SHOP_PATH.'/mymenu.php');
+	?>
 </ul>
+<div class="c_area mypage">
+	<div class="wrap">
+		<!-- <p id="sod_v_info">주문서번호를 누르시면 주문상세내역을 조회하실 수 있습니다.</p> -->
+		<ul class="ca_function teacher">
+			<li><span><?php echo $member['mb_name']; ?>님</span></li>
+			<li><span><?php echo $member['mb_nick']; ?>님</span></li>
+		</ul>
+	<?php
+	$limit = " limit $from_record, $rows ";
+	include G5_MSHOP_PATH.'/orderinquiry2.sub.php';
+	?>
 
-<div id="sod_v">
-    <!-- <p id="sod_v_info">주문서번호를 누르시면 주문상세내역을 조회하실 수 있습니다.</p> -->
-
-    <?php
-    $limit = " limit $from_record, $rows ";
-    include G5_MSHOP_PATH.'/orderinquiry2.sub.php';
-    ?>
-
-    <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
+	<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
+	</div>
 </div>
 
 <?php

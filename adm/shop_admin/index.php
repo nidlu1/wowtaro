@@ -12,7 +12,7 @@ $pg_anchor = '<ul class="anchor sidx_anchor">
 <li><a href="#anc_sidx_rdy">입금완료미배송내역</a></li>
 <li><a href="#anc_sidx_wait">미입금주문내역</a></li>
 <li><a href="#anc_sidx_ps">사용후기</a></li>
-<li><a href="#anc_sidx_qna">상담문의</a></li>
+<li><a href="#anc_sidx_qna">상품문의</a></li>
 </ul>';
 
 // 주문상태에 따른 합계 금액
@@ -407,7 +407,7 @@ function get_max_value($arr)
     </section>
 
     <section id="anc_sidx_qna">
-        <h2>상담문의</h2>
+        <h2>상품문의</h2>
         <?php echo $pg_anchor; ?>
 
         <div class="ul_01 ul_wrap">
@@ -439,7 +439,7 @@ function get_max_value($arr)
         </div>
 
         <div class="btn_list03 btn_list">
-            <a href="./itemqalist.php?sort1=iq_answer&amp;sort2=asc">상담문의 더보기</a>
+            <a href="./itemqalist.php?sort1=iq_answer&amp;sort2=asc">상품문의 더보기</a>
         </div>
     </section>
 

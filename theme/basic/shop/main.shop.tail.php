@@ -15,7 +15,6 @@ $admin = get_admin("super");
 </div>
     </div>
     <!-- } 콘텐츠 끝 -->
-
 <?php
 if ( $member['mb_level'] == 2 ) {
 	$ch = curl_init($user_remaining_secs_addr."?cp=".$cp."&svc=".$svc."&tel=".str_replace("-","",$member['mb_hp'])."&pwd=".substr($member['mb_hp'],-4)."");
@@ -38,6 +37,8 @@ if ( $member['mb_level'] == 2 ) {
 </div>
 <!--잔여시간 안내 끝-->
 <script type="text/javascript">
+
+
 
 var myTimer = setInterval(function() {
   // Timer codes
@@ -97,7 +98,7 @@ var myTimer = setInterval(function() {
   </a>
 
   <!--추가 / 카카오톡-->
-    <a href="https://open.kakao.com/o/sddbIq0c" class="quick-box quick-kakao" target="_blank">
+    <a href="https://open.kakao.com/o/sSPKf93b" class="quick-box quick-kakao" target="_blank">
       <img src="/fortune-img/quick_kakao.png" alt="">
       <div class="quick_txt">
         <b>카카오톡</b><br>
@@ -215,7 +216,7 @@ while ( $t5row = sql_fetch_array($t5res) ) {
     <div class="customer boxes">
       <h2>고객센터</h2>
       <h3>1522 - 9284</h3>
-      <p>업무시간 AM 11:00 ~ PM 16:00</p>
+      <p>업무시간 AM 10:00 ~ PM 17:00</p>
       <p class="red">점심시간 PM 13:00 ~ PM 14:00</p>
       <ul class="icon-wr clearfix">
         <li>
@@ -277,7 +278,7 @@ while ($row = sql_fetch_array($result)) {
   </div><!--tail-box-->
 
 </div><!--inner-->
-<a href="https://open.kakao.com/o/sddbIq0c" id="kakaotalk" target="_blank"><i></i><span>카카오톡 문의하기</span></a>
+<a href="https://open.kakao.com/o/sSPKf93b" id="kakaotalk" target="_blank"><i></i><span>카카오톡 문의하기</span></a>
 <div id="ft">
 
   <div class="ft_top clearfix">

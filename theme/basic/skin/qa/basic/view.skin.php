@@ -10,204 +10,244 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
 <!-- 게시물 읽기 시작 { -->
 
-<div id="review">
-  <div class="sub_banner" id="sub_callcenter">
-    <h2>고객센터</h2>
-    <p>고객님들의 궁금증을 해결해드립니다.</p>
-  </div>
+<div class="c_hero" id="sub_callcenter">
+	<strong>신선운세 <mark>1:1고객문의</mark></strong>
 </div>
-
-<div id="sct" class="navi">
-<div class="sc_wrap">
-<div class="inner">
-<div id="sct_location">
-    <a href="/index.php" class="sct_bg"><i class="xi-home"></i></a>
-    <a href="/bbs/qawrite.php" class="sct_here ">고객센터</a></div>
-<div id="sct_hhtml"></div>
-<div id="sct_sortlst">
-<!-- 상품 정렬 선택 시작 { -->
-<!-- <section id="sct_sort">
-    <h2>상품 정렬</h2>
-    <ul id="ssch_sort">
-        <li><a href="/shop/list.php?ca_id=50&amp;sort=it_sum_qty&amp;sortodr=desc">조회순</a></li>
-        <li><a href="/shop/list.php?ca_id=50&amp;sort=it_use_cnt&amp;sortodr=desc">후기많은순</a></li>
-        <li><a href="/shop/list.php?ca_id=50&amp;sort=it_use_avg&amp;sortodr=desc">별점높은순</a></li>
-    </ul>
-</section> -->
+<div class="c_list">
+	<div class="cl_menu">
+		<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span>고객센터</span>
+		<span><mark><a href="/bbs/qalist.php" class="sct_here">1:1고객문의</a></mark></span>
+	</div>
 </div>
-</div>
-</div>
-</div>
+<div class="c_area">
+	<div class="wrap">
+		<section class="ca_board">
+			<div class="cab_form">
+				<div class="cabf_wrap">
+					<div class="cabf_title">
+						<span class="text middle cb s05">제목</span>
+					</div>
+					<div class="cabf_content">
+						<h2 class="text middle bold cb s05">
+							<?php if ($category_name) { ?>
+							<?php echo $view['ca_name']; // 분류 출력 끝 ?>
+							<?php } ?>
+							<?php
+							echo cut_str(get_text($view['subject']), 70); // 글제목 출력
+							?>
+						</h2>
+						<div class="fr">
+							<div class="cabf_item">
+								<i class="time"></i>
+								<span class="text cg tiny s05"><?php echo date("Y.m.d", strtotime($view['datetime'])) ?></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="cabf_wrap w50p">
+					<div class="cabf_title">
+						<span class="text middle cb s05">상담분류</span>
+					</div>
+					<div class="cabf_content">
+						<div class="fl">
+							<span class="text middle cb s05">
+								<?php echo $view['category']; // 분류 출력 끝 ?>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="cabf_wrap w50p">
+					<div class="cabf_title">
+						<span class="text middle cb s05">글쓴이</span>
+					</div>
+					<div class="cabf_content">
+						<div class="fl">
+							<span class="text middle cb s05">
+								<?php echo $view['name'] ?>
+							</span>
+						</div>
+					</div>
+				</div>
+				<section class="cab_body">
+					<h2 class="blind">본문</h2>
+					<?php
+					// 파일 출력
+					$v_img_count = count($view['file']);
+					if($v_img_count) {
+						echo "<div class=\"cabb_pic\">\n";
 
-<div class="review_tabs">
-  <ul>
-    <li><a href="/bbs/faq.php?fm_id=4">FAQ</a></li>
-    <li class="active"><a href="/bbs/qalist.php">1:1고객문의</a></li>
-    <li><a href="/bbs/faq2.php?fm_id=3">이용안내</a></li>
-    <li><a href="/bbs/board.php?bo_table=notice">공지사항</a></li>
-  </ul>
-</div>
+						for ($i=0; $i<=count($view['file']); $i++) {
+							if ($view['file'][$i]['view']) {
+								echo $view['file'][$i]['view'];
+								echo get_view_thumbnail($view['file'][$i]['view']);
+							}
+						}
 
+						echo "</div>\n";
+					}
+					 ?>
 
-<div class="inner">
-<article id="bo_v">
-    <header>
-        <h2 id="bo_v_title">
-            <?php
-            echo '<span class="bo_v_cate">'.$view['category'].'</span> '; // 분류 출력 끝
-            ?>
-            <?php
-            echo $view['subject']; // 글제목 출력
-            ?>
-        </h2>
-    </header>
+					<!-- 본문 내용 시작 { -->
+					<div class="cabb_txt">
+                        <?php
+                            $imgdoc = explode(".",$view['qa_file1']);
+                            if($imgdoc[1] === "jpg" ||$imgdoc[1] === "png"){
+                                echo "<img src='/data/qa/".$view['qa_file1']."'>";
+                            }
+                            $imgdoc = explode(".",$view['qa_file2']);
+                            if($imgdoc[1] === "jpg" ||$imgdoc[1] === "png" ){
+                                echo "<img src='/data/qa/".$view['qa_file2']."'>";
+                            }
+                        ?>
+                        <?php 
+                            echo get_view_thumbnail($view['content']);
+                        ?>
+                    </div>
+					<?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
+					<!-- } 본문 내용 끝 -->
 
-    <section id="bo_v_info">
-        <h2>페이지 정보</h2>
-        <span class="sound_only">작성자</span><strong><?php echo $view['name'] ?></strong>
-        <span class="sound_only">작성일</span><strong class="bo_date"><?php echo $view['datetime']; ?></strong>
-        <?php if($view['email'] || $view['hp']) { ?>
-            <?php if($view['email']) { ?>
-            <span class="sound_only">이메일</span>
-            <strong><i class="xi-mail-o" aria-hidden="true"></i> <?php echo $view['email']; ?></strong>
-            <?php } ?>
-            <?php if($view['hp']) { ?>
-            <span class="sound_only">휴대폰</span>
-            <strong><i class="fa fa-phone" aria-hidden="true"></i> <?php echo $view['hp']; ?></strong>
-            <?php } ?>
-        <?php } ?>
-    </section>
+					<?php if ($is_signature) { ?><p><?php echo $signature ?></p><?php } ?>
+					<?php
+					$cnt = 0;
+					if ($view['file']['count']) {
+						for ($i=0; $i<count($view['file']); $i++) {
+							if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+								$cnt++;
+						}
+					}
+					 ?>
 
+						
+					<?php if(isset($view['link'][1]) && $view['link'][1]) { ?>
+					<!-- 관련링크 시작 { -->
+					<div class="cabb_data link cabb_link">
+						<h2 class="blind">관련링크</h2>
+						<ul>
+						<?php
+						// 링크
+						$cnt = 0;
+						for ($i=1; $i<=count($view['link']); $i++) {
+							if ($view['link'][$i]) {
+								$cnt++;
+								$link = cut_str($view['link'][$i], 70);
+							?>
+							<li>
+								<div class="cabbd_item cabbl_item">
+									<a href="<?php echo $view['link_href'][$i] ?>" class="text small cb" target="_blank"><?php echo $link ?></a>
+								</div>
+							</li>
+							<?php
+							}
+						}
+						?>
+						</ul>
+					</div>
+					<!-- } 관련링크 끝 -->
+					<?php } ?>
 
+					<?php if($cnt) { ?>
+					<!-- 첨부파일 시작 { -->
+					<div class="cabb_data download">
+						<h2 class="blind">첨부파일</h2>
+						<ul>
+						<?php
+						// 가변 파일
+						for ($i=0; $i<count($view['file']); $i++) {
+							if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+						 ?>
+							<li>
+								<div class="cabbd_item">
+									<a href="<?php echo $view['file'][$i]['href'];  ?>" class="text small cb"><?php echo $view['file'][$i]['source'] ?></a>
+								</div>
+								<!-- <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
+								<span class="bo_v_file_cnt"><?php echo $view['file'][$i]['download'] ?>회 다운로드 | DATE : <?php echo $view['file'][$i]['datetime'] ?></span> -->
+							</li>
+						<?php
+							}
+						}
+						 ?>
+						</ul>
+					</div>
+					<!-- } 첨부파일 끝 -->
+					<?php } ?>
+				</section>
+			</div>
+			<!-- 게시물 상단 버튼 시작 { -->
+			<div class="cab_buttons">
+				<?php
+				ob_start();
+				 ?>
+				<div class="cabb_wrap t1">
+					<ul class="fl">
+						<?php if ($prev_href) { ?><li><a href="<?php echo $prev_href ?>"  class="btn">이전글</a></li><?php } ?>
+						<?php if ($next_href) { ?><li><a href="<?php echo $next_href ?>"  class="btn">다음글</a></li><?php } ?>
+					</ul>
+					<ul class="fr">
+						<li><a href="<?php echo $list_href ?>" class="btn t1"> 목록</a></li>
+						<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn t1"> 글쓰기</a></li><?php } ?>
+					</ul>
+				</div>
+				<div class="cabb_wrap t2">
+					<ul class="fl">
+						<?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn t2">수정</a></li><?php } ?>
+						<?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn t2" onclick="del(this.href); return false;">삭제</a></li><?php } ?>
+					</ul>
+				</div>
+				<?php
+				$link_buttons = ob_get_contents();
+				ob_end_flush();
+				 ?>
+			</div>
+			<!-- } 게시물 상단 버튼 끝 -->
 
-    <section id="bo_v_atc">
-        <h2 id="bo_v_atc_title">본문</h2>
+			<?php
+			// 질문글에서 답변이 있으면 답변 출력, 답변이 없고 관리자이면 답변등록폼 출력
+			if(!$view['qa_type']) {
+				if($view['qa_status'] && $answer['qa_id'])
+					include_once($qa_skin_path.'/view.answer.skin.php');
+				else
+					include_once($qa_skin_path.'/view.answerform.skin.php');
+			}
+			?>
 
-        <?php
-        // 파일 출력
-        if($view['img_count']) {
-            echo "<div id=\"bo_v_img\">\n";
-
-            for ($i=0; $i<$view['img_count']; $i++) {
-                //echo $view['img_file'][$i];
-                echo get_view_thumbnail($view['img_file'][$i], $qaconfig['qa_image_width']);
-            }
-
-            echo "</div>\n";
-        }
-         ?>
-
-        <!-- 본문 내용 시작 { -->
-        <div id="bo_v_con"><?php echo get_view_thumbnail($view['content'], $qaconfig['qa_image_width']); ?></div>
-        <!-- } 본문 내용 끝 -->
-
-        <?php if($view['qa_type']) { ?>
-        <div id="bo_v_addq"><a href="<?php echo $rewrite_href; ?>" class="btn_b01">추가질문</a></div>
-        <?php } ?>
-
-        <?php if($view['download_count']) { ?>
-
-        <!-- 첨부파일 시작 { -->
-        <section id="bo_v_file">
-            <h2>첨부파일</h2>
-            <ul>
-            <?php
-            // 가변 파일
-            for ($i=0; $i<$view['download_count']; $i++) {
-             ?>
-                <li>
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                    <a href="<?php echo $view['download_href'][$i];  ?>" class="view_file_download">
-                        <strong><?php echo $view['download_source'][$i] ?></strong>
-                    </a>
-                </li>
-            <?php
-            }
-             ?>
-            </ul>
-        </section>
-        <!-- } 첨부파일 끝 -->
-        <?php } ?>
-
-    </section>
-
-
-
-    <!-- 게시물 상단 버튼 시작 { -->
-    <div id="bo_v_top">
-        <?php
-        ob_start();
-         ?>
-        <?php if ($prev_href || $next_href) { ?>
-        <ul class="bo_v_nb">
-            <?php if ($prev_href) { ?><li><a href="<?php echo $prev_href ?>" class="btn_b01 btn"><i class="fa fa-angle-left" aria-hidden="true"></i> 이전글</a></li><?php } ?>
-            <?php if ($next_href) { ?><li><a href="<?php echo $next_href ?>" class="btn_b01 btn">다음글 <i class="fa fa-angle-right" aria-hidden="true"></i></a></li><?php } ?>
-        </ul>
-        <?php } ?>
-
-        <ul class="bo_v_com">
-            <?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b01 btn"> 수정</a></li><?php } ?>
-            <?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b01 btn" onclick="del(this.href); return false;">삭제</a></li><?php } ?>
-            <li><a href="<?php echo $list_href ?>" class="btn_b01 btn"><i class="fa fa-list" aria-hidden="true"></i> 목록</a></li>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02 btn"> 글쓰기</a></li><?php } ?>
-        </ul>
-        <?php
-        $link_buttons = ob_get_contents();
-        ob_end_flush();
-         ?>
-    </div>
-    <!-- } 게시물 상단 버튼 끝 -->
-
-    <?php
-    // 질문글에서 답변이 있으면 답변 출력, 답변이 없고 관리자이면 답변등록폼 출력
-    if(!$view['qa_type']) {
-        if($view['qa_status'] && $answer['qa_id'])
-            include_once($qa_skin_path.'/view.answer.skin.php');
-        else
-            include_once($qa_skin_path.'/view.answerform.skin.php');
-    }
-    ?>
-
-    <?php if($view['rel_count']) { ?>
-    <section id="bo_v_rel">
-        <h2>연관질문</h2>
-
-        <div class="tbl_head01 tbl_wrap">
-            <table>
-            <thead>
-            <tr>
-                <th scope="col">제목</th>
-                <th scope="col">등록일</th>
-                <th scope="col">상태</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            for($i=0; $i<$view['rel_count']; $i++) {
-            ?>
-            <tr>
-                <td>
-                    <span class="bo_cate_link"><?php echo get_text($rel_list[$i]['category']); ?></span>
-
-                    <a href="<?php echo $rel_list[$i]['view_href']; ?>" class="bo_tit">
-                        <?php echo $rel_list[$i]['subject']; ?>
-                    </a>
-                </td>
-                <td class="td_date"><?php echo $rel_list[$i]['date']; ?></td>
-                <td class="td_stat"><span class="<?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($rel_list[$i]['qa_status'] ? '<i class="fa fa-check-circle" aria-hidden="true"></i> 답변완료' : '<i class="fa fa-times-circle" aria-hidden="true"></i> 답변대기'); ?></span></td>
-            </tr>
-            <?php
-            }
-            ?>
-            </tbody>
-            </table>
-        </div>
-    </section>
-    <?php } ?>
-
-
-
-</article>
+			<?php if($view['rel_count']) { ?>
+			<section class="cab_wrap mt50">
+				<h2 class="title t1 bold cb s05 mb15 left">연관질문</h2>
+				<table class="cab_table">
+				<thead>
+				<tr>
+					<th class="w100">상담분류</th>
+					<th class="w850">제목</th>
+					<th class="w150"">등록일</th>
+					<th class="w100">상태</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php
+				for($i=0; $i<$view['rel_count']; $i++) {
+				?>
+				<tr>
+					<td class="cabt_category"><span><?php echo get_text($rel_list[$i]['category']); ?></span></td>
+					<td class="cabt_subject">
+						<a href="<?php echo $rel_list[$i]['view_href']; ?>" class="bo_tit">
+							<?php echo $rel_list[$i]['subject']; ?>
+						</a>
+					</td>
+					<td class="cabt_date"><?php echo date("Y-m-d", strtotime($rel_list[$i]['date'])) ?></td>
+					<td class="cabt_stat"><span class=" <?php echo ($list[$i]['qa_status'] ? 'done' : 'rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '답변완료' : '답변대기'); ?></span></td>
+				</tr>
+				<?php
+				}
+				?>
+				</tbody>
+				</table>
+			</section>
+			<?php } ?>
+			
+		</section>
+	</div>
 </div><!--inner-->
 <!-- } 게시판 읽기 끝 -->
 

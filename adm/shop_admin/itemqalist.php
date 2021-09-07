@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '400660';
+$sub_menu = '400510';
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
@@ -107,10 +107,10 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     <thead>
     <tr>
         <th scope="col">
-            <label for="chkall" class="sound_only">상담문의 전체</label>
+            <label for="chkall" class="sound_only">상품문의 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
-        <th scope="col"><?php echo subject_sort_link('it_name'); ?>상담명</a></th>
+        <th scope="col"><?php echo subject_sort_link('it_name'); ?>상품명</a></th>
         <th scope="col"><?php echo subject_sort_link('iq_subject'); ?>질문</a></th>
         <th scope="col"><?php echo subject_sort_link('mb_nick'); ?>이름</a></th>
         <th scope="col"><?php echo subject_sort_link('iq_hp'); ?>핸드폰번호</a></th>
@@ -133,7 +133,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
      ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
-            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['iq_subject']) ?> 상담문의</label>
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['iq_subject']) ?> 상품문의</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
             <input type="hidden" name="iq_id[<?php echo $i; ?>]" value="<?php echo $row['iq_id']; ?>">
         </td>

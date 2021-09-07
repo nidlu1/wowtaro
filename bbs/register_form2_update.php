@@ -4,6 +4,7 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include_once(G5_LIB_PATH.'/register.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
+include_once(G5_PATH.'/sms_send_register.php');
 
 // 리퍼러 체크
 referer_check();
@@ -126,7 +127,7 @@ if ($w == '' || $w == 'u') {
             set_session('ss_check_mb_nick', '');
             set_session('ss_check_mb_email', '');
 
-            alert('올바른 방법으로 이용해 주십시오.');
+            alert('올바른 방법으로 이용해 주십시오.ss_check_mb_email');
         }
 /*
         // 본인확인 체크
@@ -267,6 +268,7 @@ if ($w == '') {
 	$sub_sql[] = file_up_func ( "mb_5", $image_regex, $upload_dir, $mb_no );
 	$sub_sql[] = file_up_func ( "mb_6", $image_regex, $upload_dir, $mb_no );
 	$sub_sql[] = file_up_func ( "mb_7", $image_regex, $upload_dir, $mb_no );
+	$sub_sql[] = file_up_func ( "mb_10", $image_regex, $upload_dir, $mb_no );
 	$sub_sql = array_filter(array_map('trim',$sub_sql));
 
 	if ( count($sub_sql) > 0 ) {
@@ -298,7 +300,7 @@ if ($w == '') {
         $content = ob_get_contents();
         ob_end_clean();
 
-        mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+//        mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
 
         // 메일인증을 사용하는 경우 가입메일에 인증 url이 있으므로 인증메일을 다시 발송되지 않도록 함
         if($config['cf_use_email_certify'])
@@ -314,7 +316,7 @@ if ($w == '') {
         $content = ob_get_contents();
         ob_end_clean();
 
-        mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
+//        mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
     }
 
     // 메일인증 사용하지 않는 경우에만 로그인
@@ -322,7 +324,9 @@ if ($w == '') {
         //set_session('ss_mb_id', $mb_id);
 
     //set_session('ss_mb_reg', $mb_id);
-
+    
+    //관리자에게 안내문자 발송
+//    sms_send_register("", $mb_name."님께서 신선운세에 상담사로 가입하셨습니다.");
 } else if ($w == 'u') {
     if (!trim($_SESSION['ss_mb_id']))
         alert('로그인 되어 있지 않습니다.');
@@ -576,7 +580,6 @@ unset($_SESSION['ss_cert_adult']);
 
 if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
-
 if ($w == '') {
     alert("상담사 등록 신청이 완료되었습니다.", G5_URL);
 } else if ($w == 'u') {

@@ -65,11 +65,11 @@
 #sns_outlogin .sns-icon .ico {width:30px;height:30px}
 
 /*로그인 */
-#sns_login{border:0;margin-top:15px ;padding: 20px 50px 0;border-top:1px solid #edeaea}
-#sns_login h3{;padding:10px 0 0;text-align:left;font-weight:bold}
-#sns_login .sns-icon{display:block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px}
-#sns_login .sns-naver{background-color:#1fc800;background-position:5px 5px;border-bottom:1px solid #1ea505}
-#sns_login .sns-kakao{background-color:#ffeb00;background-position:5px 5px;border-bottom:1px solid #e2c10a}
+#sns_login{box-sizing:border-box; border:0; padding-top:15px; padding-bottom:45px; border-bottom:#f5f2ee solid 1px;}
+#sns_login h3 {display:inline-block; vertical-align:middle; position:relative; width:100%; font-size:14px; font-weight:300; color:#999591; line-height:20px; text-align:left;}
+#sns_login .sns-icon{display:block; box-sizing:border-box; height:40px;line-height:40px; width:100%;margin:0 0 5px;padding-left:50px; border-radius:20px; text-align:left;color:#fff;}
+#sns_login .sns-naver{background-color:#1fc800;background-position:15px 5px;border-bottom:1px solid #1ea505}
+#sns_login .sns-kakao{background-color:#ffeb00;background-position:15px 5px;border-bottom:1px solid #e2c10a}
 #sns_login .sns-kakao {color:#3c1e1e}
 #sns_login .sns-facebook{background-color:#3b579d;background-position:5px 5px;border-bottom:1px solid #28458f}
 #sns_login .sns-google{background-color:#db4a3a;background-position:5px 5px;border-bottom:1px solid #c03121}

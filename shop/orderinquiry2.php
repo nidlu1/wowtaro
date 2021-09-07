@@ -61,24 +61,33 @@ $g5['title'] = '상담내역';
 include_once('./_head.php');
 ?>
 <!--타이틀영역-->
-<div id="review">
-  <div class="sub_banner" id="sub_mypage">
-    <h2>상담내역</h2>
-    <h3 style="color: white "><?=$member['mb_name']?> / <?=$member['mb_nick']?></h3>
-  </div>
+<div class="c_hero">
+	<strong>신선운세 <mark>상담내역</mark></strong>
 </div>
-
-
-<div class="inner">
-  <div class="order-wr clearfix">
-      <ul class="mypage-tab">
+<div class="c_list">
+	<div class="cl_menu">
+		<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span>마이페이지</span>
+		<span><mark><a href="/shop/orderinquiry2.php" class="sct_here">상담내역</a></mark></span>
+	</div>
+	<div class="cl_function mypage">
+		<li>
+			<span><?php echo $member['mb_name']; ?>님</span>
+			<span><?php echo $member['mb_nick']; ?>님</span>
+		</li>
+	</div>
+</div>
+<div class="c_area">
+  <div class="wrap">
+      <ul id="mypage-tab">
 	<?php
 	include_once(G5_SHOP_PATH.'/mymenu.php');
 	?>
       </ul>
   <!-- 주문 내역 시작 { -->
-    <div id="sod_v">
-        <p id="sod_v_tit">상담내역</p>
+    <div id="mypage-content">
+        <p>상담내역</p>
 
         <?php
         $limit = " limit $from_record, $rows ";

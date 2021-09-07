@@ -66,16 +66,16 @@ if ($w == "")
     switch ($html_content_len<300){
         case true:
 //            echo $result['p02'].":포인트<br>";
-            insert_point($member['mb_id'], $result['p02'], "상담후기 작성으로 코인 지급");
+            insert_point($member['mb_id'], $result['p02'], "상담후기 작성으로 코인 지급","","","상담후기 작성으로 코인 지급");
             break;
         case false:
-        echo $result['p03'].":포인트<br>";
-            insert_point($member['mb_id'], $result['p03'], "상담후기(300자 이상) 작성으로 포인트 지급");
+//        echo $result['p03'].":포인트<br>";
+            insert_point($member['mb_id'], $result['p03'], "상담후기(300자 이상) 작성으로 포인트 지급","","","상담후기(300자 이상) 작성으로 포인트 지급");
             break;
     }
     if(strpos($html_content, $searchName) == true) {
-        echo $result['p04'].":포인트1<br>";
-        insert_point($member['mb_id'], $result['p04'], "상담후기(이미지 첨부) 작성으로 포인트 지급");
+//        echo $result['p04'].":포인트1<br>";
+        insert_point($member['mb_id'], $result['p04'], "상담후기(이미지 첨부) 작성으로 포인트 지급","","","상담후기(이미지 첨부) 작성으로 포인트 지급");
     }
 //    포인트 지급 로직 끝
     

@@ -3,7 +3,7 @@ include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
 if (!$is_member) {
-    alert_close("상담문의는 회원만 작성 가능합니다.");
+    alert_close("상품문의는 회원만 작성 가능합니다.");
 }
 
 $w     = preg_replace('/[^0-9a-z]/i', '', trim($_REQUEST['w']));
@@ -27,13 +27,13 @@ if ($w == "u")
 {
     $qa = sql_fetch(" select * from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' ");
     if (!$qa) {
-        alert_close("상담문의 정보가 없습니다.");
+        alert_close("상품문의 정보가 없습니다.");
     }
 
     $it_id    = $qa['it_id'];
 
     if (!$is_admin && $qa['mb_id'] != $member['mb_id']) {
-        alert_close("자신의 상담문의만 수정이 가능합니다.");
+        alert_close("자신의 상품문의만 수정이 가능합니다.");
     }
 
     if($qa['iq_secret'])

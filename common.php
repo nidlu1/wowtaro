@@ -355,7 +355,7 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
         // 오늘 처음 로그인 이라면
         if (substr($member['mb_today_login'], 0, 10) != G5_TIME_YMD) {
             // 첫 로그인 포인트 지급
-            insert_point($member['mb_id'], $config['cf_login_point'], G5_TIME_YMD.' 첫로그인', '@login', $member['mb_id'], G5_TIME_YMD.' 첫로그인');
+            insert_point($member['mb_id'], $config['cf_login_point'], G5_TIME_YMD.' 출석', '@login', $member['mb_id'], G5_TIME_YMD.' 출석');
 
             // 오늘의 로그인이 될 수도 있으며 마지막 로그인일 수도 있음
             // 해당 회원의 접근일시와 IP 를 저장
@@ -644,7 +644,7 @@ header('Pragma: no-cache'); // HTTP/1.0
 
 $html_process = new html_process();
 
-if ( $config['cf_1'] == "10" ) {
+if ( $config['cf_1'] == "11" ) {
 	$event_href = G5_URL."/free_counsel_10min.php";
 }
 else {

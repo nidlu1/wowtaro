@@ -97,7 +97,7 @@ if($status == "25"){			// 결제완료
 		if ( $row['dc_status'] != "승인완료" ) {
 
 			include_once G5_PATH."/update_charge_human.php";
-			insert_point($row['mb_id'], $pay_point, "od_id:".$MOID.', '.$row['od_settle_case'].', '.$_REQUEST["goodsAmt"].' 충전', '@charge', $row['mb_id'], $MOID.', '.$row['od_settle_case'].', '.$_REQUEST["goodsAmt"].' 충전');
+			insert_point($row['mb_id'], $pay_point, "od_id".$MOID.', '.$row['od_settle_case'].', '.$_REQUEST["goodsAmt"].' 충전', '@charge', $row['mb_id'], $MOID.', '.$row['od_settle_case'].', '.$_REQUEST["goodsAmt"].' 충전');
 		}
 	}
 }

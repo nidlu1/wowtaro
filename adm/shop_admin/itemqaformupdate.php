@@ -28,7 +28,7 @@ if ($w == "u")
 
         // SMS 알림
         if($config['cf_sms_use'] == 'icode' && $row['iq_hp']) {
-            $sms_content = get_text($row['it_name']).' 상담문의에 답변이 등록되었습니다.';
+            $sms_content = get_text($row['it_name']).' 상품문의에 답변이 등록되었습니다.';
             $send_number = preg_replace('/[^0-9]/', '', $default['de_admin_company_tel']);
             $recv_number = preg_replace('/[^0-9]/', '', $row['iq_hp']);
 
@@ -73,7 +73,7 @@ if ($w == "u")
         if(trim($row['iq_email'])) {
             include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-            $subject = $config['cf_title'].' '.$row['it_name'].' 상담문의 답변 알림 메일';
+            $subject = $config['cf_title'].' '.$row['it_name'].' 상품문의 답변 알림 메일';
             $content = conv_content($iq_answer, 1);
 
             mailer($config['cf_title'], $config['cf_admin_email'], $row['iq_email'], $subject, $content, 1);

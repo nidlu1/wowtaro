@@ -26,11 +26,11 @@ for ($i=0; $i<count($_POST['chk']); $i++)
     {
         $sql = "update {$g5['g5_shop_item_use_table']}
                    set is_score   = '{$_POST['is_score'][$k]}',
-				       is_best    = '{$_POST['is_best'][$k]}',
+                        is_best    = '{$_POST['is_best'][$k]}',
                        is_confirm = '{$_POST['is_confirm'][$k]}'
                  where is_id      = '{$_POST['is_id'][$k]}' ";
         sql_query($sql);
-        
+
     // 베스트 선정 포인트 부여 로직                 
         $sql_common = " from g5_pointuse ";
         $point_sql = " select * $sql_common ";
@@ -43,7 +43,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
                     insert_point($_POST['mb_id'][$k], $result['p05'], "베스트 후기 선정으로 인한 코인 부여");
                     break;
             }
-    // 베스트 선정 포인트 부여 로직 끝 
+    // 베스트 선정 포인트 부여 로직 끝        
         
     }
     else if ($_POST['act_button'] == "선택삭제")
@@ -56,6 +56,8 @@ for ($i=0; $i<count($_POST['chk']); $i++)
         $point_sql = " select * $sql_common ";
         $result = sql_fetch($point_sql);
         insert_point($_POST['mb_id'][$k], $result['p05']*(-1), "관리자 후기 삭제로 인한 코인 반환");
+        
+        
     }
 
     update_use_cnt($_POST['it_id'][$k]);

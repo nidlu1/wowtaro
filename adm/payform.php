@@ -51,6 +51,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="pa_time">충전시간(분)</label></th>
         <td><input type="text" name="pa_time" value="<?php echo ( $co['pa_time'] / 60 ); ?>" id="pa_time" required class="frm_input required" size="90"></td>
     </tr>
+    </tr>
     <tr>
         <th scope="row"><label for="pa_point">적립 코인</label></th>
         <td><input type="text" name="pa_point" value="<?php echo ( $co['pa_point']); ?>" id="pa_time" required class="frm_input required" size="90"></td>
@@ -58,13 +59,14 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="pa_use">사용여부</label></th>
         <td>
-			<select id="pa_use" name="pa_use">
-				<option value="1" <?php echo $co['pa_use'] == 1 ? "selected" : ""; ?>>사용</option>
-				<option value="0" <?php echo $co['pa_use'] == 0 ? "selected" : ""; ?>>미사용</option>
-			</select>
-		</td>
+            <select id="pa_use" name="pa_use">
+                    <option value="1" <?php echo $co['pa_use'] == 1 ? "selected" : ""; ?>>사용</option>
+                    <option value="0" <?php echo $co['pa_use'] == 0 ? "selected" : ""; ?>>미사용</option>
+            </select>
+        </td>
     </tr>
     
+
     </tbody>
     </table>
     

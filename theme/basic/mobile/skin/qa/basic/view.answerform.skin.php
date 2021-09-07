@@ -2,14 +2,13 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<section id="bo_v_ans">
-    <?php
-    if($is_admin) // 관리자이면 답변등록
-    {
-    ?>
-    <h2 class="ans_frm_h2">답변등록</h2>
-
-    <form name="fanswer" method="post" action="./qawrite_update.php" autocomplete="off">
+<?php
+if($is_admin) // 관리자이면 답변등록
+{
+?>
+<h2 class="title t1 bold cb s05 mb10 mt30 left">답변등록</h2>
+<section class="cab_form ">
+    <form name="fanswer" method="post" action="./qawrite_update.php" onsubmit="return fwrite_submit(this);" autocomplete="off">
     <input type="hidden" name="qa_id" value="<?php echo $view['qa_id']; ?>">
     <input type="hidden" name="w" value="a">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
@@ -28,28 +27,31 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     echo $option_hidden;
     ?>
-
-    <div class="form_01">
-        <ul>
-            <?php if ($option) { ?>
+           <!--  <?php if ($option) { ?>
             <li>
-                <span class="sound_only">옵션</span>
+                옵션
                 <?php echo $option; ?>
             </li>
-            <?php } ?>
-            <li>
-                <label for="qa_subject" class="sound_only">제목</label>
-                <input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required" size="50" maxlength="255" placeholder="제목">
-            </li>
-            <li>
-                <label for="qa_content" class="sound_only">내용<strong>필수</strong></label>
-                <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-            </li>
-        </ul>
-    </div>
+            <?php } ?> -->
+			<div class="cabf_wrap p10">
+				<div class="cabf_title">
+					<label class="text middle cb s05" for="qa_subject">제목<strong class="sound_only">필수</strong></label>
+				</div>
+				<div class="cabf_content">
+					<input type="text" name="qa_subject" value="<?php echo get_text($write['qa_subject']); ?>" id="qa_subject" required class="frm_input full_input required" size="50" maxlength="255">
+				</div>
+			</div>
+			<div class="cabf_wrap p10">
+				<div class="cabf_title">
+					<label class="text middle cb s05" for="qa_content">내용<strong class="sound_only">필수</strong></label>
+				</div>
+				<div class="cabf_content" <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
+					<?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+				</div>
+			</div>
 
-    <div class="btn_confirm">
-        <input type="submit" value="답변쓰기" id="btn_submit" accesskey="s" class="btn_submit">
+   <div class="cab_buttons mt20">
+        <input type="submit" value="답변쓰기" id="btn_submit" accesskey="s" class="btn t1 fr">
     </div>
     </form>
 
@@ -109,13 +111,21 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         return true;
     }
     </script>
-    <?php
-    }
-    else
-    {
-    ?>
-    <p id="ans_msg">고객님의 문의에 대한 답변을 준비 중입니다.</p>
-    <?php
-    }
-    ?>
 </section>
+<?php
+}
+else
+{
+?>
+<section class="cab_reply">
+	<div class="cabr_head">
+		<div class="fl">
+			<h2><span>고객님의 문의에 대한 답변을 준비 중입니다.</span></h2>
+		</div>
+	</div>
+</section>
+
+<?php
+}
+?>
+

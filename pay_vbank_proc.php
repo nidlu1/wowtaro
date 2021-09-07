@@ -81,7 +81,7 @@ if($status == "25"){			// 결제완료
 		$re = sql_query($sql);
 
 		include_once G5_PATH."/update_charge_human.php";
-		insert_point($row['mb_id'], ($PAY_TYPE * 10), "od_id:".$_POST["moid"].', '.$row['od_settle_case'].', '.$_POST["goodsAmt"].' 충전', '@charge', $row['mb_id'], $_POST["moid"].', '.$row['od_settle_case'].', '.$_POST["goodsAmt"].' 충전');
+		insert_point($row['mb_id'], ($PAY_TYPE * 10), "od_id".$_POST["moid"].', '.$row['od_settle_case'].', '.$_POST["goodsAmt"].' 충전', '@charge', $row['mb_id'], $_POST["moid"].', '.$row['od_settle_case'].', '.$_POST["goodsAmt"].' 충전');
 	}
 }
 else if($status == "85"){		// 결제취소

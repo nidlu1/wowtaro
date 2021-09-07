@@ -242,7 +242,7 @@ box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
 .cke_sc_def dd {width:30%}
 
 /* 버튼 */
-a.btn,.btn{line-height:35px;height:35px;padding:0 10px;text-align:center;font-weight:bold;border:0;
+/* a.btn,.btn{line-height:35px;height:35px;padding:0 10px;text-align:center;font-weight:bold;border:0;
 -webkit-transition: background-color 0.3s ease-out;
 -moz-transition: background-color 0.3s ease-out;
 -o-transition: background-color 0.3s ease-out;
@@ -255,7 +255,7 @@ a.btn02 {display:inline-block;padding:7px;border:1px solid #3b3c3f;background:#4
 a.btn02:focus, .btn02:hover {text-decoration:none}
 button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none}
 
-.btn_confirm {text-align:right} /* 서식단계 진행 */
+.btn_confirm {text-align:right} 서식단계 진행
 
 .btn_submit {border:0;background:#253dbe;color:#fff;cursor:pointer;border:0}
 .btn_submit:hover {background:#0025eb}
@@ -264,9 +264,9 @@ a.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration
 button.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration:none;vertical-align:middle}
 .btn_cancel:hover {background:#aaa;
 }
-a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:40px;border:0;background:#3c3c3c;border-radius:5px;color:#fff;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
+a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:40px;border:0;background:#3c3c3c;border-radius:5px;color:#fff;text-decoration:none;vertical-align:top} 우편번호검색버튼 등
 a.btn_frmline {}
-button.btn_frmline {font-size:1em}
+button.btn_frmline {font-size:1em} */
 
 /* 게시판용 버튼 */
 a.btn_b01,.btn_b01 {display:inline-block;background:#4c4f6f;color:#fff;text-decoration:none;vertical-align:middle}

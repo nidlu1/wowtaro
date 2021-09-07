@@ -35,8 +35,8 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
             <li class="tnb_cart"><a href="<?php echo G5_SHOP_URL; ?>/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i> 장바구니</a></li>            
             <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
             <?php if ($is_member) { ?>
-
             <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php">정보수정</a></li>
+            <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
             <li><a href="<?php echo G5_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
             <?php if ($is_admin) {  ?>
             <li class="tnb_admin"><a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/"><b>관리자</b></a></li>

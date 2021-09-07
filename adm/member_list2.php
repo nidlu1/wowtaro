@@ -268,7 +268,7 @@ function searchForId2($id, $array) {
 			$mb_1_str .= $mb_1_str == "" ? searchForId2 ($mb_1_arr[$ii], $qdt) : ",".searchForId2 ($mb_1_arr[$ii], $qdt);
 		}*/
 		$mb_1_str = searchForId2 ($row['mb_use'], $qdt);
-
+//                echo '$mb_1_str'.$row['mb_use'];
     ?>
 
     <tr class="<?php echo $bg; ?>">
@@ -333,7 +333,7 @@ function searchForId2($id, $array) {
 			<select name="mb_status[<?php echo $i; ?>]" style="width:80px;">
 				<option value="1" <?php echo $mb_status == "상담중" ? "selected" : ""; ?> >상담중</option>
 				<option value="2" <?php echo $mb_status == "상담가능" ? "selected" : ""; ?> >상담가능</option>
-				<option value="3" <?php echo $mb_status == "예약대기" ? "selected" : ""; ?> >예약대기중</option>
+				<option value="3" <?php echo $mb_status == "예약대기" ? "selected" : ""; ?> >예약대기</option>
 			</select>
 		<?php //echo $mb_status ?>
 		</td>
@@ -380,7 +380,7 @@ function searchForId2($id, $array) {
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn btn_02">
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
     <?php if ($is_admin == 'super') { ?>
-    <a href="./member_form.php" id="member_add" class="btn btn_01">회원추가</a>
+    <a href="./member_form2.php" id="member_add" class="btn btn_01">회원추가</a>
     <?php } ?>
 
 </div>

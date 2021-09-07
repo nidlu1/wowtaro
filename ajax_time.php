@@ -1,5 +1,13 @@
 <?php
 include_once('./_common.php');
+/*
+ * 비회원 시간확인 로직
+ */
+header('Content-Type: text/html; charset=utf-8');
+$data = $_GET['tel'];
+if(isset($data)){
+    $member['mb_hp'] = $data;
+}
 
 $ch = curl_init($user_remaining_secs_addr."?cp=".$cp."&svc=".$svc."&tel=".str_replace("-","",$member['mb_hp'])."&pwd=".substr($member['mb_hp'],-4)."");
 curl_setopt($ch, CURLOPT_HEADER, false);

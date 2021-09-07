@@ -10,71 +10,83 @@ if ($is_checkbox) $colspan++;
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
 
-<div class="navi clearfix">
-  <div class="left">
-    <a href="#">
-    </a>
-  </div>
-
-  <div class="right">
-    <a href="/index.php" class="home"><i class="xi-home"></i></a>
-    <i class="xi-angle-right-min"></i>
-    <a href="#" class="txt">상담사례</a>
-  </div>
+<div class="c_hero" id="sub_review">
+	<strong>신선운세 <mark>상담사례</mark></strong>
 </div>
-
-<div id="review">
-  <div class="sub_banner" id="sub_review">
-    <h2>상담사례</h2>
-    <p></p>
-  </div>
+<div class="c_list">
+	<div class="cl_menu">
+		<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span><mark><a href="/bbs/board.php?bo_table=best" class="sct_here ">상담사례</a></mark></span>
+	</div>
 </div>
 
 <?php if ($rss_href || $write_href) { ?>
 <ul class="<?php echo isset($view) ? 'view_is_list btn_top' : 'btn_top top';?> text-right">
     <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
-    <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin"><i class="fa fa-user-circle" aria-hidden="true"></i><span class="sound_only">관리자</span></a></li><?php } ?>
-    <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02"> 글쓰기</a></li><?php } ?>
+   <!--  <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin"><i class="fa fa-user-circle" aria-hidden="true"></i><span class="sound_only">관리자</span></a></li><?php } ?> -->
+   <!--  <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02"> 글쓰기</a></li><?php } ?> -->
 </ul>
 <?php } ?>
 <!-- 게시판 목록 시작 -->
-<div id="bo_list">
+<div class="c_area best">
+	<div class="wrap">
+		<!-- 게시판 페이지 정보 및 버튼 시작 { -->
+		<!-- <div id="bo_btn_top">
+			 <div id="bo_list_total">
+				<span>Total <?php echo number_format($total_count) ?>건</span>
+				<?php echo $page ?> 페이지
+			</div>
 
-    <?php if ($is_category) { ?>
-    <nav id="bo_cate">
-        <h2><?php echo ($board['bo_mobile_subject'] ? $board['bo_mobile_subject'] : $board['bo_subject']) ?> 카테고리</h2>
-        <ul id="bo_cate_ul">
-            <?php echo $category_option ?>
-        </ul>
-    </nav>
-    <?php } ?>
+			<?php if ($rss_href || $write_href) { ?>
+			<ul class="btn_bo_user">
+				<?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01 btn"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a></li><?php } ?>
+				<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-user-circle" aria-hidden="true"></i> 관리자</a></li><?php } ?>
+				<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02 btn"><i class="fa fa-pencil" aria-hidden="true"></i> 글쓰기</a></li><?php } ?>
+			</ul>
+			<?php } ?>
+		</div> -->
+		<!-- } 게시판 페이지 정보 및 버튼 끝 -->
 
-    <div id="bo_list_total">
-        <span>전체 <?php echo number_format($total_count) ?>건</span>
-        <?php echo $page ?> 페이지
-    </div>
+		<!-- 게시판 검색 시작 { -->
+		<!-- <fieldset id="bo_sch">
+			<legend>게시물 검색</legend>
+		
+			<form name="fsearch" method="get">
+			<input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+			<input type="hidden" name="sca" value="<?php echo $sca ?>">
+			<input type="hidden" name="sop" value="and">
+			<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+			<input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력해주세요">
+			<button type="submit" name="button" class="sch_btn" role="검색"><span class="sound_only">검색</span></button>
+			</form>
+		</fieldset> -->
+		<!-- } 게시판 검색 끝 -->
 
+		<!-- 게시판 카테고리 시작 { -->
+		<?php if ($is_category) { ?>
+		<nav id="bo_cate">
+			<h2><?php echo $board['bo_subject'] ?> 카테고리</h2>
+			<ul id="bo_cate_ul">
+				<?php echo $category_option ?>
+			</ul>
+		</nav>
+		<?php } ?>
+		<!-- } 게시판 카테고리 끝 -->
 
-    <form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
-    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="spt" value="<?php echo $spt ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="sw" value="">
-
-    <div class="list_01">
-        <?php if ($is_checkbox) { ?>
-        <div scope="col">
-            <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
-            <label for="chkall"><span class="sound_only">현재 페이지 게시물 </span>전체선택</label>
-        </div>
-        <?php } ?>
-        <ul>
-            <?php
-            for ($i=0; $i<count($list); $i++) {
+		<form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
+		<input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+		<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+		<input type="hidden" name="stx" value="<?php echo $stx ?>">
+		<input type="hidden" name="spt" value="<?php echo $spt ?>">
+		<input type="hidden" name="sca" value="<?php echo $sca ?>">
+		<input type="hidden" name="sst" value="<?php echo $sst ?>">
+		<input type="hidden" name="sod" value="<?php echo $sod ?>">
+		<input type="hidden" name="page" value="<?php echo $page ?>">
+		<input type="hidden" name="sw" value="">
+		<ul class="ca_member">
+			<?php
+			for ($i=0; $i<count($list); $i++) {
 				$qrow = sql_fetch("SELECT * FROM ".$g5['member_table']." WHERE mb_id='".$list[$i]['wr_1']."'");
 
 				$bcat_arr = b_cat_func($qrow['mb_1']);
@@ -84,146 +96,121 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 				switch ($bcat_arr[$j]['ca_id']) {
 					case '10' :
-						$bcat_str = "taro";
+						$bcat_str = "타로";
 						$bcat_bg = "back_taro";
 						break;
 					case '20' :
-						$bcat_str = "sin";
+						$bcat_str = "신점";
 						$bcat_bg = "back_shinjeom";
 						break;
 					case '30' :
-						$bcat_str = "saju";
+						$bcat_str = "사주";
 						$bcat_bg = "back_saju";
 						break;
 					case '40' :
-						$bcat_str = "pet";
+						$bcat_str = "펫타로";
 						$bcat_bg = "back_pettaro";
 						break;
 					case '50' :
-						$bcat_str = "dream";
+						$bcat_str = "꿈해몽";
 						$bcat_bg = "back_dream";
 						break;
 					default :
-						$bcat_str = "taro";
+						$bcat_str = "펫타로";
 						$bcat_bg = "back_taro";
 						break;
 				}
-            ?>
-            <li class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> sps_section clearfix">
-                <?php if ($is_checkbox) { ?>
-                <div class="bo_chk">
-                    <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
-                    <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
-                </div><?php } ?>
-
-
-                <!--상담후기랑 같은 이미지 넣어주세요~-->
-                <div class="sps_section_title">
-            			<a href="<?php echo G5_SHOP_URL; ?>/item.php?ca_id=<?php echo $bcat_arr[$j]['ca_id']; ?>&it_id=<?php echo $qrow['mb_no']; ?>">
-                    <div class="review_back teacher_back_common <?php echo $bcat_bg; ?>">
-                      <!-- 선생님 배경이미지 : 클래스, 배경이미지 바뀜(sct_img 뒤에 클래스 추가)
-                      타로 일때 : back_taro (현재 예시로 설정해 놓음)
-                      꿈해몽 일떄 : back_dream
-                      펫타로 일때 : back_taro
-                      사주 일떄 : back_saju
-                      신점 일때 : back_shinjeom -->
-                      <img src="<?php echo G5_DATA_URL; ?>/temp/<?php echo $qrow['mb_no']; ?>/<?php echo $qrow['mb_8']; ?>" height="145" alt="<?php echo $qrow['mb_nick']; ?> <?php echo $qrow['mb_id']; ?>번">
-                    </div>
-                    <div class="sps_section_title_title">
-                      <!--카테고리 스타일2-->
-                      <span class="sub_cate">
-                        <!--타로일때-->
-                        <span class="cate-<?php echo $bcat_str; ?>">
-                          <?php echo $bcat_arr[$j]['ca_name']; ?>
-                        </span>
-
-                        <!--사주일때
-                        <span class="cate-saju">
-                          <?php echo $row['is_cat2']; ?>
-                        </span>-->
-
-                        <!--신점일때
-                        <span class="cate-sin">
-                          <?php echo $row['is_cat2']; ?>
-                        </span>-->
-
-                        <!--꿈해몽일때
-                        <span class="cate-dream">
-                          <?php echo $row['is_cat2']; ?>
-                        </span>-->
-
-                        <!--펫타로일때
-                        <span class="cate-dream">
-                          <?php echo $row['is_cat2']; ?>
-                        </span>-->
-
-                      </span>
-                        <!--//카테고리 스타일2-->
-                      <?php echo $qrow['mb_nick']; ?>
-                      <?php echo $qrow['mb_id']; ?>번
-                    </div>
-            			</a>
-          			</div>
-                <!--//상담후기랑 같은 이미지 넣어주세요~-->
-
-                <div class="sps_section_content">
-                  <div class="bo_subject">
-
-                      <?php
-                      if ($is_category && $list[$i]['ca_name']) {
-                      ?>
-                      <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
-                      <?php } ?>
-
-                      <a href="<?php echo $list[$i]['href'] ?>" class="bo_subject">
-                          <?php echo $list[$i]['icon_reply']; ?>
-                          <?php if ($list[$i]['is_notice']) { ?><strong class="notice_icon"><i class="fa fa-volume-up" aria-hidden="true"></i>공지</strong><?php } ?>
-                          <?php echo $list[$i]['subject'] ?>
-                          <?php
-                          // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
-
-                          if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
-                          if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
-                          if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
-                          if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
-                          if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
-
-                          ?>
-                      </a>
-
-                    </div>
-                    <div class="">
-                      <p>조회 <?php echo $list[$i]['wr_hit'] ?>  / 추천 <?php echo $list[$i]['wr_good'] ?> </p>
-                    </div>
-                  </div>
-                <!-- <div class="bo_info">
-                    <span class="sound_only">작성자</span><?php echo $list[$i]['name'] ?>
-
-
-                    <span class="bo_date"><?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><i class="fa fa-commenting-o" aria-hidden="true"></i><?php echo $list[$i]['comment_cnt']; ?><span class="sound_only">개</span><?php } ?> <i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['datetime2'] ?></span>
-
-                </div> -->
-
-            </li><?php } ?>
-            <?php if (count($list) == 0) { echo '<li class="empty_table">게시물이 없습니다.</li>'; } ?>
-        </ul>
-    </div>
-
-    <?php if ($list_href || $is_checkbox || $write_href) { ?>
-    <div class="bo_fx">
-        <ul class="btn_bo_adm">
-            <?php if ($list_href) { ?>
-            <li><a href="<?php echo $list_href ?>" class="btn_b01 btn"> 목록</a></li>
-            <?php } ?>
-            <?php if ($is_checkbox) { ?>
-            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn"><span class="">선택삭제</span></button></li>
-            <li><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value" class="btn"><span class="">선택복사</span></button></li>
-            <li><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value" class="btn"><span class="">선택이동</span></button></li>
-            <?php } ?>
-        </ul>
-    </div>
-    <?php } ?>
-    </form>
+			?>
+			<li>
+				<div class="cam_wrap">
+					<a href="<?php echo $list[$i]['href'] ?>">
+						<div class="cam_pic">
+							<div class="camp_wrap">
+								<img src="<?php echo G5_DATA_URL; ?>/temp/<?php echo $qrow['mb_no']; ?>/<?php echo $qrow['mb_8']; ?>" alt="<?php echo $qrow['mb_nick']; ?> <?php echo $qrow['mb_id']; ?>번">
+							</div>
+							<div class="camp_content">
+								<div class="campc_status">
+									<span><?php echo $bcat_str ?></span>
+								</div>
+								<span><?php echo $qrow['mb_nick']; ?> <mark><?php echo $qrow['mb_id']; ?>번</mark></span>
+							</div>
+						</div>
+						<div class="cam_info">
+							<div class="cami_title">
+								<span><?php echo $list[$i]['subject'] ?></span>
+							</div>
+							<div class="cami_txt">
+								<span class="cami_hover">
+									<?php echo $list[$i]['wr_content'] ?>
+								</span>
+							</div>
+						</div>
+						<div class="cam_etc">
+							<div class="fl">
+								<div class="came_item">
+									<i class="time"></i>
+									<span class="text cg tiny s05"><?php echo $list[$i]['datetime'] ?></span>
+								</div>
+							</div>
+							<div class="fr">
+								<div class="came_item">
+									<i class="like"></i>
+									<span class="text cg tiny s05"><?php echo $list[$i]['wr_good'] ?></span>
+								</div>
+								<div class="came_item ml18">
+									<i class="look"></i>
+									<span class="text cg tiny s05"><?php echo $list[$i]['wr_hit'] ?></span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</li>
+			<?php } ?>
+		</ul>
+			<?php if (count($list) == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
+			<!-- 예시 테이블 정보 -->
+		<!-- 페이지 -->
+		<?php echo $write_pages_moblie;  ?>
+		<?php if ($list_href || $is_checkbox || $write_href) { ?>
+		<div class="pg_buttons">
+			<?php if ($list_href || $write_href) { ?>
+			<ul>
+				<?php if ($is_checkbox) { ?>
+				<!-- <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn t2">선택삭제</button></li>
+				<li><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value" class="btn t2">선택복사</button></li>
+				<li><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value" class="btn t2">선택이동</button></li> -->
+				<?php } ?>
+				<?php if ($list_href) { ?><li><a href="<?php echo $list_href ?>" class="btn t1"><i class="fa fa-list" aria-hidden="true"></i> 목록</a></li><?php } ?>
+				<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn t1">글쓰기</a></li><?php } ?>
+			</ul>
+			<?php } ?>
+		</div>
+		<?php } ?>
+		</form>
+		<!-- 게시판 검색 시작 { -->
+		<!-- <div class="search_wrap">
+			 <fieldset class="ca_search">
+				<legend>게시물 검색</legend>
+				<form name="fsearch" method="get">
+				<input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+				<input type="hidden" name="sca" value="<?php echo $sca ?>">
+				<input type="hidden" name="sop" value="and">
+				<label for="sfl" class="sound_only">검색대상</label>
+				<select name="sfl" id="sfl" class="cas_select">
+					<option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>제목</option>
+					<option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
+					<option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
+				</select>
+				<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+				<input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="cas_input" size="25" maxlength="20" placeholder="검색어를 입력하세요">
+				<input type="submit" value="검색" class="cas_search">
+				<i class="icon_search"></i>
+				</form>
+			</fieldset>
+		</div> -->
+		<!-- } 게시판 검색 끝 -->
+	</div>
 </div>
 
 <?php if($is_checkbox) { ?>
@@ -232,10 +219,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 </noscript>
 <?php } ?>
 
-<!-- 페이지 -->
-<?php echo $write_pages; ?>
 
-<fieldset id="bo_sch">
+<!-- <fieldset id="bo_sch">
     <legend>게시물 검색</legend>
 
     <form name="fsearch" method="get">
@@ -255,7 +240,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <input name="stx" value="<?php echo stripslashes($stx) ?>" placeholder="검색어(필수)" required id="stx" class="sch_input" size="15" maxlength="20">
     <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i> <span class="sound_only">검색</span></button>
     </form>
-</fieldset>
+</fieldset> -->
 
 <?php if ($is_checkbox) { ?>
 <script>

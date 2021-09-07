@@ -11,8 +11,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$content_skin_url.'/style.css">',
         <h1><?php echo $g5['title']; ?></h1>
     </header>
 
-    <div id="ctt_con">
-        <?php echo $str; ?>
-    </div>
+    <div id="content">
+		<?php echo $str; ?>
+	</div>
 
 </article>

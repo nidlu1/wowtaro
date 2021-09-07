@@ -429,10 +429,9 @@ function check_admin_token()
 {
     $token = get_session('ss_admin_token');
     set_session('ss_admin_token', '');
-
+//        echo $token.":".$_REQUEST['token'];
     if(!$token || !$_REQUEST['token'] || $token != $_REQUEST['token'])
-        alert('올바른 방법으로 이용해 주십시오.', G5_URL);
-
+        alert('올바른 방법으로 이용해 주십시오3.', G5_URL);
     return true;
 }
 
@@ -455,11 +454,11 @@ function admin_referer_check($return=false)
     $msg = '';
 
     if($host != $p['host']) {
-        $msg = '올바른 방법으로 이용해 주십시오.';
+        $msg = '올바른 방법으로 이용해 주십시오1';
     }
 
     if( $p['path'] && ! preg_match( '/\/'.preg_quote(G5_ADMIN_DIR).'\//i', $p['path'] ) ){
-        $msg = '올바른 방법으로 이용해 주십시오';
+        $msg = '올바른 방법으로 이용해 주십시오2';
     }
 
     if( $msg ){
@@ -493,7 +492,7 @@ function admin_check_xss_params($params){
 // 접근 권한 검사
 if (!$member['mb_id'])
 {
-    alert('로그인 하십시오.', G5_BBS_URL.'/login.php?url=' . urlencode(G5_ADMIN_URL));
+    alert('잘못된 사이트로 접근하셨습니다.', G5_BBS_URL.'/login.php?url=' . urlencode(G5_ADMIN_URL));
 }
 else if ($is_admin != 'super')
 {

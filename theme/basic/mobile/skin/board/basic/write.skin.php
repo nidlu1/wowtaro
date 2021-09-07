@@ -5,191 +5,216 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
 
-<div class="navi clearfix">
-  <div class="left">
-    <a href="#">
-    </a>
-  </div>
-
-  <div class="right">
-    <a href="/index.php" class="home"><i class="xi-home"></i></a>
-    <i class="xi-angle-right-min"></i>
-    <a href="#" class="txt">고객센터</a>
-  </div>
+<div class="c_hero" id="sub_callcenter">
+	<strong>신선운세 <mark>공지사항</mark></strong>
 </div>
-
-<div id="review">
-  <div class="sub_banner" id="sub_callcenter">
-    <h2>고객센터</h2>
-    <p>고객님들의 궁금증을 해결해드립니다.</p>
-  </div>
+<div class="c_list">
+	<div class="cl_menu">
+		<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span>고객센터</span>
+		<span><mark><a href="/bbs/board.php?bo_table=notice" class="sct_here ">공지사항</a></mark></span>
+	</div>
 </div>
+<div class="c_area write notice">
+	<div class="wrap">
+		<div class="ca_customrtab">
+			<ul>
+				<li><a href="/bbs/faq.php?fm_id=4">FAQ</a></li>
+				<li><a href="/bbs/qalist.php">1:1고객문의</a></li>
+				<li><a href="/bbs/faq2.php?fm_id=3">이용안내</a></li>
+				<li class="active"><a href="/bbs/board.php?bo_table=notice">공지사항</a></li>
+			</ul>
+		</div>
+		<section class="ca_board">
+			<div class="cab_form">
+				<h2 class="sound_only"><?php echo $g5['title'] ?></h2>
+				<!-- 게시물 작성/수정 시작 { -->
+				<form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+				<input type="hidden" name="uid" value="<?php echo get_uniqid(); ?>">
+				<input type="hidden" name="w" value="<?php echo $w ?>">
+				<input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+				<input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
+				<input type="hidden" name="sca" value="<?php echo $sca ?>">
+				<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+				<input type="hidden" name="stx" value="<?php echo $stx ?>">
+				<input type="hidden" name="spt" value="<?php echo $spt ?>">
+				<input type="hidden" name="sst" value="<?php echo $sst ?>">
+				<input type="hidden" name="sod" value="<?php echo $sod ?>">
+				<input type="hidden" name="page" value="<?php echo $page ?>">
+				<?php
+				$option = '';
+				$option_hidden = '';
+				if ($is_notice || $is_html || $is_secret || $is_mail) {
+					$option = '';
+					if ($is_notice) {
+						$option .= "\n".'<input type="checkbox" id="notice" name="notice" value="1" '.$notice_checked.'>'."\n".'<label for="notice">공지</label>';
+					}
 
-<div class="review_tabs">
-  <ul>
-    <li><a href="/bbs/faq.php?fm_id=4">FAQ</a></li>
-    <li><a href="/bbs/qalist.php">1:1고객문의</a></li>
-    <li><a href="/bbs/faq2.php?fm_id=3">이용안내</a></li>
-    <li class="active"><a href="/bbs/board.php?bo_table=notice">공지사항</a></li>
-  </ul>
+					if ($is_html) {
+						if ($is_dhtml_editor) {
+							$option_hidden .= '<input type="hidden" value="html1" name="html">';
+						} else {
+							$option .= "\n".'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="html">HTML</label>';
+						}
+					}
+
+					if ($is_secret) {
+						if ($is_admin || $is_secret==1) {
+							$option .= "\n".'<input type="checkbox" id="secret" name="secret" value="secret" '.$secret_checked.'>'."\n".'<label for="secret">비밀글</label>';
+						} else {
+							$option_hidden .= '<input type="hidden" name="secret" value="secret">';
+						}
+					}
+
+					if ($is_mail) {
+						$option .= "\n".'<input type="checkbox" id="mail" name="mail" value="mail" '.$recv_email_checked.'>'."\n".'<label for="mail">답변메일받기</label>';
+					}
+				}
+
+				echo $option_hidden;
+				?>
+
+				<?php if ($is_category) { ?>
+				<div class="bo_w_select write_div">
+					<label for="ca_name"  class="sound_only">분류<strong>필수</strong></label>
+					<select name="ca_name" id="ca_name" required>
+						<option value="">분류를 선택하세요</option>
+						<?php echo $category_option ?>
+					</select>
+				</div>
+				<?php } ?>
+
+				<div class="bo_w_info write_div">
+				<?php if ($is_name) { ?>
+					<label for="wr_name" class="sound_only">이름<strong>필수</strong></label>
+					<input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input required" placeholder="이름">
+				<?php } ?>
+
+				<?php if ($is_password) { ?>
+					<label for="wr_password" class="sound_only">비밀번호<strong>필수</strong></label>
+					<input type="password" name="wr_password" id="wr_password" <?php echo $password_required ?> class="frm_input <?php echo $password_required ?>" placeholder="비밀번호">
+				<?php } ?>
+
+				<?php if ($is_email) { ?>
+						<label for="wr_email" class="sound_only">이메일</label>
+						<input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input email " placeholder="이메일">
+				<?php } ?>
+				</div>
+
+				<?php if ($is_homepage) { ?>
+				<div class="write_div">
+					<label for="wr_homepage" class="sound_only">홈페이지</label>
+					<input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input full_input" size="50" placeholder="홈페이지">
+				</div>
+				<?php } ?>
+
+				<?php
+				if ( $bo_table == "notice" ) {
+					$wr_1_checked = $write['wr_1'] == 1 ? "checked" : "";
+					$wr_2_checked = $write['wr_2'] == 1 ? "checked" : "";
+					$wr_3_checked = $write['wr_3'] == 1 ? "checked" : "";
+					$option .='<div class="cabfo_wrap">';
+					$option .= "\n".'<input type="checkbox" id="wr_1" name="wr_1" value="1" '.$wr_1_checked.'>'."\n".'<label for="wr_1">일반회원</label>';
+					$option .= "\n".'<input type="checkbox" id="wr_2" name="wr_2" value="1" '.$wr_2_checked.'>'."\n".'<label for="wr_2">상담사일반</label>';
+					$option .= "\n".'<input type="checkbox" id="wr_3" name="wr_3" value="1" '.$wr_3_checked.'>'."\n".'<label for="wr_3">상담사가족</label>';
+					$option .='</div>';
+				}
+				?>
+
+				<?php if ($option) { ?>
+				<div class="cabf_option">
+					<span class="sound_only">옵션</span>
+					<?php echo $option ?>
+				</div>
+				<?php } ?>
+
+				<div class="cabf_wrap">
+					<div class="cabf_title">
+						<span class="text middle cb s05">제목</span>
+					</div>
+					<div class="cabf_content">
+						<input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="">
+						<?php if ($is_member) { // 임시 저장된 글 기능 ?>
+						<script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
+						<?php if($editor_content_js) echo $editor_content_js; ?>
+						<button type="button" id="btn_autosave" class="cabfc_btn">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
+						<div id="autosave_pop" class="blind">
+							<strong>임시 저장된 글 목록</strong>
+							<ul></ul>
+							<div><button type="button" class="autosave_close ">닫기</button></div>
+						</div>
+						<?php } ?>
+					</div>
+				</div>
+				<div class="cabf_wrap">
+					<div class="cabf_title">
+						<span class="text middle cb s05">내용</span>
+					</div>
+					<div class="cabf_content t1">
+						<label for="wr_content" class="sound_only">내용<strong>필수</strong></label>
+						<div class="wr_content <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
+							<?php if($write_min || $write_max) { ?>
+							<!-- 최소/최대 글자 수 사용 시 -->
+							<p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
+							<?php } ?>
+							<?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+							<?php if($write_min || $write_max) { ?>
+							<!-- 최소/최대 글자 수 사용 시 -->
+							<div id="char_count_wrap"><span id="char_count"></span>글자</div>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+				<?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
+				<div class="cabf_wrap">
+					<div class="cabf_title">
+						<label for="wr_link<?php echo $i ?>"><span class="text middle cb s05"> 링크 #<?php echo $i ?></span></label>
+					</div>
+					<div class="cabf_content">
+						<input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input full_input" size="50">
+					</div>
+				</div>
+				<?php } ?>
+
+				<?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
+				<div class="cabf_wrap">
+					<div class="cabf_title">
+						<label for="bf_file_<?php echo $i+1 ?>" class="lb_icon"><span class="text middle cb s05"> 첨부파일 #<?php echo $i+1 ?></span></label>
+					</div>
+					<div class="cabf_content t1">
+						<input type="file" name="bf_file[]" id="bf_file_<?php echo $i+1 ?>" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file ">
+					</div>
+					<?php if ($is_file_content) { ?>
+					<input type="text" name="bf_content[]" value="<?php echo ($w == 'u') ? $file[$i]['bf_content'] : ''; ?>" title="파일 설명을 입력해주세요." class="full_input frm_input" size="50" placeholder="파일 설명을 입력해주세요.">
+					<?php } ?>
+
+					<?php if($w == 'u' && $file[$i]['file']) { ?>
+					<span class="file_del">
+						<input type="checkbox" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i;  ?>]" value="1"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
+					</span>
+					<?php } ?>
+
+				</div>
+				<?php } ?>
+
+
+				<?php if ($is_use_captcha) { //자동등록방지  ?>
+				<div class="write_div">
+					<?php echo $captcha_html ?>
+				</div>
+				<?php } ?>
+
+
+				<ul class="cabf_buttons">
+					<li><a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn">취소</a></li>
+					<li><input type="submit" value="등록" id="btn_submit" accesskey="s" class="btn t1"></li>
+				</ul>
+				</form>
+			</div>
+		</section>
+	</div><!--inner-->
 </div>
-
-
-<section id="bo_w">
-    <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
-    <input type="hidden" name="w" value="<?php echo $w ?>">
-    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-    <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
-    <input type="hidden" name="sca" value="<?php echo $sca ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="spt" value="<?php echo $spt ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <?php
-    $option = '';
-    $option_hidden = '';
-    if ($is_notice || $is_html || $is_secret || $is_mail) {
-        $option = '';
-        if ($is_notice) {
-            $option .= PHP_EOL.'<input type="checkbox" id="notice" name="notice" value="1" '.$notice_checked.'>'.PHP_EOL.'<label for="notice">공지</label>';
-        }
-
-        if ($is_html) {
-            if ($is_dhtml_editor) {
-                $option_hidden .= '<input type="hidden" value="html1" name="html">';
-            } else {
-                $option .= PHP_EOL.'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'.PHP_EOL.'<label for="html">html</label>';
-            }
-        }
-
-        if ($is_secret) {
-            if ($is_admin || $is_secret==1) {
-                $option .= PHP_EOL.'<input type="checkbox" id="secret" name="secret" value="secret" '.$secret_checked.'>'.PHP_EOL.'<label for="secret">비밀글</label>';
-            } else {
-                $option_hidden .= '<input type="hidden" name="secret" value="secret">';
-            }
-        }
-
-        if ($is_mail) {
-            $option .= PHP_EOL.'<input type="checkbox" id="mail" name="mail" value="mail" '.$recv_email_checked.'>'.PHP_EOL.'<label for="mail">답변메일받기</label>';
-        }
-    }
-
-    echo $option_hidden;
-    ?>
-    <div class="form_01 write_div">
-        <h2 class="sound_only"><?php echo $g5['title'] ?></h2>
-
-        <?php if ($is_category) { ?>
-        <div class="bo_w_select write_div">
-            <label for="ca_name" class="sound_only">분류<strong>필수</strong></label>
-            <select id="ca_name" name="ca_name" required>
-                <option value="">선택하세요</option>
-                <?php echo $category_option ?>
-            </select>
-        </div>
-        <?php } ?>
-
-        <?php if ($is_name) { ?>
-        <div class="write_div">
-            <label for="wr_name" class="sound_only">이름<strong>필수</strong></label>
-            <input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input full_input required" maxlength="20" placeholder="이름">
-        </div>
-        <?php } ?>
-
-        <?php if ($is_password) { ?>
-        <div class="write_div">
-            <label for="wr_password" class="sound_only">비밀번호<strong>필수</strong></label>
-            <input type="password" name="wr_password" id="wr_password" <?php echo $password_required ?> class="frm_input full_input <?php echo $password_required ?>" maxlength="20" placeholder="비밀번호">
-        </div>
-        <?php } ?>
-
-        <?php if ($is_email) { ?>
-        <div class="write_div">
-            <label for="wr_email" class="sound_only">이메일</label>
-            <input type="email" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input full_input  email" maxlength="100" placeholder="이메일">
-        </div>
-        <?php } ?>
-
-        <?php if ($is_homepage) { ?>
-        <div class="write_div">
-            <label for="wr_homepage" class="sound_only">홈페이지</label>
-            <input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input full_input " placeholder="홈페이지">
-        </div>
-        <?php } ?>
-
-        <?php if ($option) { ?>
-        <div class="write_div">
-            <span class="sound_only">옵션</span>
-            <?php echo $option ?>
-        </div>
-        <?php } ?>
-
-        <div class="bo_w_tit write_div">
-            <label for="wr_subject" class="sound_only">제목<strong>필수</strong></label>
-            <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input full_input required" placeholder="제목">
-        </div>
-
-        <div class="write_div">
-            <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>
-            <?php if($write_min || $write_max) { ?>
-            <!-- 최소/최대 글자 수 사용 시 -->
-            <p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
-            <?php } ?>
-            <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-            <?php if($write_min || $write_max) { ?>
-            <!-- 최소/최대 글자 수 사용 시 -->
-            <div id="char_count_wrap"><span id="char_count"></span>글자</div>
-            <?php } ?>
-        </div>
-
-
-        <?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
-        <div class="bo_w_link write_div">
-            <label for="wr_link<?php echo $i ?>"><i class="fa fa-link" aria-hidden="true"></i> <span class="sound_only">링크 #<?php echo $i ?></span></label>
-            <input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo $write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input wr_link">
-        </div>
-        <?php } ?>
-
-
-        <?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
-        <div class="bo_w_flie write_div">
-            <div class="file_wr write_div">
-                <label for="bf_file_<?php echo $i+1 ?>" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only">파일 #<?php echo $i+1 ?></span></label>
-                <input type="file" name="bf_file[]" id="bf_file_<?php echo $i+1 ?>" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file ">
-            </div>
-            <?php if ($is_file_content) { ?>
-            <input type="text" name="bf_content[]" value="<?php echo ($w == 'u') ? $file[$i]['bf_content'] : ''; ?>" title="파일 설명을 입력해주세요." class="full_input frm_input" size="50" placeholder="파일 설명을 입력해주세요.">
-            <?php } ?>
-
-            <?php if($w == 'u' && $file[$i]['file']) { ?>
-            <span class="file_del">
-                <input type="checkbox" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i;  ?>]" value="1"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
-            </span>
-            <?php } ?>
-
-        </div>
-        <?php } ?>
-
-        <?php if ($is_use_captcha) { //자동등록방지 ?>
-        <div class="write_div">
-            <span class="sound_only">자동등록방지</span>
-            <?php echo $captcha_html ?>
-
-        </div>
-        <?php } ?>
-
-    </div>
-
-    <div class="btn_top top write_div">
-        <a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn_cancel">취소</a>
-        <input type="submit" value="작성완료" id="btn_submit" class="btn_submit" accesskey="s">
-    </div>
-    </form>
-</section>
-
 <script>
 <?php if($write_min || $write_max) { ?>
 // 글자수 제한

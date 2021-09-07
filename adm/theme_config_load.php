@@ -24,7 +24,7 @@ if(!in_array($config['cf_theme'], $theme_dir)) {
 $type = $_POST['type'];
 $arr_type = array('board', 'conf_skin', 'conf_member', 'shop_skin', 'shop_pc_index', 'shop_mobile_index', 'shop_etc', 'shop_event', 'shop_category');
 if(!in_array($type, $arr_type)) {
-    $data['error'] = '올바른 방법으로 이용해 주십시오.';
+    $data['error'] = '올바른 방법으로 이용해 주십시오.error';
     die(json_encode($data));
 }
 

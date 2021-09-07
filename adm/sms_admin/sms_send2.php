@@ -81,7 +81,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');	?>
 				for($i=0;$res = sql_fetch_array($qry);$i++) {
 				?>
 				<textarea onClick="$('#sms_msg').val(this.value);" style="width:130px;height:150px;font-size:10pt;line-height:120%;" readonly><?php echo $res['fo_content']; ?></textarea>
-				<?
+				<?php
 				}
 				?>
 			
@@ -92,7 +92,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');	?>
 
 
 
-		<?if($_SERVER['REQUEST_METHOD'] == "POST") {
+		<?php if($_SERVER['REQUEST_METHOD'] == "POST") {
 		for($i = 0; $i<sizeof($sms_to); $i++){
 			if($sms_to[$i]!=''){
 				sql_query("insert into sms5_write2 set wr_renum=0, wr_hp='".$sms_to[$i]."', wr_reply='1522-7229', wr_message='$sms_msg', wr_success='1', wr_failure='0', wr_memo='', wr_booking='0000-00-00 00:00:00', wr_total='1', wr_datetime='".G5_TIME_YMDHIS."'");
@@ -127,7 +127,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');	?>
 			</select>-->
 			</div>
 			<div>총 
-			<?
+			<?php
 
 			$sql = "select * from g5_member where mb_id NOT LIKE '%@wowunse.com%' and mb_level = '2' GROUP BY mb_hp order by mb_name asc ";
 
@@ -140,7 +140,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');	?>
 			<font style='color:red;font-size:10pt;font-weight:bold'>(상담사 제외/핸드폰 미등록 제외 / 중복번호 제거)</font>
 			<br><br>
 			<select name = "sms_to[]" class="frm_input" multiple style="height:300px;" >
-			<?while($rs = sql_fetch_array($stmt)){
+			<?php while($rs = sql_fetch_array($stmt)){
 				$rs['mb_hp']=preg_replace('/[^0-9]/','',$rs['mb_hp']);
 				if($rs['mb_hp']!=''){
 					echo "<option value=".$rs['mb_hp'].">"; echo $rs['mb_hp']." [".$rs['mb_name']."]"; 
@@ -172,9 +172,9 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');	?>
 		<tr>
 			<td colspan="2" align='center' height="50"><input class="btn_submit" type="submit" value="보내기" style="padding:7px;"></td>
 		</tr>
-	<?}?>
+	<?php }?>
 		</tbody>
 		</table>
 	</form>
 </div>
-<?include_once(G5_ADMIN_PATH.'/admin.tail.php');	?>
+<?php include_once(G5_ADMIN_PATH.'/admin.tail.php');	?>

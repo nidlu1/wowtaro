@@ -8,227 +8,270 @@ define("_INDEX_", TRUE);
 include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 ?>
 
-
+<!-- 
 <script src="<?php echo G5_JS_URL; ?>/swipe.js"></script>
 <script src="<?php echo G5_JS_URL; ?>/shop.mobile.main.js"></script>
 
 <?php echo display_banner('메인', 'mainbanner.10.skin.php'); ?>
 <?php echo display_banner('왼쪽', 'boxbanner.skin.php'); ?>
-
-
-<!--메인 아래 -->
-
-
-<div class="inner">
-  <div class="brown-box clearfix">
-      <a href="/payment.php" class="coin">
-        <h3>코인상담</h3>
-        <p>최대 <span>50%</span> 할인</p>
-        <span class="arr">
-          <i class="xi-angle-right-min"></i>
-        </span>
-      </a>
-
-      <a href="tel:060-300-6700" class="postpay">
-        <h3>060상담</h3>
-        <p><span>후불제</span>로 바로 이용</p>
-        <span class="arr">
-          <i class="xi-angle-right-min"></i>
-        </span>
-      </a>
-  </div>
-</div><!--inner-->
-
-  <ul class="menu-list clearfix">
-    <li>
-      <a href="/shop/list.php?ca_id=10">
-        <img src="/m-fortune-img/cate_icon1.png" alt="">
-        <p>타로</p>
-      </a>
-    </li>
-    <li>
-      <a href="/shop/list.php?ca_id=20">
-        <img src="/m-fortune-img/cate_icon2.png" alt="">
-        <p>신점</p>
-      </a>
-    </li>
-    <li>
-      <a href="/shop/list.php?ca_id=30">
-        <img src="/m-fortune-img/cate_icon3.png" alt="">
-        <p>사주</p>
-      </a>
-    </li>
-    <li>
-      <a href="/shop/list.php?ca_id=40">
-        <img src="/m-fortune-img/cate_icon4.png" alt="">
-        <p>펫타로</p>
-      </a>
-    </li>
-    <li>
-      <a href="/shop/list.php?ca_id=50">
-        <img src="/m-fortune-img/cate_icon5.png" alt="">
-        <p>꿈해몽</p>
-      </a>
-    </li>
-    <li>
-      <a href="/shop/itemuselist.php">
-        <img src="/m-fortune-img/cate_icon6.png" alt="">
-        <p>상담후기</p>
-      </a>
-    </li>
-
-  </ul>
-
-
-<!--div class="main-tab">
-  <ul>
-    <li class="reco">
-      추천
-    </li>
-    <li class="new">
-      NEW
-    </li>
-    <li class="avail">
-      상담가능
-    </li>
-  </ul>
-</div-->
-
-<div class="list-wr reco-wr">
-<?php
-$sct_sort_href = $_SERVER['SCRIPT_NAME'].'?';
-if($ca_id)
-    $sct_sort_href .= 'ca_id='.$ca_id;
-else if($ev_id)
-    $sct_sort_href .= 'ev_id='.$ev_id;
-if($skin)
-    $sct_sort_href .= '&amp;skin='.$skin;
-$sct_sort_href .= '&amp;type=';
-?>
-  <!--솔팅 추가-->
-  <ul id="ssch_sort" class="clearfix">
-    <li><a href="<?php echo $sct_sort_href; ?>mb_type1">성실상담사</a></li>
-    <li><a href="<?php echo $sct_sort_href; ?>mb_type2">추천상담사</a></li>
-    <li><a href="<?php echo $sct_sort_href; ?>mb_type3">NEW상담사</a></li>
-  </ul>
-  <!--솔팅 추가-->
-  <?php if($default['de_mobile_type2_list_use']) { ?>
-  <div class="sct_wrap">
-      <h2><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=2">추천상품</a></h2>
-      <?php
-	  $skin_file = G5_THEME_PATH.'/mobile/skin/shop/basic/main.10.skin.php'; //스킨명(기존 것을 사용하거나 새로이 만들거나)
-
-      $item_mod = 1; //한줄당 갯수
-	  /*
-      $list = new item_list();
-      $list->set_mobile(true);
-      $list->set_type(2);
-      $list->set_view('it_id', false);
-      $list->set_view('it_name', true);
-      $list->set_view('it_cust_price', true);
-      $list->set_view('it_price', true);
-      $list->set_view('it_icon', true);
-      $list->set_view('sns', false);
-      echo $list->run();
-	  */
-	  $sub_where = "";
-	  if ( $type ) {
-		  $sub_where = " AND ".$type."='1' ";
-	  }
-	  $sql = "SELECT * FROM ".$g5['member_table']." WHERE mb_level='3' AND mb_hide='0' AND mb_type4='1' ".$sub_where." ORDER BY mb_status ASC, rand() limit 12";
-	  //echo $sql;
-	  $result = sql_query($sql);
-
-	  // where 된 전체 상품수
-	  $total_count = sql_num_rows($result);
-	  // 전체 페이지 계산
-	  $total_page  = ceil($total_count / $items);
-//echo $skin_file." , ".$total_count;exit;
-	  include $skin_file;
-      ?>
-  </div>
-  <?php } ?>
-
-
-    <?php /*if($default['de_mobile_type3_list_use']) { ?>
-    <div class="sct_wrap new-wr">
-        <h2><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=3">최신상품</a></h2>
-        <?php
-        $list = new item_list();
-        $list->set_mobile(true);
-        $list->set_type(3);
-        $list->set_view('it_id', false);
-        $list->set_view('it_name', true);
-        $list->set_view('it_cust_price', true);
-        $list->set_view('it_price', true);
-        $list->set_view('it_icon', true);
-        $list->set_view('sns', true);
-        echo $list->run();
-        ?>
-    </div>
-    <?php } ?>
-
-    <!-- 아래 히트상품 상담가능으로 변경해야함 -->
-    <?php if($default['de_mobile_type1_list_use']) { ?>
-    <div class="sct_wrap avail-wr">
-            <h2><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=1">히트상품</a></h2>
-        <?php
-        $list = new item_list();
-        $list->set_mobile(true);
-        $list->set_type(1);
-        $list->set_view('it_id', false);
-        $list->set_view('it_name', true);
-        $list->set_view('it_cust_price', true);
-        $list->set_view('it_price', true);
-        $list->set_view('it_icon', true);
-        $list->set_view('sns', true);
-        echo $list->run();
-        ?>
-    </div>
-    <?php }*/ ?>
-
-</div><!--list-wr-->
-
-
-
-<div class="event">
-  <a href="/bbs/write.php?bo_table=event_form">
-    <h2>이벤트 안내</h2>
-    <p class="txt">타로와 캐리커처 함께 할 수 있는 다양한 이벤트 행사</p>
-    <p class="go">보러가기<span class="arr"><i class="xi-angle-right-min"></i></span></p>
-  </a>
-</div>
-
-    <!-- <?php include_once(G5_MSHOP_SKIN_PATH.'/main.event.skin.php'); // 이벤트 ?> -->
-<script>
-$(function() {
-			$('.tab_txt_list li').click(function() {
-        var idx = $(this).index();
-
-        $(".s03_con").hide()
-        $(".s03_con").eq(idx).show()
-
-        $(".tab_b").removeClass("on")
-        $(".tab_b").eq(idx).addClass("on")
-			})
-		});
-
-/*mobile tab*/
-$(function() {
-			$('.main-tab li').click(function() {
-        var idx = $(this).index();
-
-        $(".sct_wrap").hide()
-        $(".sct_wrap").eq(idx).show()
-
-        // $(".tab_btn").removeClass("on")
-        // $(".tab_btn").eq(idx).addClass("on")
-			});
-		});
-
-
-</script>
-
+ -->
+		<div class="cm_hero">
+			<?php echo display_banner('메인', 'mainbanner.10_reform.skin.php'); ?>
+			<ul class="cmh_btn">
+				<li><a href="#counsel"><strong>바로상담</strong><span>060-300-6700</span></a></li>
+				<li><a href="#counsel" class="focus"><strong>할인상담</strong><span>02-3433-1177</span></a></li>
+			</ul>
+			<div class="cmh_scroll">
+				<a href="#page"><i></i><span class="blind">SCROLL</span></a>
+			</div>
+		</div>
+		<div class="cm_quick" id="page">
+			<div class="cmq_wrap">
+				<div class="wrap">
+					<ul>
+						<li>
+							<a href="/free_counsel.php">
+								<i class="cmq_icon discount"></i>
+								<strong>5분 무료안내</strong>
+								<span>회원가입 시 최초 1인 1회 제공</span>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=dream">
+								<i class="cmq_icon dream"></i>
+								<strong>무료 꿈해몽</strong>
+								<span>회원가입만으로 누리는 꿈해몽 상담가기!</span>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=charm">
+								<i class="cmq_icon talisman"></i>
+								<strong>찐 부적 무료</strong>
+								<span>상담받고 무료 부적신청 하세요.</span>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo G5_BBS_URL; ?>/faq.php?fm_id=4">
+								<i class="cmq_icon faq"></i>
+								<strong>자주묻는 질문</strong>
+								<span>궁금한게 있으신가요? 친절히 알려드립니다.</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="cmq_deco">
+					<i></i><i></i><i></i><i></i><i></i><i></i>
+				</div>
+			</div>
+		</div>
+		<div class="cm_month">
+			<h3 class="title font cb enter">
+				<span>신선운세</span>
+				<strong class="bold cb">이달의 선생님</strong>
+			</h3>
+			<div class="slide_type2 owl-carousel">
+				<?php
+				$t5sql = "SELECT * FROM ".$g5['member_table']." WHERE mb_level='3' AND mb_type5='1' AND mb_status=2 ORDER BY rand() LIMIT 5";
+				$t5res = sql_query($t5sql);
+				while ( $t5row = sql_fetch_array($t5res) ) {
+					$mb_1_arr = explode(",", $t5row['mb_1']);
+					$scat_arr = s_cat_func($t5row['mb_2']);
+					if ( in_array('10', $mb_1_arr) ) {
+							$bcat_str = "taro";
+							$bcat_str2 = "타로";
+							$ca_id=10;
+					}
+					else if ( in_array('20', $mb_1_arr) ) {
+							$bcat_str = "sin";
+							$bcat_str2 = "신점";
+							$ca_id=20;
+					}
+					else if ( in_array('30', $mb_1_arr) ) {
+							$bcat_str = "saju";
+							$bcat_str2 = "사주";
+							$ca_id=30;
+					}
+					else if ( in_array('40', $mb_1_arr) ) {
+							$bcat_str = "pet";
+							$bcat_str2 = "펫타로";
+							$ca_id=40;
+					}
+					else if ( in_array('50', $mb_1_arr) ) {
+							$bcat_str = "dream";
+							$bcat_str2 = "꿈해몽";
+							$ca_id=50;
+					}
+					else {
+							$bcat_str = "taro";
+							$bcat_str2 = "타로";
+							$ca_id=10;
+					}
+				?>
+					<div class="item">
+						<a href="<?php echo G5_SHOP_URL; ?>/item.php?ca_id=<?php echo $ca_id; ?>&it_id=<?php echo $t5row['mb_no']; ?>" class="cmm_box">
+							<div class="cmm_pic">
+								 <img src="<?php echo G5_DATA_URL; ?>/temp/<?php echo $t5row['mb_no']; ?>/<?php echo $t5row['mb_8']; ?>" alt="<?php echo $t5row['mb_nick']; ?>  이미지">
+							</div>
+							<div class="cmm_focus"></div>
+							<div class="cmm_category">
+								<strong><?php echo $bcat_str2; ?></strong>
+							</div>
+							<div class="cmm_name">
+								<span><?php echo $t5row['mb_nick']; ?></span>
+								<strong><?php echo $t5row['mb_id']; ?>번</strong>
+							</div>
+							<div class="cmm_txt">
+								<?php echo $t5row['mb_9']; ?>
+							</div>
+							<div class="cmm_hash">
+								<ul>
+									<?php
+									for ($j = 0; $j < 3; $j++) {
+									?>
+										<li><span><?php echo $scat_arr[$j]['ht_name']; ?></span></li>
+									<?php
+									}
+									?>
+								</ul>
+							</div>
+						</a>
+					</div>
+				<?php
+				}
+				?>
+			</div>
+			<div class="cmm_deco">
+				<i></i><i></i><i></i><i></i>
+			</div>
+		</div>
+		<div class="cm_review">
+			<h3 class="title font cb enter">
+				<span>신선운세</span>
+				<strong class="bold cb">베스트 후기</strong>
+			</h3>
+			<div class="slide_type1 owl-carousel">
+					<?php
+						$itemCount =0;
+						$best_sql = "select b.mb_nick, b.mb_no, b.mb_id, b.mb_8, a.is_subject, a.is_cat2, a.is_content, a.is_score from `g5_shop_item_use` a join `g5_member` b on (a.it_id=b.mb_no AND b.mb_level='3' AND b.mb_hide='0') where a.is_confirm = '1' AND is_best='1' order by rand() limit 0, 12";
+						$best_query = sql_query($best_sql);
+						while($best_result = sql_fetch_array($best_query)){
+                            $ca_id;
+                            switch($best_result['is_cat2']){
+                                case "타로":
+                                    $ca_id=10;
+                                    break;
+                                case "신점":
+                                    $ca_id=20;
+                                    break;
+                                case "사주":
+                                    $ca_id=30;
+                                    break;
+                                case "펫타로":
+                                    $ca_id=40;
+                                    break;
+                                case "꿈해몽":
+                                    $ca_id=50;
+                                    break;
+                                default:
+                                    $ca_id=10;
+                                    break;
+                            }
+							if($itemCount % 4 == 0){
+								echo "<div class='item'>";
+							}
+							$itemCount++;
+							$star_str = "";
+							for ($jj = 1; $jj <= 5; $jj++) {
+								if ($jj <= $best_result['is_score']) $star_str .= "<i class='cmri_icon on'></i>";
+								else $star_str .= "<i class='cmri_icon off'></i>";
+							}
+					?>
+						<div class="cmr_box">
+							<div class="cmr_pic">
+								<a href="<?php echo G5_SHOP_URL; ?>/item.php?ca_id=<?php echo $ca_id; ?>&it_id=<?php echo $best_result['mb_no']; ?>"></a>
+								<img src="<?php echo G5_DATA_URL; ?>/temp/<?php echo $best_result['mb_no']; ?>/<?php echo $best_result['mb_8']; ?>"alt="<?php echo $best_result['www']; ?>">
+							</div>
+							<div class="cmr_txt">
+								<p><span><?=$best_result['mb_nick']?></span> <strong><?=$best_result['mb_id']?>번</strong></p>
+								<a href="/shop/itemuselist.php?gubun=best#ca_tab" class="text s05 left"><?=$best_result['is_content']?></a>
+							</div>
+							<div class="cmr_info">
+								<ul>
+									<li><strong><?php echo $best_result['is_cat2']; ?></strong></li>
+									<li>
+										<?php echo $star_str; ?>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<hr>
+					<?php 
+						if($itemCount % 4 == 0){
+							echo "</div>";
+						}
+					}
+					if($itemCount % 4 != 0){
+							echo "</div>";
+						}
+					?>
+			</div>
+			<div class="cmr_deco">
+				<i></i><i></i><i></i><i></i><i></i>
+			</div>
+		</div>
+		<div class="cm_youtube">
+			<div class="wrap">
+				<div class="cmy_wrap">
+					<h3 class="mt3 title font cw enter">
+						<span>신선운세</span>
+						<strong class="bold cw">YOUTUBE</strong>
+					</h3>
+					<p class="mt15 text mini medium font cw s05">공식 유튜브 채널을 통해 다양한 이야기를 함께하세요.</p>
+				</div>
+				<div class="cmy_video mt25">
+					<iframe  src="https://www.youtube.com/embed/-Hec1ogSn9s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<img src="/images/m/ratio_16x9.png"/>
+				</div>
+				<ul class="mt30">
+					<li><a href="https://www.youtube.com/channel/UCik5S72bGO9nEA0jeAAS7FQ/featured" target="_blank" class="btn t1 font">채널 <span class="light">바로가기</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="cm_app">
+			<div class="wrap">
+				<div class="cma_wrap">
+					<h3 class="title font cw enter">
+						<span>신선운세</span>
+						<strong class="bold cw">앱 다운로드</strong>
+					</h3>
+					<p class="mt5 text mini medium font cw">신선운세를 스마트폰에서도 간편하게 즐겨보세요.</p>
+					<ul class="btn_wrap mt25">
+						<li><a href="#" class="btn font"><i class="cmp_icon apple"></i><span>App Store</span></a></li>
+						<li><a href="#" class="btn font"><i class="cmp_icon google"></i><span>Google Play</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="cm_banner">
+			<div class="wrap">
+				<div class="cmb_wrap">
+					<h3 class="title font cb s1 enter">
+						<span>신선운세</span>
+						<strong class="bold">이벤트 의뢰</strong>
+					</h3>
+					<p class="mt5 text mini thin font cb s05">
+						<span>타로와 캐리커쳐를 동시에 진행할 수 있는</span>
+						<strong class="medium">다양한 이벤트 행사!</strong>
+					</p>
+					<ul class="mt30">
+						<li><a href="<?php echo G5_BBS_URL; ?>/write.php?bo_table=event_form" class="btn t1 font">더 알아보기</a></li>
+					</ul>
+				</div>
+				<div class="cmb_deco">
+					<i></i><i></i><i></i>
+				</div>
+			</div>
+		</div>
 
 <?php
 include_once(G5_THEME_MSHOP_PATH.'/shop.tail.php');

@@ -5,8 +5,6 @@ $g5['title'] =  '10분무료상담';
 
 include_once('./_head.php');
 
-$arr_telnum = explode("-", $member['mb_hp']);
-
 /*
  * url 직접접근 막기
  */
@@ -22,6 +20,7 @@ if(!eregi($pattern, $string)){
 }
 // url 직접접근 막기 끝
 
+$arr_telnum = explode("-", $member['mb_hp']);
 ?>
 
 
@@ -108,7 +107,7 @@ if(!eregi($pattern, $string)){
               * 본 이벤트는 선착순으로 하루 30명에게만 지급되는 이벤트이며, 잔여수량은 10분 무료상담 신청페이지에서 확인가능합니다.
             </span>
             <span class="sub_text">
-              ( 5분 무료건이 모두 소진되었을 경우, 다음날 신청 가능합니다. )
+              ( 30건 모두 소진되었을 경우, 다음날 신청 가능합니다. )
             </span>
           </div>
         </div>

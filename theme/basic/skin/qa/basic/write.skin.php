@@ -5,151 +5,152 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 ?>
 
-<div id="review">
-  <div class="sub_banner" id="sub_callcenter">
-    <h2>고객센터</h2>
-    <p>고객님들의 궁금증을 해결해드립니다.</p>
-  </div>
+<div class="c_hero" id="sub_callcenter">
+	<strong>신선운세 <mark>1:1고객문의</mark></strong>
+</div>
+<div class="c_list">
+	<div class="cl_menu">
+		<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span>고객센터</span>
+		<span><mark><a href="/bbs/qalist.php" class="sct_here">1:1고객문의</a></mark></span>
+	</div>
 </div>
 
-<div id="sct" class="navi">
-<div class="sc_wrap">
-<div class="inner">
-<div id="sct_location">
-    <a href="/index.php" class="sct_bg"><i class="xi-home"></i></a>
-    <a href="/bbs/qawrite.php" class="sct_here ">고객센터</a></div>
-<div id="sct_hhtml"></div>
-<div id="sct_sortlst">
-<!-- 상품 정렬 선택 시작 { -->
-<!-- <section id="sct_sort">
-    <h2>상품 정렬</h2>
-    <ul id="ssch_sort">
-        <li><a href="/shop/list.php?ca_id=50&amp;sort=it_sum_qty&amp;sortodr=desc">조회순</a></li>
-        <li><a href="/shop/list.php?ca_id=50&amp;sort=it_use_cnt&amp;sortodr=desc">후기많은순</a></li>
-        <li><a href="/shop/list.php?ca_id=50&amp;sort=it_use_avg&amp;sortodr=desc">별점높은순</a></li>
-    </ul>
-</section> -->
-</div>
-</div>
-</div>
-</div>
+<div class="c_area write">
+	<div class="wrap">
+		<section class="ca_board">
+			<div class="cab_form">
+				<h2 class="blind">1:1문의 작성</h2>
+				<!-- 게시물 작성/수정 시작 { -->
+				<form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
+				<input type="hidden" name="w" value="<?php echo $w ?>">
+				<input type="hidden" name="qa_id" value="<?php echo $qa_id ?>">
+				<input type="hidden" name="sca" value="<?php echo $sca ?>">
+				<input type="hidden" name="stx" value="<?php echo $stx ?>">
+				<input type="hidden" name="page" value="<?php echo $page ?>">
+				<?php
+				$option = '';
+				$option_hidden = '';
+				$option = '';
 
-<div class="review_tabs">
-  <ul>
-    <li><a href="/bbs/faq.php?fm_id=4">FAQ</a></li>
-    <li class="active"><a href="/bbs/qalist.php">1:1고객문의</a></li>
-    <li><a href="/bbs/faq2.php?fm_id=3">이용안내</a></li>
-    <li><a href="/bbs/board.php?bo_table=notice">공지사항</a></li>
-  </ul>
-</div>
+				if ($is_dhtml_editor) {
+					$option_hidden .= '<input type="hidden" name="qa_html" value="1">';
+				} else {
+					$option .= "\n".'<input type="checkbox" id="qa_html" name="qa_html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="qa_html">html</label>';
+				}
 
-
-<div class="inner qa_bottom">
-<section id="bo_w">
-    <h2>1:1문의 작성</h2>
-    <!-- 게시물 작성/수정 시작 { -->
-    <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
-    <input type="hidden" name="w" value="<?php echo $w ?>">
-    <input type="hidden" name="qa_id" value="<?php echo $qa_id ?>">
-    <input type="hidden" name="sca" value="<?php echo $sca ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <?php
-    $option = '';
-    $option_hidden = '';
-    $option = '';
-
-    if ($is_dhtml_editor) {
-        $option_hidden .= '<input type="hidden" name="qa_html" value="1">';
-    } else {
-        $option .= "\n".'<input type="checkbox" id="qa_html" name="qa_html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="qa_html">html</label>';
-    }
-
-    echo $option_hidden;
-    ?>
-
-    <div class="form_01">
-        <ul>
-            <?php if ($category_option) { ?>
-            <li>
-                <label for="qa_category" class="sound_only">분류<strong>필수</strong></label>
-                <select name="qa_category" id="qa_category" required >
-                    <option value="">분류를 선택하세요</option>
-                    <?php echo $category_option ?>
-                </select>
-
-            </li>
-            <?php } ?>
+				echo $option_hidden;
+				?>
+					<?php if ($category_option) { ?>
+					<div class="cabf_wrap">
+						<div class="cabf_title">
+							<label class="text middle cb s05" for="qa_category">상담 분류<strong class="blind">필수</strong></label>
+						</div>
+						<div class="cabf_content t1">
+							<select name="qa_category" id="qa_category" class="cabfc_select required" required >
+								<option value="">분류를 선택하세요</option>
+								<?php echo $category_option ?>
+							</select>
+							<i class="arrow"></i>
+						</div>
+					</div>
+					<?php } ?>
 
 
-            <?php if ($is_email) { ?>
-            <li class="bo_w_mail">
-                <label for="qa_email" class="sound_only">이메일</label>
-                <input type="text" name="qa_email" value="<?php echo get_text($write['qa_email']); ?>" id="qa_email" <?php echo $req_email; ?> class="<?php echo $req_email.' '; ?>frm_input full_input email" size="50" maxlength="100" placeholder="이메일">
-                <input type="checkbox" name="qa_email_recv" id="qa_email_recv" value="1" <?php if($write['qa_email_recv']) echo 'checked="checked"'; ?>>
-                <label for="qa_email_recv" class="frm_info">답변받기</label>
+					<?php if ($is_email) { ?>
+					<div class="cabf_wrap w50p">
+						<div class="cabf_title">
+							<label class="text middle cb s05" for="qa_email">이메일</label>
+						</div>
+						<div class="cabf_content">
+							<input type="text" name="qa_email" value="<?php echo get_text($write['qa_email']); ?>" id="qa_email" <?php echo $req_email; ?> class="<?php echo $req_email.' '; ?>frm_input full_input email" size="50" maxlength="100" placeholder="이메일">
+							<div class="cabfc_btn t1">
+								<input type="checkbox" class="cab_check" name="qa_email_recv" id="qa_email_recv" value="1" <?php if($write['qa_email_recv']) echo 'checked="checked"'; ?>>
+								<i></i>
+								<label for="qa_email_recv" class="frm_info">답변받기</label>
+							</div>
+						</div>
+					</div>
+					<?php } ?>
 
-            </li>
-            <?php } ?>
+					<?php if ($is_hp) { ?>
+					<div class="cabf_wrap w50p">
+						<div class="cabf_title">
+							<label class="text middle cb s05" for="qa_hp">휴대폰</label>
+						</div>
+						<div class="cabf_content">
+							<input type="text" name="qa_hp" value="<?php echo get_text($write['qa_hp']); ?>" id="qa_hp" <?php echo $req_hp; ?> class="<?php echo $req_hp.' '; ?>frm_input full_input" size="30" placeholder="휴대폰">
+							<div class="cabfc_btn t1">
+								<?php if($qaconfig['qa_use_sms']) { ?>
+								<input type="checkbox" class="cab_check" name="qa_sms_recv" id="qa_sms_recv" value="1" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?>>
+								<i></i>
+								<label for="qa_sms_recv" class="frm_info">답변등록 SMS알림 수신</label>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+					<?php } ?>
 
-            <?php if ($is_hp) { ?>
-            <li class="bo_w_hp">
-                <label for="qa_hp" class="sound_only">휴대폰</label>
-                <input type="text" name="qa_hp" value="<?php echo get_text($write['qa_hp']); ?>" id="qa_hp" <?php echo $req_hp; ?> class="<?php echo $req_hp.' '; ?>frm_input full_input" size="30" placeholder="휴대폰">
-                <?php if($qaconfig['qa_use_sms']) { ?>
-                <input type="checkbox" name="qa_sms_recv" id="qa_sms_recv" value="1" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?>> <label for="qa_sms_recv" class="frm_info">답변등록 SMS알림 수신</label>
-                <?php } ?>
-            </li>
-            <?php } ?>
+					<div class="cabf_wrap">
+						<div class="cabf_title">
+							<label class="text middle cb s05" for="qa_subject">제목<strong class="sound_only">필수</strong></label>
+						</div>
+						<div class="cabf_content">
+							<input type="text" name="qa_subject" value="<?php echo get_text($write['qa_subject']); ?>" id="qa_subject" required class="frm_input full_input required" size="50" maxlength="255">
+						</div>
+					</div>
+					<div class="cabf_wrap">
+						<div class="cabf_title">
+							<label class="text middle cb s05" for="qa_content">내용<strong class="sound_only">필수</strong></label>
+						</div>
+						<div class="cabf_content" <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
+							<?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+						</div>
+					</div>
+					<?php if ($option) { ?>
+					<li>
+						옵션
+						<?php echo $option; ?>
+					</li>
+					<?php } ?>
+					<div class="cabf_wrap">
+						<div class="cabf_title">
+							<label for="bf_file_1" class="lb_icon"><span class="text middle cb s05"> 첨부파일 #1</span></label>
+						</div>
+						<div class="cabf_content t1">
+							<input type="file" name="bf_file[1]" id="bf_file_1" title="파일첨부 1 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
+						</div>
+						<?php if($w == 'u' && $write['qa_file1']) { ?>
+						<span class="file_del">
+							<input type="checkbox" id="bf_file_del1" name="bf_file_del[1]" value="1"> <label for="bf_file_del1"><?php echo $write['qa_source1']; ?> 파일 삭제</label>
+						</span>
+						<?php } ?>
+					</div>
 
-            <li class="bo_w_sbj">
-                <label for="qa_subject" class="sound_only">제목<strong class="sound_only">필수</strong></label>
-
-                    <input type="text" name="qa_subject" value="<?php echo get_text($write['qa_subject']); ?>" id="qa_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
-
-            </li>
-
-            <li class="qa_content_wrap <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
-                <label for="qa_content" class="sound_only">내용<strong class="sound_only">필수</strong></label>
-                    <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-
-            </li>
-
-            <?php if ($option) { ?>
-            <li>
-                옵션
-                <?php echo $option; ?>
-            </li>
-            <?php } ?>
-
-            <li class="bo_w_flie">
-                <div class="file_wr">
-                    <label for="bf_file_1" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #1</span></label>
-                    <input type="file" name="bf_file[1]" id="bf_file_1" title="파일첨부 1 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
-                    <?php if($w == 'u' && $write['qa_file1']) { ?>
-                    <input type="checkbox" id="bf_file_del1" name="bf_file_del[1]" value="1"> <label for="bf_file_del1"><?php echo $write['qa_source1']; ?> 파일 삭제</label>
-                    <?php } ?>
-                </div>
-            </li>
-
-            <li class="bo_w_flie">
-                <div class="file_wr">
-                    <label for="bf_file_2" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #2</span></label>
-                    <input type="file" name="bf_file[2]" id="bf_file_2" title="파일첨부 2 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
-                    <?php if($w == 'u' && $write['qa_file2']) { ?>
-                    <input type="checkbox" id="bf_file_del2" name="bf_file_del[2]" value="1"> <label for="bf_file_del2"><?php echo $write['qa_source2']; ?> 파일 삭제</label>
-                    <?php } ?>
-                </div>
-            </li>
-        </ul>
-    </div>
-
-    <div class="btn_confirm">
-        <a href="<?php echo $list_href; ?>" class="btn_cancel btn"><i class="fa fa-list" aria-hidden="true"></i> 목록</a>
-        <button type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn"> 작성완료 </button>
-
-    </div>
-    </form>
+					<div class="cabf_wrap">
+						<div class="cabf_title">
+							<label for="bf_file_2" class="lb_icon"><span class="text middle cb s05"> 첨부파일 #2</span></label>
+						</div>
+						<div class="cabf_content t1">
+							<input type="file" name="bf_file[2]" id="bf_file_2" title="파일첨부 2 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
+						</div>
+						<?php if($w == 'u' && $write['qa_file2']) { ?>
+						<span class="file_del">
+							<input type="checkbox" id="bf_file_del2" name="bf_file_del[2]" value="1"> <label for="bf_file_del2"><?php echo $write['qa_source2']; ?> 파일 삭제</label>
+						</div>
+						<?php } ?>
+					</div>
+				</div>
+				<div class="pg_buttons">
+					<ul>
+						<li><a href="<?php echo $list_href; ?>" class="btn">목록</a></li>
+						<li><button type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn t1">등록</button></li>
+					</ul>
+				</div>
+				</form>
+			</div>
+		</section>
 </div><!--inner-->
     <script>
     function html_auto_br(obj)
@@ -215,5 +216,5 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         return true;
     }
     </script>
-</section>
+
 <!-- } 게시물 작성/수정 끝 -->

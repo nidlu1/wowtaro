@@ -6,8 +6,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 ?>
 
 <!-- 사용후기 쓰기 시작 { -->
-<div id="sit_use_write" class="new_win">
-    <h1 id="win_title">상담후기 쓰기</h1>
+<div id="sit_use_write" class="w_popup review">
+    <h1 class="wp_title text big bold cb">상담후기 쓰기</h1>
 
     <form name="fitemuse" method="post" action="./itemuseformupdate.php" onsubmit="return fitemuse_submit(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
@@ -16,63 +16,106 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 	<input type="hidden" name="is_cat2" value="<?php echo $is_cat2; ?>">
 	<input type="hidden" name="ca_id" value="<?php echo $ca_id; ?>">
 
-    <div class="new_win_con form_01">
-
-        <ul>
-            <li>
-                <label for="is_subject" class="sound_only">제목<strong> 필수</strong></label>
-                <input type="text" name="is_subject" value="<?php echo get_text($use['is_subject']); ?>" id="is_subject" required class="required frm_input full_input"  maxlength="250" placeholder="제목">
-            </li>
-			<li>
-                <label for="is_cat" class="sound_only">분류<strong> 필수</strong></label>
-                <select id="is_cat" name="is_cat" class="required frm_input full_input">
-					<option value="할인상담">할인상담</option>
-					<option value="일반상담">일반상담</option>
-				</select>
-            </li>
-            <li>
-                <strong  class="sound_only">내용</strong>
-                <?php echo $editor_html; ?>
-            </li>
-            <li>
-                <span class="sound_only">평점</span>
-                <ul id="sit_use_write_star">
-                    <li>
-                        <input type="radio" name="is_score" value="5" id="is_score5" <?php echo ($is_score==5)?'checked="checked"':''; ?>>
-                        <label for="is_score5">매우만족</label>
-                        <img src="<?php echo G5_URL; ?>/shop/img/s_star5.png" alt="매우만족">
-                    </li>
-                    <li>
-                        <input type="radio" name="is_score" value="4" id="is_score4" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
-                        <label for="is_score4">만족</label>
-                        <img src="<?php echo G5_URL; ?>/shop/img/s_star4.png" alt="만족">
-                    </li>
-                    <li>
-                        <input type="radio" name="is_score" value="3" id="is_score3" <?php echo ($is_score==3)?'checked="checked"':''; ?>>
-                        <label for="is_score3">보통</label>
-                        <img src="<?php echo G5_URL; ?>/shop/img/s_star3.png" alt="보통">
-                    </li>
-                    <li>
-                        <input type="radio" name="is_score" value="2" id="is_score2" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
-                        <label for="is_score2">불만</label>
-                        <img src="<?php echo G5_URL; ?>/shop/img/s_star2.png" alt="불만">
-                    </li>
-                    <li>
-                        <input type="radio" name="is_score" value="1" id="is_score1" <?php echo ($is_score==1)?'checked="checked"':''; ?>>
-                        <label for="is_score1">매우불만</label>
-                        <img src="<?php echo G5_URL; ?>/shop/img/s_star1.png" alt="매우불만">
-                    </li>
-                </ul>
-            </li>
-        </ul>
-
-        <div class="win_btn">
-            <input type="submit" value="작성완료" class="btn_submit">
-            <button type="button" onclick="self.close();" class="btn_close">닫기</button>
-        </div>
-    </div>
-
-    </form>
+		<div class="wp_body">
+			<ul class="wpb_wrap">
+				<li>
+					<label for="is_subject" class="sound_only">제목<strong> 필수</strong></label>
+					<input type="text" name="is_subject" value="<?php echo get_text($use['is_subject']); ?>" id="is_subject" required class="required input"  maxlength="250" placeholder="제목">
+				</li>
+				<li class="mb10">
+					<label for="is_cat" class="sound_only">분류<strong> 필수</strong></label>
+					<select id="is_cat" name="is_cat" class="required select">
+						<option value="할인상담">할인상담</option>
+						<option value="일반상담">일반상담</option>
+					</select>
+					<i class="arrow"></i>
+				</li>
+				<li>
+					<strong class="sound_only">내용</strong>
+					<?php echo $editor_html; ?>
+				</li>
+				<li class="wpb_score">
+					<span class="sound_only">평점</span>
+					<ul>
+						<li>
+							<input type="radio" name="is_score" value="5" id="is_score5" <?php echo ($is_score==5)?'checked="checked"':''; ?>>
+							<i></i>
+							<label for="is_score5" class="text cg">
+								<div class="wpb_star">
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+								</div>
+								매우만족
+							</label>
+						</li>
+						<li>
+							<input type="radio" name="is_score" value="4" id="is_score4" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
+							<i></i>
+							<label for="is_score4" class="text cg">
+								<div class="wpb_star">
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon off'></i>
+								</div>
+								만족
+							</label>
+						</li>
+						<li>
+							<input type="radio" name="is_score" value="3" id="is_score3" <?php echo ($is_score==3)?'checked="checked"':''; ?>>
+							<i></i>
+							<label for="is_score3" class="text cg">
+								<div class="wpb_star">
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon off'></i>
+									<i class='wpbs_icon off'></i>
+								</div>
+								보통
+							</label>
+						</li>
+						<li>
+							<input type="radio" name="is_score" value="2" id="is_score2" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
+							<i></i>
+							<label for="is_score2"" class="text cg">
+								<div class="wpb_star">
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon off'></i>
+									<i class='wpbs_icon off'></i>
+									<i class='wpbs_icon off'></i>
+								</div>
+								불만
+							</label>
+						</li>
+						<li>
+							<input type="radio" name="is_score" value="1" id="is_score1" <?php echo ($is_score==1)?'checked="checked"':''; ?>>
+							<i></i>
+							<label for="is_score1" class="text cg">
+								<div class="wpb_star">
+									<i class='wpbs_icon on'></i>
+									<i class='wpbs_icon off'></i>
+									<i class='wpbs_icon off'></i>
+									<i class='wpbs_icon off'></i>
+									<i class='wpbs_icon off'></i>
+								</div>
+								매우불만
+							</label>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<div class="win_btn">
+				<input type="submit" value="작성완료" class="btn t1 fr mt10">
+			</div>
+		</div>
+	</form>
+	<button type="button" onclick="window.close();" class="wp_btn"><span class="blind">창닫기</span></button>
 </div>
 
 <script type="text/javascript">
@@ -82,5 +125,14 @@ function fitemuse_submit(f)
 
     return true;
 }
+$(function() {
+    $("#is_cat").click(function() {
+		if($(".wpb_wrap .arrow").hasClass("on")){
+			$(".wpb_wrap .arrow").removeClass("on");
+		}else{
+			$(".wpb_wrap .arrow").addClass("on");
+		}
+    });
+});
 </script>
 <!-- } 사용후기 쓰기 끝 -->

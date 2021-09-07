@@ -329,7 +329,7 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
             }
         }
 
-        $sql2 = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' AND od_status='입금' ";
+		$sql2 = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' AND od_status='입금' ";
         $od2 = sql_fetch($sql2);
 		//print_r($od2);
 		$od_dc_pwd = substr($od2['od_hp'],-4) ;
@@ -347,9 +347,9 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
         // 관리자 주문취소 로그
         $mod_history .= G5_TIME_YMDHIS.' '.$member['mb_id'].' 주문'.$_POST['ct_status'].' 처리'.$pg_cancel_log."\n";
         
-        $sql3 = "select * from {$g5['pay_table']} where pa_time = $sec ";
+        $sql3="select * from {$g5['pay_table']} where pa_time = $sec ";
         $od3 = sql_fetch($sql3);
-        insert_point($od2['mb_id'] , ($od3['pa_point'] * -1) , "od_id:".$od_id.', '.$_POST['ct_status'].', '.$od2["od_refund_price"].' 취소', '@charge', $od2['mb_id'], $od_id.', '.$_POST['ct_status'].', '.$od2["od_refund_price"].' 취소');
+        insert_point($od2['mb_id'], ($od3['pa_point'] * -1), "od_id:".$od_id.', '.$_POST['ct_status'].', '.$od2["od_refund_price"].' 취소', '@charge', $od2['mb_id'], $od_id.', '.$_POST['ct_status'].', '.$od2["od_refund_price"].' 취소');
     //}
 }
 //echo "$pg_cancel && $pg_res_cd && $pg_res_msg";exit;
@@ -404,7 +404,7 @@ if ( $_POST['ct_status'] == "입금" && $od['od_settle_case'] == "무통장" ) {
 		$hp = $od['od_hp'];
 		$member = get_member($od['mb_id']);
 		include_once G5_PATH."/update_charge_human.php";
-		insert_point($od['mb_id'], ($od['pa_point'] * 1), "od_id:".$MOID.', '.$od['od_settle_case'].', '.$od["od_cart_price"].' 충전', '@charge', $od['mb_id'], $MOID.', '.$od['od_settle_case'].', '.$od["od_cart_price"].' 충전');
+		insert_point($od['mb_id'], ($od['od_pay_time'] * 10), "od_id:".$MOID.', '.$od['od_settle_case'].', '.$od["od_cart_price"].' 충전', '@charge', $od['mb_id'], $MOID.', '.$od['od_settle_case'].', '.$od["od_cart_price"].' 충전');
 	}
 }
 
@@ -421,6 +421,7 @@ if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {
     if ($od['od_receipt_point'])
         alert("포인트로 결제한 주문은,\\n\\n주문상태 변경으로 인해 포인트의 가감이 발생하는 경우\\n\\n회원관리 > 포인트관리에서 수작업으로 포인트를 맞추어 주셔야 합니다.", $url);
     else
-        goto_url($url);
+        alert("처리되었습니다.", $url);
+//        goto_url($url);
 }
 ?>

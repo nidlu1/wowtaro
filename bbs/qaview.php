@@ -13,15 +13,15 @@ include_once('./qahead.php');
 ?>
 
 <?php
-
-$skin_file = $qa_skin_path.'/view.skin.php';
+$skin_file = $qa_skin_path.'/view.skin.php'; //확인
+// echo $skin_file;
 
 if(is_file($skin_file)) {
     $sql = " select * from {$g5['qa_content_table']} where qa_id = '$qa_id' ";
     if(!$is_admin) {
         $sql .= " and mb_id = '{$member['mb_id']}' ";
     }
-
+    // echo "sql:".$sql;
     $view = sql_fetch($sql);
 
     if(!$view['qa_id'])

@@ -5,9 +5,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
-<!-- 상담문의 쓰기 시작 { -->
+<!-- 상품문의 쓰기 시작 { -->
 <div id="sit_qa_write" class="new_win">
-    <h1 id="win_title">상담문의 쓰기</h1>
+    <h1 id="win_title">상품문의 쓰기</h1>
 
     <form name="fitemqa" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqa_submit(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
@@ -57,4 +57,4 @@ function fitemqa_submit(f)
     return true;
 }
 </script>
-<!-- } 상담문의 쓰기 끝 -->
+<!-- } 상품문의 쓰기 끝 -->

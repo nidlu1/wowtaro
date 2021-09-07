@@ -1,8 +1,7 @@
 /* 
  * 20210127 포인트 결제 추가 로직
  */
-
-
+//$("#coin-apply").click(coin($('#pointpay_str').val()));
 function coin(val){
 //    console.log(val);
     var checkNum = isNaN(val);
@@ -13,7 +12,7 @@ function coin(val){
             location.reload();
             break;
         case false:
-            var amt =  parseInt($("#amt_str").html())*1000;
+            var amt =  parseInt($("#amt_str").html().replaceAll(",","") );
             var point_hold = parseInt($("#point_str").html().replaceAll(",","") );
             var point_hold2 = parseInt($("#point_str2").val());
             var point_use =  parseInt($("#pointpay_str").val() );
@@ -21,8 +20,9 @@ function coin(val){
             var amt_result = parseInt(amt)-parseInt(point_use);
             var pa_point = $("input[name=MallReserved]").val();
            
+            
             $("#point_str").html( number_format(point_hold2-point_use) );            
-            $("#pay_str").html( number_format(amt_result) );                        
+            $("#pay_str").html( number_format(amt_result) );            
             $("input[name=MallReserved]").val(pa_point+point_use);
             
             if(parseInt(point_hold) < parseInt(point_use)){

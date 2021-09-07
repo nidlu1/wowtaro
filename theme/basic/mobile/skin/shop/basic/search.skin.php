@@ -1,147 +1,180 @@
-<?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-?>
-<!-- 검색 시작 { -->
-<div id="ssch">
+<div class="c_hero">
+	<strong>신선운세 <mark>검색</mark></strong>
+</div>
+<div class="c_list" id="search_top">
+	<div class="cl_menu">
+		<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span><mark><a href="/shop/search.php" class="sct_here">검색</a></mark></span>
+	</div>
+</div>
+<div class="c_area">
+	<div class="wrap">
+		<div class="ca_find">
+			<div class="caf_title">
+				<strong>선생님을 찾고 계신가요?</strong>
+			</div>
+			<div class="caf_search">
+				<form action="./search.php" method="get" id="searchKeywordForm">
+					<label for="sch_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+					<select name="seach_category" id="sch_str">
+						<option value="level3">선생님</option>
+					</select>
+					<label for="keyword" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+					<input type="text" name="q" id="keyword"  placeholder="상담사 닉네임(예명)이나 원하시는 키워드로 검색하세요. " value="<?php echo stripslashes(get_text(get_search_string($q))); ?>">
+					<button type="submit" id="sch_submit"><span>검색</span></button>
+				</form>
+			</div>
+			<p class="caf_txt"><mark>태그 선택</mark><span>원하는 상담분야 태그를 선택하여 빠르고 편하게 선생님을 찾아보세요.</span></p>
+			<ul class="caf_list">
+				<?php
+				while ($row_hashtag = sql_fetch_array($result_hashtag)){
+				?>
+				<li><a href="./search.php?mb_hashtag=<?=$row_hashtag['mg_hashtag']?>#search_top" class="tag">#<?=$row_hashtag['mg_hashtag']?></a></li>
+				<?php } ?>
+			</ul>
+		</div>
+		<ul class="ca_member">
+			<?php
+            $result = sql_query($sql);
+            // echo $sql."<br>";
+			for ($i = 1; $row = sql_fetch_array($result); $i++) {
+				if ($item_mod >= 2) { // 1줄 이미지 : 2개 이상
+					if ($i % $item_mod == 0)
+						$sct_last = 'sct_last'; // 줄 마지막
+					else if ($i % $item_mod == 1)
+						$sct_last = 'sct_clear'; // 줄 첫번째
+					else
+						$sct_last = '';
+				} else { // 1줄 이미지 : 1개
+					$sct_last = 'sct_clear';
+				}
 
-    <!-- 상세검색 항목 시작 { -->
-    <div id="ssch_frm">
-        <form name="frmdetailsearch">
-        <input type="hidden" name="qsort" id="qsort" value="<?php echo $qsort ?>">
-        <input type="hidden" name="qorder" id="qorder" value="<?php echo $qorder ?>">
-        <input type="hidden" name="qcaid" id="qcaid" value="<?php echo $qcaid ?>">
-        <!-- <div>
-            <strong>검색범위</strong>
-            <input type="checkbox" name="qname" id="ssch_qname" <?php echo $qname_check?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
-            <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo $qexplan_check?'checked="checked"':'';?>> <label for="ssch_qexplan"><span class="sound_only">상품</span>설명</label>
-            <input type="checkbox" name="qbasic" id="ssch_qbasic" value="1" <?php echo $qbasic_check?'checked="checked"':'';?>> <label for="ssch_qbasic">기본설명</label>
-          <input type="checkbox" name="qid" id="ssch_qid" <?php echo $qid_check?'checked="checked"':'';?>> <label for="ssch_qid"><span class="sound_only">상품</span>코드</label>
-            <input type="checkbox" name="qbasic" id="ssch_qbasic" value="1" <?php echo $qbasic_check?'checked="checked"':'';?>> <label for="ssch_qbasic">기본설명</label><br>
-        </div> -->
-        <!-- <div>
-            <strong>상품가격 (원)</strong>
-            <label for="ssch_qfrom" class="sound_only">최소 가격</label>
-            <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" id="ssch_qfrom" class="frm_input"> ~
-            <label for="ssch_qto" class="sound_only">최대 가격</label>
-            <input type="text" name="qto" value="<?php echo $qto; ?>" id="ssch_qto" class="frm_input"> 까지<br>
-        </div> -->
-        <div class="search-sch">
-            <label for="ssch_q" class="ssch_lbl"></label>
-            <input type="text" name="q" value="<?php echo $q; ?>" id="ssch_q" class="frm_input" maxlength="30">
-            <input type="submit" value="검색" class="btn_submit">
-        </div>
-        <!-- <p>
-            상세검색을 선택하지 않으면 전체에서 검색합니다.<br>
-            검색어는 최대 30글자까지, 여러개의 검색어를 공백으로 구분하여 입력 할수 있습니다.
-        </p> -->
-        </form>
+				$bcat_arr = b_cat_func($row['mb_1']);
+				$scat_arr = s_cat_func($row['mb_2']);
 
-        <!--ul id="ssch_sort" class="clearfix">
-            <li><a href="#" class="btn01" onclick="set_sort('it_sum_qty', 'desc'); return false;">조회순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_use_cnt', 'desc'); return false;">후기많은순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_use_avg', 'desc'); return false;">별점높은순</a></li>
-        </ul-->
-		<?php
-        define('G5_SHOP_CSS_URL', G5_MSHOP_SKIN_URL);
-        $list_file = G5_MSHOP_SKIN_PATH.'/'.$default['de_mobile_search_list_skin'];
-        if (file_exists($list_file)) {
-            /*$list = new item_list($list_file, $default['de_mobile_search_list_mod'], $default['de_mobile_search_list_row'], $default['de_mobile_search_img_width'], $default['de_mobile_search_img_height']);
-            $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
-            $list->set_is_page(true);
-            $list->set_mobile(true);
-            $list->set_view('it_img', true);
-            $list->set_view('it_id', false);
-            $list->set_view('it_name', true);
-            $list->set_view('it_basic', true);
-            $list->set_view('it_cust_price', false);
-            $list->set_view('it_price', true);
-            $list->set_view('it_icon', true);
-            $list->set_view('sns', true);
-            echo $list->run();*/
-			$sub_where = "";
-			if ( $_REQUEST['q'] ) {
-				$concat = array();
-				$concat[] = "mb_nick";
-				$concat[] = "mb_id";
+				//$l = mt_rand( 0, (count($bcat_arr) - 1) );
+				$l = searchForId3($row['mb_use'], $bcat_arr);
+				//echo "j==> ".$l;
+				switch ($bcat_arr[$l]['ca_id']) {
+					case '10' :
+						$bcat_str = "taro";
+						$bcat_bg = "back_taro";
+						break;
+					case '20' :
+						$bcat_str = "sin";
+						$bcat_bg = "back_shinjeom";
+						break;
+					case '30' :
+						$bcat_str = "saju";
+						$bcat_bg = "back_saju";
+						break;
+					case '40' :
+						$bcat_str = "pet";
+						$bcat_bg = "back_pettaro";
+						break;
+					case '50' :
+						$bcat_str = "dream";
+						$bcat_bg = "back_dream";
+						break;
+					default :
+						$bcat_str = "taro";
+						$bcat_bg = "back_taro";
+						break;
+				}
+				?>
+				<li>
+					<a href="<?php echo G5_SHOP_URL; ?>/item.php?ca_id=<?php echo $bcat_arr[$l]['ca_id']; ?>&it_id=<?php echo $row['mb_no']; ?>" class="cam_wrap">
+						<div class="cam_pic">
+							<div>
+								<img src="<?php echo G5_DATA_URL; ?>/temp/<?php echo $row['mb_no']; ?>/<?php echo $row['mb_8']; ?>" alt="<?php echo $row['mb_nick']; ?> <?php echo $row['mb_id']; ?>번">
+								<?php
+									if ( $mb_st ) $row['mb_status'] = $mb_st;
 
-				$concat_fields = "concat(".implode(",' ',",$concat).")";
+									if ( $row['mb_status'] == 2 ) {
+										$mb_status = "상담가능";
+										$mb_status_css = "tel-avail";
+										$mb_status_img = "1";
+									}
+									else if ( $row['mb_status'] == 1 ) {
+										$mb_status = "상담중";
+										$mb_status_css = "tel-ing";
+										$mb_status_img = "2";
+									}
+									else {
+										$mb_status = "예약대기";
+										$mb_status_css = "tel-disabled";
+										$mb_status_img = "3";
+									}
+								?>
+							</div>
+						</div>
+						<div class="cam_info">
+							<div class="cami_title">
+								<span><?php echo $row['mb_nick']; ?> <mark><?php echo $row['mb_id']; ?>번</mark></span>
+							</div>
+							<div class="cami_txt">
+								<span><?php echo $row['mb_9']; ?></span>
+							</div>
+						</div>
+						<div class="cam_middle">
+							<div class="cam_score">
+								<?php
+								$sql = "SELECT AVG(is_score) is_score, COUNT(is_id) cnt, IFNULL(SUM( IF( is_reply_name<>'',1,0 ) ),0) re_cnt FROM ".$g5['g5_shop_item_use_table']." WHERE it_id='".$row['mb_no']."' AND is_cat2='".$bcat_arr[$l]['ca_name']."'";
+								$use_dt = sql_fetch($sql);
 
-				$sub_where = " AND ".$concat_fields." like '%".$_REQUEST['q']."%' ";
+								$star_str = "";
+								for ($jj = 1; $jj <= 5; $jj++) {
+									if ($jj <= intval($use_dt['is_score'])) $star_str .= "<i class='cam_icon on'></i>";
+									else $star_str .= "<i class='cam_icon off'></i>";
+								}
+								?>
+								<span class="cams_star"><?php echo $star_str; ?>
+									<mark><?php echo number_format($use_dt['is_score'],1); ?></mark>
+								</span>
+								<span class="cams_total">
+									<div><span>상담후기</span><mark><?php echo $use_dt['cnt']; ?></mark></div>
+								</span>
+							</div>
+							<div class="cam_status <?php echo $mb_status_css ?>">
+								<span><?php echo $mb_status ?></span>
+							</div>
+						</div>
+						<!--분류 추가-->
+						<div class="cam_sort">
+							<?php
+							for ($j = 0; $j < 3; $j++) {
+							if($scat_arr[$j]['ht_name'] == ""){
+								continue;
+							}
+							?>
+							<span><?php echo $scat_arr[$j]['ht_name']; ?></span>
+							<?php
+							}
+							?>
+						</div>
+					</a>
+				</li>
+				<?php
 			}
 
-			$sql = "SELECT * FROM ".$g5['member_table']." WHERE mb_level='3' ".$sub_where." ORDER BY mb_status ASC, rand()";
-			//echo $sql;
-			$result = sql_query($sql);
-
-			// where 된 전체 상품수
-			$total_count = sql_num_rows($result);
-			// 전체 페이지 계산
-			$total_page  = ceil($total_count / $items);
-		?>
-        <div id="ssch_ov">
-            검색 결과 <b><?php echo $total_count; ?></b>건
-        </div>
-    </div>
-    <!-- } 상세검색 항목 끝 -->
-
-    <!-- 검색된 분류 시작 { --
-    <div id="ssch_cate">
-        <ul>
-        <?php
-        $total_cnt = 0;
-        foreach( $categorys as $row ){
-            echo "<li><a href=\"#\" onclick=\"set_ca_id('{$row['ca_id']}'); return false;\">{$row['ca_name']} (".$row['cnt'].")</a></li>\n";
-            $total_cnt += $row['cnt'];
-        }
-        echo '<li><a href="#" onclick="set_ca_id(\'\'); return false;">전체분류 <span>('.$total_cnt.')</span></a></li>'.PHP_EOL;
-        ?>
-        </ul>
-    </div>
-    <!-- } 검색된 분류 끝 -->
-
-    <!-- 검색결과 시작 { -->
-    <div>
-        <?php
-        // 리스트 유형별로 출력
-	//echo $skin_file;
-			include $list_file;
-        }
-        else
-        {
-            $i = 0;
-            $error = '<p class="sct_nofile">'.$list_file.' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</p>';
-        }
-
-        if ($i==0)
-        {
-            echo '<div>'.$error.'</div>';
-        }
-
-        $query_string = 'qname='.$qname.'&amp;qexplan='.$qexplan.'&amp;qid='.$qid.'&amp;qbasic='.$qbasic;
-        if($qfrom && $qto) $query_string .= '&amp;qfrom='.$qfrom.'&amp;qto='.$qto;
-        $query_string .= '&amp;qcaid='.$qcaid.'&amp;q='.urlencode($q);
-        $query_string .='&amp;qsort='.$qsort.'&amp;qorder='.$qorder;
-        echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$query_string.'&amp;page=');
-        ?>
-    </div>
-    <!-- } 검색결과 끝 -->
-
+			if ($i == 1)
+				echo "<p class=\"sct_noitem title t1 cg bold\">등록된 선생님이 없습니다.</p>\n";
+			?>
+		</ul>
+	</div>
 </div>
-<!-- } 검색 끝 -->
+<script type="text/javascript">
+    $(function () {
 
-<script>
-function set_sort(qsort, qorder)
-{
-    var f = document.frmdetailsearch;
-    f.qsort.value = qsort;
-    f.qorder.value = qorder;
-    f.submit();
-}
+        $(".tip_button").on("click", function () {
+            $(".pop-bg2").show();
+        });
 
-function set_ca_id(qcaid)
-{
-    var f = document.frmdetailsearch;
-    f.qcaid.value = qcaid;
-    f.submit();
-}
+        $(".pop2 .pop-close").on("click", function () {
+            $(".pop-bg2").hide();
+        });
+    });
 </script>
+<div id="sct_thtml">
+</div>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 25px;
+        fill: #e0383d;
+        text-anchor: middle;
+        font-family: "Noto Sans CJK KR";
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <text id="_" data-name="  *" class="cls-1" x="15.272" y="-30.011"><tspan x="15.272" dy="60">*</tspan></text>
+</svg>

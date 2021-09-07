@@ -58,6 +58,53 @@ function itemuse_page($write_pages, $cur_page, $total_page, $url, $add="")
         return "";
 }
 
+function itemuse_page_moblie($write_pages, $cur_page, $total_page, $url, $add="")
+{
+    //$url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
+    $url = preg_replace('#&amp;page=[0-9]*#', '', $url) . '&amp;page=';
+
+    $str = '';
+	if(($start_page > 1) || ($cur_page > 1) || ($total_page > $end_page) || ($cur_page < $total_page))
+		$str .= '<ul class="t1 mb10">'.PHP_EOL;
+    if ($cur_page > 1) {
+        $str .= '<li class="t1"><a href="'.$url.'1'.$add.'" class="pager_func first"><i class="xi-angle-left-min"></i><i class="xi-angle-left-min"></i></a></li>'.PHP_EOL;
+    }
+
+    $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
+    $end_page = $start_page + $write_pages - 1;
+
+    if ($end_page >= $total_page) $end_page = $total_page;
+
+    if ($start_page > 1) $str .= '<li class="t1"><a href="'.$url.($start_page-1).$add.'" class="pager_func prev"><i class="xi-angle-left-min"></i></a></li>'.PHP_EOL;
+	
+	if ($cur_page < $total_page) {
+        $str .= '<li class="t2"><a href="'.$url.$total_page.$add.'" class="pager_func last"><i class="xi-angle-right-min"></i><i class="xi-angle-right-min"></i></a></li>'.PHP_EOL;
+    }
+
+	if ($total_page > $end_page) $str .= '<li class="t2"><a href="'.$url.($end_page+1).$add.'" class="pager_func next"><i class="xi-angle-right-min"></i></a></li>'.PHP_EOL;
+
+    
+	
+	if(($start_page > 1) || ($cur_page > 1) || ($total_page > $end_page) || ($cur_page < $total_page))
+		$str .= '</ul>'.PHP_EOL;
+	$str .= '<ul>'.PHP_EOL;
+    if ($total_page > 1) {
+        for ($k=$start_page;$k<=$end_page;$k++) {
+            if ($cur_page != $k)
+                $str .= '<li><a href="'.$url.$k.$add.'">'.$k.'</a></li>'.PHP_EOL;
+            else
+                $str .= '<li><a href="'.$url.$k.$add.'" class="on">'.$k.'</a></li>'.PHP_EOL;
+        }
+    }
+	$str .= '</ul>'.PHP_EOL;
+   
+
+    if ($str)
+        return "<div class=\"pager\">{$str}</div>";
+    else
+        return "";
+}
+
 $itemuse_list = "./itemuselist.php";
 $itemuse_form = "./itemuseform.php?it_id=".$it_id."&is_cat2=".$ca['ca_name'];
 $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id."&is_cat2=".$ca['ca_name'];
@@ -77,6 +124,7 @@ if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 레코드 구함
 
 $sql = "select * $sql_common order by is_id desc limit $from_record, $rows ";
+// echo $sql;
 $result = sql_query($sql);
 
 $itemuse_skin = G5_SHOP_SKIN_PATH.'/itemuse.skin.php';

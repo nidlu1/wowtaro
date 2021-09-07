@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '500500';
+$sub_menu = '300500';
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
@@ -49,8 +49,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     <tbody>
     <?php
     $sql = " select * from {$g5['g5_shop_banner_table']}
-          order by bn_order, bn_id desc
-          limit $from_record, $rows  ";
+          order by bn_id desc
+      ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 테두리 있는지

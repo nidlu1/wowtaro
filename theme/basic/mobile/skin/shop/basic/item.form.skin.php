@@ -260,13 +260,13 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
         </li>
         <!-- } 사용후기 끝 -->
 
-        <!-- 상담문의 시작 { -->
+        <!-- 상품문의 시작 { -->
         <li id="sit_qa">
             <h2>상담문의</h2>
 
             <div id="itemqa"><?php include_once(G5_SHOP_PATH.'/itemqa.php'); ?></div>
         </li>
-        <!-- } 상담문의 끝 -->
+        <!-- } 상품문의 끝 -->
 
 
     </ul>

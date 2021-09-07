@@ -40,19 +40,29 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         if($max_height < $size[1])
             $max_height = $size[1];
 
+        
+//echo '
+//<li class="bn_first" style="clear: none; list-style: outside none none; position: absolute; width: 1403px; z-index: 0;">
+//    <a href="http://fortune.urbannet.co.kr/shop/bannerhit.php?bn_id=11">
+//        <img src="http://fortune.urbannet.co.kr/data/banner/11" alt="" title="" width="1920 style="z-index: 5">
+//    </a>
+//</li>
+//';
+        
+        
         echo '<li'.$bn_first_class.'>'.PHP_EOL;
         if ($row['bn_url'][0] == '#')
             $banner .= '<a href="'.$row['bn_url'].'">';
         else if ($row['bn_url'] && $row['bn_url'] != 'http://') {
             $banner .= '<a href="'.G5_SHOP_URL.'/bannerhit.php?bn_id='.$row['bn_id'].'"'.$bn_new_win.'>';
         }
-        echo $banner.'<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$size[0].'" alt="'.get_text($row['bn_alt']).'"'.$bn_border.'>';
+         $banner .='<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$size[0].'" alt="'.get_text($row['bn_alt']).'"'.$bn_border.'>';
+         echo $banner;
         if($banner)
             echo '</a>'.PHP_EOL;
         echo '</li>'.PHP_EOL;
 
-
-    }
+    }http://sinseonunse.com/shop/bannerhit.php?bn_id=31
 }
 
 if ($i > 0) {
@@ -79,7 +89,7 @@ jQuery(function($){
         auto: true,
         useCSS : false,
         onSlideAfter : function(){
-            slider.startAuto();
+//            slider.startAuto(); 스크립트에러로 주석처리
         }
     });
 });

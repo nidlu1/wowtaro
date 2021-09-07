@@ -4,6 +4,9 @@ include_once('./_common.php');
 $g5['title'] = "상품 검색 결과";
 include_once(G5_MSHOP_PATH.'/_head.php');
 
+//
+$mb_hashtag = SQLFiltering( str_replace("#", "", filter_input(INPUT_GET, "mb_hashtag")) );
+
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만
 $sql_common = " from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b ";
@@ -119,8 +122,21 @@ $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 $total_page  = ceil($total_count / $items); // 전체 페이지 계산
 
-$sql = " select b.ca_id, b.ca_name, count(*) as cnt $sql_common $sql_where group by b.ca_id order by b.ca_id ";
+
+
+$mb_hashtag = SQLFiltering( str_replace("#", "", filter_input(INPUT_GET, "q")) );
+// $mb_hashtag = "루이스";
+// $sql = " select b.ca_id, b.ca_name, count(*) as cnt $sql_common $sql_where group by b.ca_id order by b.ca_id ";
+$sql = " SELECT *
+        FROM g5_member gm 
+        WHERE mb_level='3' AND mb_hide='0' AND mb_type4='1' AND ( mb_status='1' OR mb_status='2' OR mb_status='3' ) AND ( mb_hashtag LIKE '%$mb_hashtag%' OR mb_nick LIKE '%$mb_hashtag%' ) ORDER BY mb_status ASC, rand();
+ ";
 $result = sql_query($sql);
+// echo $sql."<br>";
+
+
+$sql_hashtag = "SELECT * FROM g5_hashtag_v1 WHERE mg_YN = 'Y' ";
+$result_hashtag = sql_query($sql_hashtag);
 
 $categorys = array();
 // 검색된 분류를 배열에 저장
@@ -133,6 +149,7 @@ $search_skin = G5_MSHOP_SKIN_PATH.'/search.skin.php';
 if(!file_exists($search_skin)) {
     echo str_replace(G5_PATH.'/', '', $search_skin).' 스킨 파일이 존재하지 않습니다.';
 } else {
+//    echo $search_skin;
     include_once($search_skin);
 }
 

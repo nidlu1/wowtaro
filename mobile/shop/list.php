@@ -62,19 +62,8 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 <script src="<?php echo G5_JS_URL; ?>/shop.mobile.list.js"></script>
 
 
-<div id="sct">
-  <div class="navi clearfix">
-    <div class="left">
-      <a href="#">
-      </a>
-    </div>
 
-    <div class="right">
-      <a href="/index.php" class="home"><i class="xi-home"></i></a>
-      <i class="xi-angle-right-min"></i>
-      <a href="#" class="txt"><?php echo get_text($g5['title']); ?></a>
-    </div>
-  </div>
+
 
 <?php
   switch ($ca_id) {
@@ -98,29 +87,27 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
       break;
   }
 ?>
-  <div class="sub_banner" id="<?php echo $sub_img_str; ?>">
-    <!--서브 카테고리에 따라 id달림 :
-    타로 일때 : sub_taro (현재 예시로 설정해 놓음)
-    펫타로 일때 : sub_pet
-    꿈해몽 일떄 : sub_dream
-    사주 일떄 : sub_saju
-    신점 일때 : sub_sin
-  -->
-    <h2><?php echo $ca['ca_name'] ?></h2>
-
-    <!--모바일에서는 세부분야 사용 안한다고 해서 주석처리해두었습니다~-->
-    <!-- <div class="tag_list">
-      <button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == "" ) ? "active" : ""; ?>" id="ht_0" name="ht_no" data-no="">전체</button>
-	  <?php
-	  $qdt2 = get_hash_list();	// 세부분야내역 가져오기
-	  for ($ii = 0; $ii < count($qdt2); $ii++) {
-	  ?>
-	  <button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == $qdt2[$ii]['ht_no'] ) ? "active" : ""; ?>" id="ht_<?php echo $qdt2[$ii]['ht_no']; ?>" name="ht_no" data-no="<?php echo $qdt2[$ii]['ht_no']; ?>"><?php echo $qdt2[$ii]['ht_name']; ?></button>
-	  <?php
-	  }
-	  ?>
-    </div> -->
-  </div>
+<div class="c_hero" id="<?php echo $sub_img_str; ?>">
+	 <!--서브 카테고리에 따라 id달림 :
+	  타로 일때 : sub_taro (현재 예시로 설정해 놓음)
+	  펫타로 일때 : sub_pet
+	  꿈해몽 일떄 : sub_dream
+	  사주 일떄 : sub_saju
+	  신점 일때 : sub_sin
+	-->
+	<strong>신선운세 <mark><?php echo $ca['ca_name'] ?></mark></strong>
+	<!--div class="tag_list">
+		<button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == "" ) ? "active" : ""; ?>" id="ht_0" name="ht_no" data-no="">전체</button>
+		<?php
+		$qdt2 = get_hash_list();	// 세부분야내역 가져오기
+		for ($ii = 0; $ii < count($qdt2); $ii++) {
+		?>
+		<button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == $qdt2[$ii]['ht_no'] ) ? "active" : ""; ?>" id="ht_<?php echo $qdt2[$ii]['ht_no']; ?>" name="ht_no" data-no="<?php echo $qdt2[$ii]['ht_no']; ?>"><?php echo $qdt2[$ii]['ht_name']; ?></button>
+		<?php
+		}
+		?>
+  </div-->
+</div>
 <?php
 $sct_sort_href = $_SERVER['SCRIPT_NAME'].'?';
 if($ca_id)
@@ -131,30 +118,25 @@ if($skin)
     $sct_sort_href .= '&amp;skin='.$skin;
 $sct_sort_href .= '&amp;sort=';
 ?>
+<div class="c_list">
+	<div class="cl_menu">
+		<a href='<?php echo G5_URL; ?>/'><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span><mark><a href="#"><?php echo get_text($g5['title']); ?></a></mark></span>
+	</div>
   <!--솔팅 추가-->
-  <ul id="ssch_sort" class="clearfix">
-    <li><a href="<?php echo $sct_sort_href; ?>it_sum_qty&amp;sortodr=desc">조회순</a></li>
-    <li><a href="<?php echo $sct_sort_href; ?>it_use_cnt&amp;sortodr=desc">후기많은순</a></li>
-    <li><a href="<?php echo $sct_sort_href; ?>it_use_avg&amp;sortodr=desc">별점높은순</a></li>
-  </ul>
+	<div class="cl_function blind">
+		<ul>
+			<li><a href="/shop/list.php?ca_id=20&amp;sort=it_sum_qty&amp;sortodr=desc"><i></i><span>조회높은순</span></a></li>
+			<li><a href="/shop/list.php?ca_id=20&amp;sort=it_use_cnt&amp;sortodr=desc"><i></i><span>후기많은순</span></a></li>
+			<li><a href="/shop/list.php?ca_id=20&amp;sort=it_use_avg&amp;sortodr=desc"><i></i><span>별점높은순</span></a></li>
+		</ul>
+		<a href="./list.php?ca_id=20"><i></i><span>필터 초기화</span></a>
+	</div>
   <!--솔팅 추가-->
+</div>
 
 
-  <!-- <div class="main-tab">
-    <ul>
-      <li class="reco">
-        추천
-      </li>
-      <li class="new">
-        NEW
-      </li>
-      <li class="avail">
-        상담가능
-      </li>
-    </ul>
-  </div> -->
-
-<div class="inner">
 
 
     <?php
@@ -265,7 +247,7 @@ $sct_sort_href .= '&amp;sort=';
 			$orderby = " mb_review DESC";
 		}
 		else {
-			$orderby = " mb_status ASC, rand()";
+			$orderby = " mb_status ASC"; /*, rand()*/
 		}
 		$sub_where = "";
 		if ( $_REQUEST['ca_id'] ) {
@@ -280,7 +262,30 @@ $sct_sort_href .= '&amp;sort=';
 		$tot_arr = sql_fetch($sql);
 		$total_count = $tot_arr['cnt'];*/
 
-		$sql = "SELECT * FROM ".$g5['member_table']." WHERE mb_level='3' AND mb_hide='0' ".$sub_where." ORDER BY ".$orderby; //." LIMIT ".$from_record.", ".$items;
+
+
+        $sql_paging = "SELECT * FROM ".$g5['member_table']." WHERE mb_level='3' AND mb_hide='0' ".$sub_where." ORDER BY ".$orderby;
+        // echo $sql_paging;
+        $result_paging = sql_query($sql_paging);
+        $totalRecord = sql_num_rows($result_paging);
+        $curPage = empty( $_GET["curPage"])? 1 : $_GET["curPage"] ;
+        $listPage = 18;
+        $blockCnt = 5;
+        $blockNum = ceil($curPage/$blockCnt);
+        $blockStart = (($blockNum-1)*$blockCnt)+1;
+        $blockEnd = $blockStart + $blockCnt -1;
+
+        $pageStart = ($curPage-1)*$listPage;
+        $totalPage = ceil($totalRecord / $listPage);
+        if($blockEnd>$totalPage){
+            $blockEnd=$totalPage;
+        }
+        $totalBlock = ceil($totalPage/$blockCnt);  
+
+
+
+		$sql = "SELECT * FROM ".$g5['member_table']." WHERE mb_level='3' AND mb_hide='0' ".$sub_where." ORDER BY ".$orderby." limit $pageStart, $listPage";
+                $aaa = $sql;
 		//echo $sql;
 		$result = sql_query($sql);
 
@@ -288,7 +293,7 @@ $sct_sort_href .= '&amp;sort=';
         $total_count = sql_num_rows($result);
         // 전체 페이지 계산
         $total_page  = ceil($total_count / $items);
-//echo $skin_file;
+// echo $skin_file;
 		include $skin_file;
     }
     else
@@ -296,7 +301,32 @@ $sct_sort_href .= '&amp;sort=';
         echo '<div class="sct_nofile">'.str_replace(G5_PATH.'/', '', $skin_file).' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
     }
     ?>
+    <nav class="pg_wrap shop">
+        <?php
+            if($curPage>1){
+                echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=1' class='pg_start'></a>";
+            }
+            if($curPage>1){
+                $pre = $curPage -1;
+                echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=$pre' class='pg_prev'></a>";
+            }
+            for($i = $blockStart; $i <= $blockEnd; $i++){
+                if($curPage == $i){
+                    echo "<strong class='pg_current'>$i</strong>";
+                }else {
+                    echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=$i'>$i</a>";
+                }
 
+            }
+            if($curPage<$totalPage){
+                $next = $curPage + 1;
+                echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=$next' class='pg_next'></a>";
+            }
+            if($curPage<$totalPage){
+                echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=$totalPage' class='pg_end'></a>";
+            }
+        ?>
+    </nav>
     <?php
     if($i > 0 && $total_count > $items) {
         $qstr1 .= 'ca_id='.$ca_id;
@@ -316,7 +346,14 @@ $sct_sort_href .= '&amp;sort=';
     // 하단 HTML
     echo '<div id="sct_thtml">'.conv_content($ca['ca_mobile_tail_html'], 1).'</div>';
     ?>
-</div>
+
+ <!-- <?php echo $sct_sort_href; ?>it_sum_qty&amp;sortodr=desc
+  <br>
+  <?=$aaa?>
+  <br>
+  <?=$ajax_url?>
+  <br>
+  <?=$sql?>-->
 </div>
 
 

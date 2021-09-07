@@ -147,7 +147,7 @@ $editor_js .= chk_editor_js('mb_memo', $is_dhtml_editor);
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 if ($config['cf_use_addr'])
     add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
-//echo $member_skin_path;
 include_once($member_skin_path.'/register_form2.skin.php');
+//echo $member_skin_path;
 include_once('./_tail.php');
 ?>

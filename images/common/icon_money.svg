@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #cbbca7;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <circle id="bg_copy" data-name="bg copy" class="cls-1" cx="15" cy="15" r="10"/>
+  <path id="currency-16" class="cls-2" d="M17.323,17.4l-0.737-2.9h1.438Zm-5.309-2.9H13.44l-0.722,2.9ZM21,13.5H19.939l0.495-2H18.75l-0.484,2H16.331l-0.509-2H14.188l-0.5,2H11.771l-0.486-2H9.565l0.486,2H9v1h1.294l1.46,6H13.53l1.45-5.781L16.469,20.5H18.21l1.482-6H21v-1Z"/>
+</svg>

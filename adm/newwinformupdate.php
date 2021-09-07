@@ -28,6 +28,7 @@ $sql_common = " nw_division = '{$_POST['nw_division']}',
                 nw_content = '{$_POST['nw_content']}',
                 nw_content_html = '{$_POST['nw_content_html']}',
                 nw_link = '{$_POST['nw_link']}' ";
+                
 
 if($w == "")
 {

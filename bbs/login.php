@@ -6,7 +6,8 @@ if( function_exists('social_check_login_before') ){
 }
 
 $g5['title'] = '로그인';
-include_once('./_head.sub.php');
+//echo G5_THEME_SHOP_PATH;
+include_once(G5_THEME_PATH.'/head.php');
 
 $url = $_GET['url'];
 
@@ -18,7 +19,7 @@ if ($is_member) {
     if ($url)
         goto_url($url);
     else
-        goto_url(G5_URL);
+        goto_url(G5_URL."/shop");
 }
 
 $login_url        = login_url($url);
@@ -31,5 +32,5 @@ if (!file_exists($login_file))
 
 include_once($member_skin_path.'/login.skin.php');
 
-include_once('./_tail.sub.php');
+include_once(G5_THEME_PATH.'/tail.php');
 ?>

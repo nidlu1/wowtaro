@@ -128,7 +128,7 @@ box-shadow: 0 1px 3px #eee;
 #fregister .btn_confirm .btn_submit{height:50px;border-radius:6px;padding:0 40px;font-weight:bold;font-size:1.083em}
 
 /* 회원가입 입력 */
-#register_form{width: 800px;background:#fafafa;padding:44px 50px;margin:70px auto 70px; }
+/*#register_form{width: 800px;background:#fafafa;padding:44px 50px;margin:70px auto 70px; }*/
 #fregisterform #msg_certify {margin:5px 0 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
 #fregisterform .frm_address {margin:5px 0 0}
 #fregisterform #mb_addr3 {display:inline-block;margin:5px 0 0;vertical-align:middle}
@@ -182,7 +182,7 @@ box-shadow: 0 1px 3px #eee;
 
 /* 아이디/비밀번호 찾기 */
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
-#find_info p {line-height:1.5em}
+#find_info p {line-height:30px;}
 #find_info #mb_email{margin:10px 0;}
 
 /* 로그인 */

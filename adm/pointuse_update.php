@@ -20,6 +20,6 @@ $sql = "update g5_pointuse
           p05 = $p05 
 ";
 echo $sql;
-sql_query($sql);
+//sql_query($sql);
 goto_url('./pointuse_list.php');
 ?>

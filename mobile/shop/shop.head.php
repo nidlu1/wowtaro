@@ -18,7 +18,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 <header id="hd">
     <?php if ((!$bo_table || $w == 's' ) && defined('_INDEX_')) { ?><h1><?php echo $config['cf_title'] ?></h1><?php } ?>
 
-    <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
+    <div id="skip_to_container"><a href="#container">본문 바로가기123</a></div>
 
     <?php if(defined('_INDEX_')) { // index에서만 실행
         include G5_MOBILE_PATH.'/newwin.inc.php'; // 팝업레이어

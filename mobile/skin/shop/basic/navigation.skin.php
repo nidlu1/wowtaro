@@ -32,7 +32,9 @@ else
 add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0);
 ?>
 
-<div id="sct_location">
-    <a href='<?php echo G5_SHOP_URL; ?>/' class="sct_bg">Home</a>
-    <?php echo $str; ?>
-</div>
+<div class="c_list">
+	<div class="cl_menu">
+		<a href='<?php echo G5_URL; ?>/'><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span><mark><?php echo $navigation; ?></mark></span>
+	</div>

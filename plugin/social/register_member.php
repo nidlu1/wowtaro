@@ -48,6 +48,6 @@ $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
 
 include_once(get_social_skin_path().'/social_register_member.skin.php');
-
+//echo get_social_skin_path().'/social_register_member.skin.php';
 include_once(G5_BBS_PATH.'/_tail.php');
 ?>

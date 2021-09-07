@@ -54,7 +54,7 @@ $editor_js = '';
 $editor_js .= get_editor_js('is_reply_content', $is_dhtml_editor);
 $editor_js .= chk_editor_js('is_reply_content', $is_dhtml_editor);
 
-$itemuseform_skin = G5_SHOP_SKIN_PATH.'/itemuseformr.skin.php';
+$itemuseform_skin = G5_SHOP_SKIN_PATH.'/itemuseformr.skin.php'; //theme/basic/skin/shop/basic/itemuseform
 
 if(!file_exists($itemuseform_skin)) {
     echo str_replace(G5_PATH.'/', '', $itemuseform_skin).' 스킨 파일이 존재하지 않습니다.';

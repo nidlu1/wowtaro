@@ -1,5 +1,5 @@
 <?php
-$sub_menu = "200200";
+$sub_menu = "400200";
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
@@ -67,7 +67,7 @@ if (strstr($sfl, "mb_id"))
 else
     $mb_id = "";
 ?>
-<?=$sql?>
+
 <div class="local_ov01 local_ov">
     <?php echo $listall ?>
     <span class="btn_ov01"><span class="ov_txt">전체 </span><span class="ov_num"> <?php echo number_format($total_count) ?> 건 </span></span>
@@ -87,6 +87,7 @@ else
         <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>아이디</option>
         <option value="po_content"<?php echo get_selected($_GET['sfl'], "po_content"); ?>>내용</option>
         <option value="mb_hp"<?php echo get_selected($_GET['sfl'], "mb_hp"); ?>>전화번호</option>
+        <option value="mb_name"<?php echo get_selected($_GET['sfl'], "mb_name"); ?>>이름</option>
     </select>
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">

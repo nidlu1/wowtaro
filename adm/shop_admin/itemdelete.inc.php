@@ -52,7 +52,7 @@ if (!function_exists("itemdelete")) {
         $sql = " delete from {$g5['g5_shop_item_use_table']} where it_id = '$it_id' ";
         sql_query($sql);
 
-        // 상담문의삭제
+        // 상품문의삭제
         $sql = " delete from {$g5['g5_shop_item_qa_table']} where it_id = '$it_id' ";
         sql_query($sql);
 

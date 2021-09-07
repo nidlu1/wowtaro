@@ -38,7 +38,7 @@ switch($method) {
         $sql_common = " where substring(vi_date, 1, 7) = '$del_date' ";
         break;
     default:
-        alert('올바른 방법으로 이용해 주십시오.');
+        alert('올바른 방법으로 이용해 주십시오.로그삭제');
         break;
 }
 

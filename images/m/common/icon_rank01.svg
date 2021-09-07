@@ -1,0 +1,60 @@
+<svg id="나그네회원" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: #001831;
+      }
+
+      .cls-1 {
+        fill-rule: evenodd;
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        fill: #d88d26;
+        filter: url(#filter-2);
+      }
+
+      .cls-3 {
+        fill: #eebe2c;
+        fill-opacity: 0;
+        filter: url(#filter-3);
+      }
+
+      .cls-4 {
+        font-size: 9px;
+        font-family: "Noto Sans CJK KR";
+        font-weight: 700;
+      }
+    </style>
+    <filter id="filter" x="1" y="7.938" width="22" height="16.063" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="1" y="7.9375" width="22" height="16.063" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjIiIGhlaWdodD0iMTYuMDYzIiB2aWV3Qm94PSIwIDAgMjIgMTYuMDYzIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBvcGFjaXR5OiAwLjc7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQpOwogICAgICB9CiAgICA8L3N0eWxlPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQiIHkxPSI4LjAzMSIgeDI9IjIyIiB5Mj0iOC4wMzEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMC41IiBzdG9wLW9wYWNpdHk9IjAuNTAyIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iMjIiIGhlaWdodD0iMTYuMDYzIi8+Cjwvc3ZnPgo="/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" mode="softLight" in2="SourceGraphic"/>
+      <feGaussianBlur result="blur" stdDeviation="0.333" in="SourceAlpha"/>
+      <feFlood result="flood" flood-opacity="0.15"/>
+      <feComposite result="composite-3" operator="out" in2="blur"/>
+      <feComposite result="composite-2" operator="in" in2="SourceAlpha"/>
+      <feBlend result="blend-2" mode="overlay" in2="blend"/>
+    </filter>
+    <filter id="filter-2" x="4" y="0" width="16" height="16" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="4" y="0" width="16" height="16" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgb3BhY2l0eTogMC41OwogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50KTsKICAgICAgfQogICAgPC9zdHlsZT4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50IiB5MT0iOCIgeDI9IjE2IiB5Mj0iOCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIwLjUiIHN0b3Atb3BhY2l0eT0iMC41MDIiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCBjbGFzcz0iY2xzLTEiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIvPgo8L3N2Zz4K"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" mode="softLight" in2="SourceGraphic"/>
+      <feGaussianBlur result="blur" stdDeviation="0.333" in="SourceAlpha"/>
+      <feFlood result="flood" flood-opacity="0.15"/>
+      <feComposite result="composite-3" operator="out" in2="blur"/>
+      <feComposite result="composite-2" operator="in" in2="SourceAlpha"/>
+      <feBlend result="blend-2" mode="overlay" in2="blend"/>
+    </filter>
+    <filter id="filter-3" x="5" y="1" width="14" height="14" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="5" y="1" width="14" height="14" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgb3BhY2l0eTogMC4zOwogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50KTsKICAgICAgfQogICAgPC9zdHlsZT4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50IiB4MT0iMTQiIHkxPSIxNCIgeDI9IjAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZmIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZmZmIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCBjbGFzcz0iY2xzLTEiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIvPgo8L3N2Zz4K"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" mode="overlay" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="리본" class="cls-1" d="M23,19H18l-2,5-4.013-6.9L8,24.008,6,19H1L8.034,7.946l3.988,2.3L15.964,8Z"/>
+  <circle id="메달테두리" class="cls-2" cx="12" cy="8" r="8"/>
+  <circle id="광원" class="cls-3" cx="12" cy="8" r="7"/>
+  <text id="_3" data-name="3" class="cls-4" x="9.187" y="11.687">3</text>
+</svg>

@@ -1,6 +1,6 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-
+$sort_reset = "";
 if ($ca_id)
 {
     $navigation = $bar = "";
@@ -21,6 +21,7 @@ if ($ca_id)
         else $sct_bg = '';
 
         $navigation .= $bar.'<a href="./list.php?ca_id='.$code.'" class="'.$sct_here.' '.$sct_bg.'">'.$row['ca_name'].'</a>';
+		$sort_reset ='<a href="./list.php?ca_id='.$code.'"><i></i><span>필터 초기화</span></a>';
     }
 }
 else
@@ -32,9 +33,9 @@ else
 add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0);
 ?>
 
-<div class="sc_wrap">
-<div class="inner">
-<div id="sct_location">
-    <a href='<?php echo G5_SHOP_URL; ?>/' class="sct_bg"><i class="xi-home"></i></a>
-    <?php echo $navigation; ?>
-</div>
+<div class="c_list">
+	<div class="cl_menu">
+		<a href='<?php echo G5_URL; ?>/'><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span><mark><?php echo $navigation; ?></mark></span>
+	</div>

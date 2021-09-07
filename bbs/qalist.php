@@ -19,22 +19,22 @@ $category_option = '';
 if ($qaconfig['qa_category']) {
     $category_href = G5_BBS_URL.'/qalist.php';
 
-    $category_option .= '<li><a href="'.$category_href.'"';
+    $category_option .= '<li><a href="'.$category_href.'#ca_tabs"';
     if ($sca=='')
-        $category_option .= ' id="bo_cate_on"';
-    $category_option .= '>전체</a></li>';
+        $category_option .= ' class="on"';
+    $category_option .= '><span>전체</span></a></li>';
 
     $categories = explode('|', $qaconfig['qa_category']); // 구분자가 | 로 되어 있음
     for ($i=0; $i<count($categories); $i++) {
         $category = trim($categories[$i]);
         if ($category=='') continue;
         $category_msg = '';
-        $category_option .= '<li><a href="'.($category_href."?sca=".urlencode($category)).'"';
+        $category_option .= '<li><a href="'.($category_href."?sca=".urlencode($category)).'#ca_tabs"';
         if ($category==$sca) { // 현재 선택된 카테고리라면
-            $category_option .= ' id="bo_cate_on"';
+            $category_option .= ' class="on"';
             $category_msg = '<span class="sound_only">열린 분류 </span>';
         }
-        $category_option .= '>'.$category_msg.$category.'</a></li>';
+        $category_option .= '><span>'.$category_msg.$category.'</span></a></li>';
     }
 }
 
@@ -60,7 +60,7 @@ if(is_file($skin_file)) {
             $sql_search .= " and ( INSTR(qa_subject, '$stx') > 0 or INSTR(qa_content, '$stx') > 0 ) ";
     }
 
-    $sql_order = " order by qa_datetime DESC ";
+    $sql_order = " order by qa_num ";
 
     $sql = " select count(*) as cnt
                 $sql_common
@@ -117,7 +117,7 @@ if(is_file($skin_file)) {
     $write_href = G5_BBS_URL.'/qawrite.php';
 
     $list_pages = preg_replace('/(\.php)(&amp;|&)/i', '$1?', get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './qalist.php'.$qstr.'&amp;page='));
-
+	$list_pages_moblie = preg_replace('/(\.php)(&amp;|&)/i', '$1?', get_paging_moblie(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './qalist.php'.$qstr.'&amp;page='));
     $stx = get_text(stripslashes($stx));
     include_once($skin_file);
 } else {

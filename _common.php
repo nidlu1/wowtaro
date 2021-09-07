@@ -1,5 +1,9 @@
 <?php
 include_once('./common.php');
+/*
+ * 접근제어.
+ */
+//include_once(G5_ADMIN_PATH.'/admin.lib.php');
 
 // 커뮤니티 사용여부
 if(G5_COMMUNITY_USE === false) {

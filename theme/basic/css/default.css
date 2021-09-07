@@ -21,11 +21,6 @@ hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 a {color:#000;text-decoration:none}
 
-*, :after, :before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
 
 input[type=text],input[type=password], textarea {
 -webkit-transition: all 0.30s ease-in-out;
@@ -63,7 +58,7 @@ border: 1px solid #558ab7 !important;
 .hd_pops_footer:after {display:block;visibility:hidden;clear:both;content:""}
 .hd_pops_footer button {padding: 10px;border:0;color:#fff}
 .hd_pops_footer .hd_pops_reject{font-size:11px;background:#000;text-align:left}
-.hd_pops_footer .hd_pops_close{font-size:11px;background:#393939;position:absolute;top:0;right:0}
+.hd_pops_footer .hd_pops_close{background:#393939;position:absolute;top:0;right:0}
 
 /* 상단 레이아웃 */
 #hd {border-top:2px solid #253dbe}
@@ -248,7 +243,7 @@ box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
 #bo_v_con li{display: list-item;}
 
 /* 버튼 */
-a.btn,.btn{line-height:35px;height:35px;padding:0 10px;text-align:center;font-weight:bold;border:0;
+/* a.btn,.btn{line-height:35px;height:35px;padding:0 10px;text-align:center;font-weight:bold;border:0;
 -webkit-transition: background-color 0.3s ease-out;
 -moz-transition: background-color 0.3s ease-out;
 -o-transition: background-color 0.3s ease-out;
@@ -260,16 +255,16 @@ button.btn01 {display:inline-block;margin:0;padding:7px;border:1px solid #ccc;ba
 a.btn02 {display:inline-block;padding:7px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none;vertical-align:middle;}
 a.btn02:focus, .btn02:hover {text-decoration:none}
 button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none}
-.btn_confirm {text-align:right} /* 서식단계 진행 */
+.btn_confirm {text-align:right} 서식단계 진행
 .btn_submit {border:0;background:#253dbe;color:#fff;cursor:pointer;border:0}
 .btn_submit:hover {background:#0025eb}
 a.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration:none;vertical-align:middle;}
 button.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration:none;vertical-align:middle}
 .btn_cancel:hover {background:#aaa;}
-a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:40px;border:0;background:#3c3c3c;border-radius:5px;color:#fff;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
+a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:40px;border:0;background:#3c3c3c;border-radius:5px;color:#fff;text-decoration:none;vertical-align:top} 우편번호검색버튼 등
 a.btn_frmline {}
 button.btn_frmline {font-size:1em}
-
+ */
 /* 게시판용 버튼 */
 a.btn_b01,.btn_b01 {display:inline-block;background:#4c4f6f;color:#fff;text-decoration:none;vertical-align:middle}
 .btn_b01:hover, .btn_b01:hover {background:#54598c}
@@ -349,7 +344,7 @@ box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 .empty_list {padding:20px 0 !important;color:#666;text-align:center}
 
 /* 필수입력 */
-.required, textarea.required {background-image:url('../img/require.png')  !important;background-repeat:no-repeat   !important;background-position:right top  !important;}
+.required, textarea.required {background-image:url('../img/require.png') ;background-repeat:no-repeat   !important;background-position:right top  !important;}
 
 /* 테이블 항목별 정의 */
 .td_board {width:80px;text-align:center}

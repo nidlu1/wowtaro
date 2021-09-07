@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="40" viewBox="0 0 20 40">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        opacity: 0.7;
+      }
+
+      .cls-1, .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #001831;
+      }
+    </style>
+  </defs>
+  <path id="menu-2_copy_8" data-name="menu-2 copy 8" class="cls-1" d="M8,35h8V33H8v2Zm0-4h8V29H8v2Zm0-6v2h8V25H8ZM6,25H4v2H6V25Zm0,4H4v2H6V29Zm0,6H4V33H6v2Z"/>
+  <path id="menu-2_copy_2" data-name="menu-2 copy 2" class="cls-2" d="M8,15h8V13H8v2Zm0-4h8V9H8v2ZM8,5V7h8V5H8ZM6,5H4V7H6V5ZM6,9H4v2H6V9Zm0,6H4V13H6v2Z"/>
+</svg>

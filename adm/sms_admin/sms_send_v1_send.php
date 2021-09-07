@@ -16,15 +16,15 @@ $sms->login($sms_id, $sms_passwd);
 		for($i = 0; $i<sizeof($sms_to); $i++){
 			if($sms_to[$i]!=''){
                             echo $sms_to[$i]."<br>";
-                           sql_query("insert into sms5_write2 set wr_renum=0, wr_hp='".$sms_to[$i]."', wr_reply='1522-7229', wr_message='$sms_msg', wr_success='1', wr_failure='0', wr_memo='', wr_booking='0000-00-00 00:00:00', wr_total='1', wr_datetime='".G5_TIME_YMDHIS."'");
-                           $ret = $sms->send($sms_to[$i], "1522-7229", $sms_msg, $sms_date, $sms_type);
-                           if($ret){
-                               print_r($ret);
-                               echo $sms_to[$i]."<br>";
-                           }else{
-                               echo $sms->errMsg;
-                               echo $sms_to[$i]."<br>";
-                           }
+//                            sql_query("insert into sms5_write2 set wr_renum=0, wr_hp='".$sms_to[$i]."', wr_reply='1522-7229', wr_message='$sms_msg', wr_success='1', wr_failure='0', wr_memo='', wr_booking='0000-00-00 00:00:00', wr_total='1', wr_datetime='".G5_TIME_YMDHIS."'");
+//                            $ret = $sms->send($sms_to[$i], "1522-7229", $sms_msg, $sms_date, $sms_type);
+//                            if($ret){
+//                                print_r($ret);
+//                                echo $sms_to[$i]."<br>";
+//                            }else{
+//                                echo $sms->errMsg;
+//                                echo $sms_to[$i]."<br>";
+//                            }
 			}
 		}
 ?>

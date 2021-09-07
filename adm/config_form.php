@@ -1,5 +1,5 @@
 <?php
-$sub_menu = "100100";
+$sub_menu = "400600";
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
@@ -327,7 +327,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td colspan="3"><input type="checkbox" name="cf_use_point" value="1" id="cf_use_point" <?php echo $config['cf_use_point']?'checked':''; ?>> 사용</td>
         </tr>
         <tr>
-            <th scope="row"><label for="cf_login_point">로그인시 포인트<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="cf_login_point">출석 포인트<strong class="sound_only">필수</strong></label></th>
             <td>
                 <?php echo help('회원이 로그인시 하루에 한번만 적립') ?>
                 <input type="text" name="cf_login_point" value="<?php echo $config['cf_login_point'] ?>" id="cf_login_point" required class="required frm_input" size="5"> 점

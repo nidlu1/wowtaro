@@ -18,6 +18,7 @@ else if ($w == 'u')  {
 
 $g5['title'] = $html_title;
 include_once('./admin.head.php');
+
 ?>
 
 <form name="fpoll" id="fpoll" action="./poll_form_update.php" method="post" enctype="multipart/form-data">

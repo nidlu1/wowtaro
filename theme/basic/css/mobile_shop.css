@@ -26,11 +26,7 @@ a:link, a:visited {color:#000;text-decoration:none}
 ul,li,dl,dt,dd{padding:0;margin:0;}
 ul{list-style:none}
 
-*, :after, :before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
+
 
 input[type=text],input[type=password], textarea {
 -webkit-transition: all 0.30s ease-in-out;
@@ -1218,7 +1214,7 @@ a.btn02 {display:inline-block;padding:8px 7px 7px;border:1px solid #3b3c3f;backg
 a.btn02:focus, .btn02:hover {text-decoration:none}
 button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 5px;border:0;background:#8542ab/*#ab0000*/;color:#fff;letter-spacing:-0.1em}
+.btn_submit {padding:0 5px;border:0;background:#8542ab;color:#fff;letter-spacing:-0.1em}
 fieldset .btn_submit {padding:0 7px;height:24px;line-height:1em}
 a.btn_cancel {display:inline-block;padding:8px 7px 7px;border:1px solid #ccc;background:#fff;color:#000;text-decoration:none;vertical-align:middle}
 button.btn_cancel {display:inline-block;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;vertical-align:top;text-decoration:none}
@@ -1423,11 +1419,11 @@ box-shadow: 0 0 8px rgba(65,98,255,0.8);}
 #sod_addr .win_desc{padding:10px 20px}
 
 /*쇼핑몰레이아웃*/
-#mb_login .btn_submit{background:#ab0000 !important}
+#mb_login .btn_submit{background:#8542ab !important}
 /* #bo_list,#bo_cate{margin-top:10px !important} */
 #fregisterform{margin:10px}
 #bo_w .btn_submit, #bo_w a.btn_cancel{padding:8px 7px}
-#bo_w {padding:10px}}
+#bo_w {padding:10px}
 #sit_sms_new #sms_agree{padding:10px 20px !important}
 
 /*이벤트*/

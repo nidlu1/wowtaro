@@ -109,9 +109,11 @@ function get_mshop_category($ca_id, $len)
 
         <div class="cate02">
           <ul class="cate02-ul">
+            <?php if(!$is_member){ ?>
             <li>
-              <a href="#!" class="hashtag">#추천해시태그</a>
+                <a href=""id="no_member_time_check">비회원 조회</a>
             </li>
+            <?php }?>
             <li>
               <a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=notice">공지사항</a>
             </li>
@@ -123,6 +125,9 @@ function get_mshop_category($ca_id, $len)
             </li>
             <li>
               <a href="<?php echo G5_BBS_URL; ?>/faq.php?fm_id=4">FAQ</a>
+            </li>
+            <li>
+              <a href="#!" class="hashtag">#추천해시태그</a>
             </li>
             <li>
               <a href="https://open.kakao.com/o/sSPKf93b" target="_blank">카카오톡 문의 (AM 10:00 ~ PM 22:00)</a>
@@ -196,4 +201,60 @@ $(function (){
     });
 
 });
+</script>
+<script>
+    let no_member_time_check = {
+        init:function(){
+          $("#no_member_time_check").on("click",()=>{
+              let no_member_time = this.phone_check();
+                switch(no_member_time){
+                    case false:
+                        alert("핸드폰번호를 다시 입력해주세요");
+                        return false;
+                    default :
+                        no_member_time = no_member_time.toString().replaceAll("-","");
+                        alert("화면이 표시됩니다.");
+                        console.log(no_member_time);
+                        this.create_bar();
+                        this.time_check(no_member_time);
+                        return false;
+                }
+          });
+        },
+        phone_check : function(){
+            //올바른 핸드폰번호인지 체크하기
+            let phone = prompt("핸드폰번호를 입력하세요. ex) 010-0000-0000");
+            const regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+            let phone_check = regExp.test(phone)
+            switch(phone_check){
+                case true:
+                    return phone;
+                case false:
+                    return false;
+            }
+        },
+        create_bar:function(){
+            alert("크리에이트바 생성");
+            let bar = '<div class="my_time"><p></p></div>';
+            $("#container").append(bar);
+        },
+        time_check: function(no_member_time){
+            $.ajax({
+                    url : "<?=G5_URL?>/ajax_time.php",
+                    type : "GET",
+                    contentType: "text/html; charset=utf-8",
+                    data : {tel:no_member_time},
+                    success : function(data){
+                            alert("성공");
+                            console.log(data);
+                            $('.my_time > p').html(data);
+                    },
+                    error : function(data){
+                            alert("에러");
+                            console.log(data);
+                    }
+            });                
+        }
+    };
+    no_member_time_check.init();
 </script>

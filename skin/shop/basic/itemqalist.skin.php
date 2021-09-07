@@ -33,7 +33,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
 <div id="sqa">
 
-    <!-- <p><?php echo $config['cf_title']; ?> 전체 상담문의 목록입니다.</p> -->
+    <!-- <p><?php echo $config['cf_title']; ?> 전체 상품문의 목록입니다.</p> -->
 
     <?php
     $thumbnail_width = 500;
@@ -126,7 +126,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
 <script>
 $(function(){
-    // 상담문의 더보기
+    // 상품문의 더보기
     $(".sqa_con_btn button").click(function(){
         var $con = $(this).parent().prev();
         if($con.is(":visible")) {

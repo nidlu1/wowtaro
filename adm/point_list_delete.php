@@ -67,7 +67,7 @@ for ($i=0; $i<$count; $i++)
 	$ch = curl_init($url);
 	curl_setopt($ch, CURLOPT_HEADER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//	$ret = curl_exec($ch);
+	$ret = curl_exec($ch);
 	curl_close($ch);
 }
 

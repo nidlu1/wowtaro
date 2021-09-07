@@ -1217,7 +1217,7 @@
     border: 1px solid #959595;
 }
 
-/* 상품 상세보기 - 상담문의 */
+/* 상품 상세보기 - 상품문의 */
 #sit_qa {}
 #sit_qa h2{position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #sit_qa_ol{
@@ -1391,7 +1391,7 @@
 .sps_reply .sps_section{margin-left:70px;min-height:50px}
 #sps_empty{text-align:center;color:#777;padding:50px 0}
 
-/* 상담문의 모음 */
+/* 상품문의 모음 */
 #sqa_sch {margin:10px 10px}
 #sqa_sch a {display:block;padding:0 8px;height:40px;line-height:40px;vertical-align:top;border-radius:3px;color:#3059c7;font-weight:bold;border:1px solid #3059c7;text-decoration:none;text-align:center;margin: 5px 0}
 #sqa_sch .sch_wr{background:#fff;border:1px solid #bdc2d8;position:relative;border-radius:3px}

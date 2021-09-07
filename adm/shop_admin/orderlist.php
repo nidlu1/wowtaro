@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '400400';
+$sub_menu = '400100';
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
@@ -126,6 +126,7 @@ $sql  = " select gso.*, gp.po_point ,
            order by $sort1 $sort2
            limit $from_record, $rows ";
 $result = sql_query($sql);
+//echo $sql;
 
 $qstr1 = "od_status=".urlencode($od_status)."&amp;od_settle_case=".urlencode($od_settle_case)."&amp;od_misu=$od_misu&amp;od_cancel_price=$od_cancel_price&amp;od_refund_price=$od_refund_price&amp;od_receipt_point=$od_receipt_point&amp;od_coupon=$od_coupon&amp;fr_date=$fr_date&amp;to_date=$to_date&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 if($default['de_escrow_use'])
@@ -161,15 +162,15 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
 <label for="sel_field" class="sound_only">검색대상</label>
 <select name="sel_field" id="sel_field">
     <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
-    <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
+    <!--<option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>-->
     <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
     <!--<option value="od_tel" <?php echo get_selected($sel_field, 'od_tel'); ?>>주문자전화</option>-->
-    <option value="od_hp" <?php echo get_selected($sel_field, 'od_hp'); ?>>주문자핸드폰</option>
-    <option value="od_b_name" <?php echo get_selected($sel_field, 'od_b_name'); ?>>받는분</option>
+    <option value="od_hp" <?php echo get_selected($sel_field, 'od_hp'); ?>>주문자핸드폰번호</option>
+    <!--<option value="od_b_name" <?php echo get_selected($sel_field, 'od_b_name'); ?>>받는분</option>-->
     <!--<option value="od_b_tel" <?php echo get_selected($sel_field, 'od_b_tel'); ?>>받는분전화</option>-->
-    <option value="od_b_hp" <?php echo get_selected($sel_field, 'od_b_hp'); ?>>받는분핸드폰</option>
-    <option value="od_deposit_name" <?php echo get_selected($sel_field, 'od_deposit_name'); ?>>입금자</option>
-    <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>
+    <!--<option value="od_b_hp" <?php echo get_selected($sel_field, 'od_b_hp'); ?>>받는분핸드폰</option>-->
+    <!--<option value="od_deposit_name" <?php echo get_selected($sel_field, 'od_deposit_name'); ?>>입금자</option>-->
+    <!--<option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>-->
 </select>
 
 <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>

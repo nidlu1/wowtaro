@@ -2,6 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if(defined('G5_THEME_PATH')) {
+    // echo G5_THEME_SHOP_PATH.'/shop.tail.php';
     require_once(G5_THEME_SHOP_PATH.'/shop.tail.php');
     return;
 }

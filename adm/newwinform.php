@@ -1,9 +1,10 @@
 <?php
-$sub_menu = '100310';
+$sub_menu = '300510';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
+
 $nw_id = preg_replace('/[^0-9]/', '', $nw_id);
 
 $html_title = "팝업레이어";
@@ -41,7 +42,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="token" value="">
 
 <div class="local_desc01 local_desc">
-    <p>초기화면 접속 시 자동으로 뜰 팝업레이어를 설정합니다.</p>
+    <p>초기화면 접속 시 자동으로 뜰 팝업레이어를 설정합니다.<?=$w?></p>
 </div>
 
 <div class="tbl_frm01 tbl_wrap">

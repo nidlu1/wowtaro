@@ -26,75 +26,111 @@ include_once('./_head.php');
 <!-- 위시리스트 시작 { -->
 
 
-<div class="sub_banner" id="sub_mypage">
-  <h2>단골상담사</h2>
-  <h3 style="color: white "><?=$member['mb_name']?> / <?=$member['mb_nick']?></h3>
+<div class="c_hero">
+	<strong>신선운세 <mark>단골 상담사</mark></strong>
 </div>
+<div class="c_list">
+	<div class="cl_menu">
+		<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span>마이페이지</span>
+		<span><mark><a href="/shop/wishlist.php" class="sct_here">단골 상담사</a></mark></span>
+	</div>
+	<div class="cl_function mypage">
+		<span><?php echo $member['mb_name']; ?>님</span>
+			<?php
+		switch($member['mb_grade']) {
+			case "1" :
+				echo '<span><div class="clf_rank"><img src="/images/common/icon_rank01.svg"></div><b>나그네회원</b></span>';
+				break;
+			case "2" :
+				echo '<span><div class="clf_rank"><img src="/images/common/icon_rank02.svg"></div><b>열심회원</b></span>';
+				break;
+			case "3" :
+				echo '<span><div class="clf_rank"><img src="/images/common/icon_rank03.svg"></div><b>성실회원</b></span>';
+				break;
+			case "4" :
+				echo '<span><div class="clf_rank"><img src="/images/common/icon_rank04.svg"></div><b>충성회원</b></span>';
+				break;
+			case "5" :
+			case "6" :
+				echo '<span><div class="clf_rank"><img src="/images/common/icon_rank05.svg"></div><b>신선회원</b></span>';
+				break;
+			default :
+				echo '<span><div class="clf_rank"><img src="/images/common/icon_rank01.svg"></div><b>나그네회원</b></span>';
+				break;
+		}
+		//보유 포인트 확인
+		$sql = "select * from {$g5['point_table']} where mb_id = '{$member['mb_id']}' order by po_id DESC";
+		$row = sql_fetch($sql);
+		?>
+		<span><i class="icon money"></i>보유 코인 <mark class="cs"><?=number_format($row['po_mb_point'])?></mark> coin</span>
+	</div>
+</div>
+<div class="c_area">
+		<div class="wrap">
+			<ul id="mypage-tab">
+			<?php
+			include_once(G5_SHOP_PATH.'/mymenu.php');
+			?>
+			</ul>
 
-<div class="inner">
-  <div class="order-wr clearfix">
-    <ul class="mypage-tab">
+
+
+<div id="mypage-content">
+
+	<p>나의 상담문의</p>
+	<div class="ca_board">
+		<table class="cab_table">
+	<thead>
+		<tr>
+			<th scope="col">상담사</th>
+			<th scope="col">상담상태</th>
+			<th scope="col">등록일시</th>
+			<th class="w100"></th>
+		</tr>
+	</thead>
+	<form name="fwishlist" method="post" action="./cartupdate.php">
+	<input type="hidden" name="act"       value="multi">
+	<input type="hidden" name="sw_direct" value="">
+	<input type="hidden" name="prog"      value="wish">
+
+
+	  <tbody>
 	<?php
-	include_once(G5_SHOP_PATH.'/mymenu.php');
+	$sql  = " select a.wi_id, a.wi_time, b.* from {$g5['g5_shop_wish_table']} a left join {$g5['member_table']} b on ( a.it_id = b.mb_no ) ";
+	$sql .= " where a.mb_id = '{$member['mb_id']}' order by a.wi_id desc ";
+	$result = sql_query($sql);
+	for ($i=0; $row = sql_fetch_array($result); $i++) {
+
+		//$out_cd = '';
+		//$sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
+		//$tmp = sql_fetch($sql);
+		//if($tmp['cnt'])
+			//$out_cd = 'no';
+
+		//$it_price = get_price($row);
+
+		if ($row['it_tel_inq']) $out_cd = 'tel_inq';
+
+		//$image = get_it_image($row['it_id'],230, 230);
 	?>
-    </ul>
 
+		<tr>
 
+		  <td><a href="./item.php?it_id=<?php echo $row['mb_no']; ?>" class="info_link"><?php echo stripslashes($row['mb_nick']); ?></a></td>
+		  <td>상담중</td><!--상담중/상담대기-->
+		  <td><div class="info_date"><?php echo $row['wi_time']; ?></div></td>
+		  <td><a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>" class="wish_del"><i class="cabt_trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a></td>
+		</tr>
 
-<div id="sod_ws">
+			  <?php
+			  }
 
-  <p id="sod_v_tit">나의 상담문의</p>
-  <div class="tbl_head03 tbl_wrap">
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">상담사</th>
-          <th scope="col">상담상태</th>
-          <th scope="col">등록일시</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-    <form name="fwishlist" method="post" action="./cartupdate.php">
-    <input type="hidden" name="act"       value="multi">
-    <input type="hidden" name="sw_direct" value="">
-    <input type="hidden" name="prog"      value="wish">
-
-
-      <tbody>
-	<?php
-    $sql  = " select a.wi_id, a.wi_time, b.* from {$g5['g5_shop_wish_table']} a left join {$g5['member_table']} b on ( a.it_id = b.mb_no ) ";
-    $sql .= " where a.mb_id = '{$member['mb_id']}' order by a.wi_id desc ";
-    $result = sql_query($sql);
-    for ($i=0; $row = sql_fetch_array($result); $i++) {
-
-        //$out_cd = '';
-        //$sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
-        //$tmp = sql_fetch($sql);
-        //if($tmp['cnt'])
-            //$out_cd = 'no';
-
-        //$it_price = get_price($row);
-
-        if ($row['it_tel_inq']) $out_cd = 'tel_inq';
-
-        //$image = get_it_image($row['it_id'],230, 230);
-    ?>
-
-        <tr>
-
-          <td><a href="./item.php?it_id=<?php echo $row['mb_no']; ?>" class="info_link"><?php echo stripslashes($row['mb_nick']); ?></a></td>
-          <td>상담중</td><!--상담중/상담대기-->
-          <td><div class="info_date"><?php echo $row['wi_time']; ?></div></td>
-          <td><a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>" class="wish_del"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a></td>
-        </tr>
-
-              <?php
-              }
-
-              if ($i == 0)
-                  echo '<tr><td colspan=4><li class="empty_table">보관함이 비었습니다.</li></td></tr>';
-              ?>
-      </tbody>
+			  if ($i == 0)
+				  echo '<tr><td colspan=4><li class="empty_table">보관함이 비었습니다.</li></td></tr>';
+			  ?>
+	  </tbody>
 	</table>
   </div>
 

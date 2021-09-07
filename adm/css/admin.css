@@ -574,7 +574,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #sidx_stat h2 {padding:0 20px 0 0}
 #sidx_stat .tbl_wrap {padding:0 20px 0 0}
 
-/* idx 1:1문의/상담문의/사용후기 */
+/* idx 1:1문의/상품문의/사용후기 */
 .sidx_cs {}
 .sidx_cs section {float:left;margin:0 2% 0 0;width:32%}
 .sidx_cs #anc_sidx_ps {margin:0}
@@ -1099,7 +1099,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 #anc_sodr_pay .btn_confirm{margin-top:30px}
 #anc_sodr_pay .btn_confirm .btn_submit{width:300px;height:40px;font-size:14px;}
 
-/*상담문의 */
+/*상품문의 */
 #itemqalist .qa_href .tit_op{background:url(./../img/op_btn1.gif) no-repeat 50% 50%;display:inline-block;text-indent:-999px;overflow:hidden;width:7px;height:4px;margin-left:5px}
 #itemqalist .qa_div{background:#d8dfe9;padding:10px;margin:5px 0 0;display:none;}
 #itemqalist .qa_div strong{color:#415f9d;font-size:0.92em;display:block}

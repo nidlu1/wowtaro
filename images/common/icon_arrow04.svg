@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #001831;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="icon_arrow_copy_2" data-name="icon_arrow copy 2" class="cls-1" d="M24.655,11.1l-8.863,9.53s0,0.008-.007.011a1.082,1.082,0,0,1-1.607,0s0-.007-0.006-0.01L5.309,11.1a1.286,1.286,0,0,1,0-1.725,1.078,1.078,0,0,1,1.6,0l8.07,8.677,8.07-8.677a1.078,1.078,0,0,1,1.6,0A1.286,1.286,0,0,1,24.655,11.1Z"/>
+</svg>

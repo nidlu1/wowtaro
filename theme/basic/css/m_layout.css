@@ -321,7 +321,7 @@ span > .rank_text{
 .coin_content ol li {
   position: relative;
   line-height: 1.78em;
-  font-size: 11px;
+  font-size: 13px;
   padding-left: 10px;
 }
 .coin_content ol li:before {
@@ -356,10 +356,11 @@ span > .rank_text{
 .coin_table th {
   padding: 8px 0;
   font-weight: 400;
-  font-size: 10px;
+  font-size: 14px;
   color: #fff;
   text-align: center;
   background: #8542ab; /* #b50b0f;*/
+  
 }
 .coin_table td {
   border-bottom: 1px solid #dadada;
@@ -368,7 +369,7 @@ span > .rank_text{
 }
 .coin_content strong {
   padding-right: 2px;
-  font-size: 10px;
+  font-size: 16px;
   color: #333;
 }
 .coin_content .bonus_coin {
@@ -379,8 +380,8 @@ span > .rank_text{
 }
 .coin_content .score_rate {
   position: relative;
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 14px;
+  font-weight: 600;
   color: #b50b0f;
 }
 .coin_content .score_rate:before {
@@ -388,7 +389,7 @@ span > .rank_text{
   top: 8px;
   left: -12px;
   content:'';
-  /*border-top: 6px solid #b50b0f;*/
+  border-top: 6px solid #b50b0f;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
 }
@@ -543,7 +544,7 @@ input.payment_hp::-webkit-input-placeholder {
   padding: 10px 0;
   /* font-weight: normal; */
   text-align: center;
-  background: #8542ab/*#f5d58a*/;
+  background: #8542ab; /*#f5d58a;*/
   position: relative;
 }
 .information_use_banner{

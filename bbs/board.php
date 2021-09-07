@@ -1,5 +1,7 @@
 <?php
 include_once('./_common.php');
+//echo $write_table;
+//echo $write['wr_num'];
 
 if (!$board['bo_table']) {
    alert('존재하지 않는 게시판입니다.', G5_URL);

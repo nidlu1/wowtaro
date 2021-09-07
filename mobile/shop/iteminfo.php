@@ -35,7 +35,7 @@ $sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_
 $row = sql_fetch($sql);
 $item_use_count = $row['cnt'];
 
-// 상담문의의 개수를 얻음
+// 상품문의의 개수를 얻음
 $sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];

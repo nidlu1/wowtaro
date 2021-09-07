@@ -202,4 +202,4 @@ if ($PAY_PROCESS != "N") {
 	window.close();
 	<?}?>
 </script>	
-<?}?>
+<?php }?>

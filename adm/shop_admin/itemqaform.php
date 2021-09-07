@@ -14,7 +14,7 @@ if (!$iq['iq_id']) alert('등록된 자료가 없습니다.');
 
 $name = get_sideview($iq['mb_id'], get_text($iq['iq_name']), $iq['mb_email'], $iq['mb_homepage']);
 
-$g5['title'] = '상담문의';
+$g5['title'] = '상품문의';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;

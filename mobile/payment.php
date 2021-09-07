@@ -5,361 +5,282 @@ include_once('./_common.php');
 //	alert('로그인 후 이용하여 주십시오.', G5_BBS_URL."/login.php?url=".G5_URL."/payment.php");
 
 
-$g5['title'] =  '코인충전';
+$g5['title'] = '코인충전';
 
-include_once(G5_PATH.'/head.php');
+include_once(G5_PATH . '/head.php');
 
-$moid = date("YmdHis")."S".str_replace("-","",$member['mb_hp']);
+$moid = date("YmdHis") . "S" . str_replace("-", "", $member['mb_hp']);
 
-$sql = "SELECT * FROM ".$g5['pay_table']." WHERE pa_use='1' order by pa_no ";
+$sql = "SELECT * FROM " . $g5['pay_table'] . " WHERE pa_use='1' order by pa_no ";
 $result = sql_query($sql);
-
 ?>
 <script type="text/javascript" src="https://pg.innopay.co.kr/pay/js/Innopay.js"></script>
-<form id="frm" name="frm" method="post" action="<?php echo G5_URL; ?>/payment_result.php">
+<form id="frm" name="frm" method="post" action="./payment_result.php">
+	<div class="c_hero">
+		<strong>신선운세 <mark>코인충전</mark></strong>
+	</div>
+	<div class="c_list">
+		<div class="cl_menu">
+			<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+			<span>신선운세</span>
+			<span><mark><a href="/payment.php" class="sct_here">코인충전</a></mark></span>
+		</div>
+	</div>
+	<div class="c_area t1">
+		<div class="wrap">
+			<?php
+			if ( !$member['mb_id'] ) {
+			?>
+			<div class="ca_title title t2 cg mb20">
+				<h3>현재 고객님은 회원이 아닙니다. 비회원으로 결제 할시 포인트가 지급되지 않습니다. <a href="/bbs/login.php">로그인하기</a></h3>
+			</div>
+			<?php
+			}
+			?>
+			<div class="ca_kind">
+				<h2 class="blind">결제금액 선택</h2>
+				<ul>
+					<?php
+					for ($i=0; $row=sql_fetch_array($result); $i++) {
+						$origin_amt = 2600 * ($row['pa_time'] / 60);
+						$per = ( $origin_amt - $row['pa_amt'] ) / $origin_amt * 100;
+						$amt30 = ( $row['pa_amt'] / ($row['pa_time'] / 60) / 2 );
+						//$add_amt = ( $row['pa_amt'] * 0.3 );
+						$add_amt = $row['pa_amt'];
+						$pluse_time = preg_replace("/[^0-9]*/s", "", $row['pa_mungu']);
+						$base_time = ($row['pa_time'] / 60) -  $pluse_time;
+						
+					//			$add_amt2 = ( $row['pa_point'] - $add_amt == 0 ) ? "" : "<span class='bonus_coin'>(".number_format($add_amt)."코인<span class='blue_strong'>+보너스".number_format($row['pa_point'] - $add_amt)."코인</span>)</span>";
+					//			$add_amt2 = "<span class='bonus_coin'>(".number_format($add_amt)."코인 <span class='blue_strong'> + 보너스".number_format( $row['pa_point']-$add_amt)."코인</span>)</span>";
+						//if ( $row['pa_no'] == 7 && $_SERVER['REMOTE_ADDR'] != "175.114.22.192" ) continue;
+					?>
+					<li <?php echo $i == 1 ? "class='on'" : "";?>>
+						<div class="cak_wrap">
+							<div class="cak_radio">
+								<input type="radio" id="pa_no_<?php echo $row['pa_no']; ?>" name="coin_count" value="<?php echo $row['pa_no']; ?>" data-amt="<?= $row['pa_amt']; ?>" data-point="<?php echo $row['pa_point']; ?>" data-time="<?php echo $row['pa_time']; ?>" <?php echo $i == 1 ? "checked" : "";?>>
+								<i></i>
+							</div>
+							<div class="cak_time">
+								<?php echo $base_time; ?>분
+							</div>
+							<div class="cak_pluse">
+								 <?php echo $row['pa_mungu']; ?>
+							</div>
+							<div class="fr">
+								<div class="cak_rate">
+									<span class="score_rate"><?php echo number_format($per,0); ?>% 할인</span>
+								</div>
+								<div class="cak_point blind">
+									<span>3,000원 할인</span>
+								</div>
+								<div class="cak_price">
+									<span><?php echo $row['pa_amt']/10000; ?>만원</span>
+								</div>
+							</div>
+							<div class="cak_content">
+								<span>기본 시간 <?php echo $base_time; ?>분 <?php echo $pluse_time; ?>분추가,<mark>총 <?php echo ($row['pa_time'] / 60); ?>분</mark></span>
+							</div>
+							<div class="cak_point">
+								<span>적립코인 <?php echo number_format($row['pa_point']); ?> <i class="icon coin"></i></span>
+							</div>
+						</div>
+					</li>
+					<?php
+					}
+					?>
+				</ul>
+			</div>
+			<ol class="ca_notice">
+				<li><span>결제금액은 <mark>VAT별도 금액입니다.</span></li>
+				<li><span>할인율은 <mark>바로상담 (<a href="tel:0603006700">060 - 300 - 6700</a>  /  30초당 1,300원) 대비 할인율</mark> 입니다.</span></li>
+				<li><span>결제금액이 높을수록 더 많은 포인트가 지급됩니다.</span></li>
+				<li><span><mark>1원당 1코인</mark> 입니다.</span></li>
+				<li><span>이벤트 기간에는 적립금 코인이 지급되지 않습니다.</span></li>
+			</ol>
+			<!-- <div class="coin_content">
+				<h2>결제금액에 따른 회원등급 부여</h2>
+				<ol class="coin_notice">
+				  <li><span>50만원</span><span>누적 시 나그네회원</span><span>무료 15분 코인충전</span></li>
+				  <li><span>100만원</span><span>누적 시 열심회원</span><span>무료 30분 코인충전</span></li>
+				  <li><span>400만원</span><span>누적 시 성실회원</span><span>무료 40분 코인충전</span></li>
+				  <li><span>500만원</span><span>누적 시 충성회원</span><span>무료 60분 코인충전</span></li>
+				  <li><span>1000만원</span><span>누적 시 신선회원</span><span>무료 120분 코인충전</span></li>
+				</ol>
+			  </div> -->
 
-<div class="sub_banner" id="sub_coin">
-  <h2>코인충전</h2>
-</div>
+			<script>
+			//콘텐츠배너 열고닫기
+			  $(function(){
+				$(".cai_title").on("click", function(){
+				  $(this).siblings(".cai_content").toggle();
+				  $(this).children("i").toggleClass("on");
+				});
+			  });
+			</script>
 
-<div class="inner content_inner">
-<?php
-    if ( !$member['mb_id'] ) {
-?>
-    <div class="coin_sub_title">
-    <h3>로그인 후 결제가 가능합니다. <a href="/bbs/login.php">로그인하기</a></h3>
-    </div>
-<?php
-    }
-?>
-    
-  <div class="coin_content">
-    <h2>결제금액 선택</h2>
-    <ol class="coin_notice">
-      <li>결제금액은 VAT별도 금액입니다.</li>
-      <li>할인율은 060상담 (30초당 1,300원) 대비 할인율입니다.</li>
-      <li>결제금액이 높을수록 더 많은 적립금 (코인) 이 지급 됩니다.</li>
-      <li>1원당 1코인 입니다.</li>
-      <li>이벤트 기간에는 적립금 (코인)이 되지 않습니다.</li>
-    </ol>
-    <table class="coin_table">
-      <colgroup>
-        <col width="18px">
-        <col width="80px">
-        <col width="*">
-        <col width="66px">
-        <col width="63px">
-      </colgroup>
-      <thead>
-        <tr>
-          <th style="width: 50px">선택</th>
-          <th>운세</th>
-          <th>결제금액</th>
-          <th>적립금<br>(코인)</th>
-          <th>시간</th>
-          <th>환산요금</th>
-          <th>할인율</th>
-        </tr>
-      </thead>
-      <tbody>
-		<?php
-		for ($i=0; $row=sql_fetch_array($result); $i++) {
-			$origin_amt = 2600 * ($row['pa_time'] / 60);
-			$per = ( $origin_amt - $row['pa_amt'] ) / $origin_amt * 100;
-			$amt30 = ( $row['pa_amt'] / ($row['pa_time'] / 60) / 2 );
-			$add_amt = $row['pa_amt'];
-			//$add_amt = ( $row['pa_amt'] * 0.3 );
-			//$add_amt2 = ( $row['pa_point'] - $add_amt == 0 ) ? "" : "<span class='bonus_coin'>(".number_format($add_amt)."코인<span class='blue_strong'>+보너스".number_format($row['pa_point'] - $add_amt)."코인</span>)</span>";
-			$add_amt2 = "<span class='bonus_coin'>(".number_format($add_amt)."코인<span class='blue_strong'>+보너스".number_format($row['pa_point'] - $add_amt)."코인</span>)</span>";
-			//if ( $row['pa_no'] == 7 && $_SERVER['REMOTE_ADDR'] != "175.114.22.192" ) continue;
-		?>
-        <!--tr>
-          <td><input type="radio" name="coin_count" checked="checked"></td>
-          <td><strong>30,000</strong>원</td>
-          <td><strong class="blue_strong">9,000</strong>코인</td>
-          <td><strong>15</strong>분</td>
-          <td><span class="score_rate">23.08</span>%</td>
-        </tr-->
-        <tr>
-          <td><input type="radio" id="pa_no_<?php echo $row['pa_no']; ?>" name="coin_count" value="<?php echo $row['pa_no']; ?>" data-amt="<?= $row['pa_amt']; ?>" data-point="<?php echo $row['pa_point']; ?>" data-time="<?php echo $row['pa_time']; ?>" <?php echo $i == 1 ? "checked" : "";?>></td>
-          <td><strong><?php echo $row['pa_mungu']; ?></strong></td>
-          <td><strong><?php echo number_format($row['pa_amt']); ?></strong>원</td>
-          <td><strong class="blue_strong"><?php echo number_format($row['pa_point']); ?></strong> P <?php // echo $add_amt2; ?></td>
-          <td><strong><?php echo ($row['pa_time'] / 60); ?></strong>분</td>
-          <td><strong><?php echo number_format($amt30); ?></strong>원</td>
-          <td><span class="score_rate"><?php echo number_format($per,2); ?></span>%</td>
-        </tr>
-		<?php
-		}
-		?>
-      </tbody>
-    </table>
-  </div>
-  <!-- <div class="coin_content">
-    <h2>결제금액에 따른 회원등급 부여</h2>
-    <ol class="coin_notice">
-      <li><span>50만원</span><span>누적 시 옐로우</span><span>무료 15분 코인충전</span></li>
-      <li><span>100만원</span><span>누적 시 레드</span><span>무료 30분 코인충전</span></li>
-      <li><span>400만원</span><span>누적 시 골드</span><span>무료 40분 코인충전</span></li>
-      <li><span>500만원</span><span>누적 시 VIP</span><span>무료 60분 코인충전</span></li>
-      <li><span>1000만원</span><span>누적 시 VVIP</span><span>무료 120분 코인충전</span></li>
-    </ol>
-  </div> -->
-  <script>
-  //콘텐츠배너 열고닫기
-    $(function(){
-      $(".coin_banner_open").on("click", function(){
-        $(this).siblings(".coin_banner_content").toggle();
-        $(this).children("i").toggleClass("on");
-      });
-    });
-  </script>
+			<!-- <div class="information_use payment_banner">
+			 <h3 class="banner_title coin_banner_open">코인할인상담 최대 60%할인 이용방법안내
+			  <i class="xi-angle-up-thin"></i>
+			 </h3>
+			 <div class="information_use_banner coin_banner_content">
+			   <p>
+				 <span class="num_style">1</span>
+				 회원가입후 코인을 충전합니다.
+			   </p>
+			   <p>
+				 <span class="num_style">2</span>
+				 현재 선생님 상담상태인지 꼭 확인하고 상담
+			   </p>
+			   <p>
+				 <span class="num_style">3</span>
+				 코인할인상담 상담가능 선생님 코드번호를 확인하고 <span class="color_red">1661-3439</span>번으로 건 후<br>
+				 선택한 000코드번호(#) 입력후 선생님과 상담 진행
+			   </p>
+			   <p>
+				 <span class="num_style">4</span>
+				  코인 사용기간은 사용자가 사용할때 차감되는 방식입니다.
+			   </p>
+			   <p>
+				 <span class="num_style">5</span>
+				 충전된 코인이 모두 사용되면 자동으로 통화가 종료됩니다.
+			   </p>
+			 </div>
+		   </div> -->
 
-  <!--코인충전 배너 시작-->
-  <!-- <div class="information_use payment_banner">
-     <h3 class="banner_title coin_banner_open">코인할인상담 최대 60%할인 이용방법안내
-       <i class="xi-angle-up"></i>
-     </h3>
-     <div class="information_use_banner payment_banner_01  coin_banner_content">
-       <p>
-         <span class="num_style">1</span>
-         회원가입후 코인을 충전합니다.
-       </p>
-       <p>
-         <span class="num_style">2</span>
-         현재 선생님 상담상태인지 꼭 확인하고 상담
-       </p>
-       <p>
-         <span class="num_style">3</span>
-         코인할인상담 상담가능 선생님 코드번호를 확인하고 <span class="color_red">1661-3439</span>번으로 건 후
-         선택한 000코드번호(#) 입력후 선생님과 상담 진행
-       </p>
-       <p>
-         <span class="num_style">4</span>
-          코인 사용기간은 사용자가 사용할때 차감되는 방식입니다.
-       </p>
-       <p>
-         <span class="num_style">5</span>
-         충전된 코인이 모두 사용되면 자동으로 통화가 종료됩니다.
-       </p>
-     </div>
-   </div> -->
+			<div class="ca_info">
+				<h3 class="cai_title">신선운세의 할인 혜택과 등급에 따라 추가 지급되는 적립 코인을 지금 확인하세요!! <i class="cai_arrow"></i></h3>
+				<div class="cai_content">
+					<img src="/images/m/payment/pic_event.jpg"/ alt="할인상담(코인충전 후 상담) 할인 혜택">
+				</div>
+			</div>
 
-   <div class="information_use payment_banner">
-     <h3 class="banner_title coin_banner_open">코인할인상담 최대 60%할인 혜택 (Click!)
-       <i class="xi-angle-up"></i>
-     </h3>
-     <div class="information_use_banner coin_banner_content">
+			<script>
+			//계좌번호 나타나기
+			  // $(function(){
+			  //   $("#PayMethod1, #PayMethod2, #PayMethod3").on("click",function(){
+			  //     $(".account_info").hide();
+			  //     $(".coin_payment .fright").removeClass("on");
+			  //   });
+			  //   $("#PayMethod4").on("click",function(){
+			  //     $(".account_info").show();
+			  //     $(".coin_payment .fright").addClass("on");
+			  //   });
+			  // });
+			</script>
 
-			 <div class="payment_text_wrap">
-	       <p>
-	         <span class="num_style">1</span>
-	         회원가입후 코인을 충전합니다.
-	       </p>
-	       <p>
-	         <span class="num_style">2</span>
-	         선생님의 상담가능 상태를 확인하세요.
-	       </p>
-	       <p>
-	         <span class="num_style">3</span>
-	         코인할인상담 상담가능 선생님 코드번호를 확인하고 <span class="color_red">1661-3439</span>번으로 건 후
-	         선택한 000코드번호(#) 입력후 선생님과 상담 진행
-	       </p>
-	       <p>
-	         <span class="num_style">4</span>
-	          코인 사용기간은 사용자가 사용할때 차감되는 방식입니다.
-	       </p>
-	       <p>
-	         <span class="num_style">5</span>
-	         충전된 코인이 모두 사용되면 자동으로 통화가 종료됩니다.
-	       </p>
-	     </div>
+			<div class="ca_paymethod">
+				<h2 class="cap_title">결제 방법 선택</h2>
+				<div class="cap_wrap">
+					<div class="cap_select <?php if($member['mb_id']) { ?>on<?php }?>">
+						<ul>
+							<li><label><input type="radio" name="PayMethod" id="PayMethod1" class="radio" value="CARD" checked><i></i><span>신용카드</span></label></li>
+							<li><label><input type="radio" name="PayMethod" id="PayMethod2" class="radio" value="CARS"><i></i><span>ARS결제</span></label></li>
+							<li><label><input type="radio" name="PayMethod" id="PayMethod3" class="radio" value="VBANK"><i></i><span>가상계좌</span></label></li>
+						</ul>
+					<!-- <div class="account_info">
+					  <p>입금계좌 : 100-033-433393 신한은행</p>
+					  <p>예금주 : 김두혁(와우엔터테인먼트)</p>
+					  <p>무통장입금 가능한 시간 : 09:00~24:00 가능 합니다</p>
+					</div> -->
+					</div>
+					<div class="cap_info">
+						<dl>
+							<dt>결제금액<span id="time_str"></dt>
+							<dd><span id="amt_str"></span>원</dd>
+						</dl>
+						
+							<?php if ( $member['mb_id'] ) {?>
+							<dl>
+							<dt>
+								<label for="BrowserType">보유코인: <span id="point_str"><?= $member['mb_point']?></span>코인</label>
+								<input type="hidden" id="point_str2" value="<?= $member['mb_point']?>">
+								<span id="time_str"></span>
+							</dt>
+							<dd><input type="text" class="payment-coin" id="pointpay_str" name="BrowserType"><button id="coin-apply" type="button" class="btn_submit">코인적용</button></dd>
+						</dl>
+						<?php } ?>
+						<dl>
+							<dt>실제 결제금액(VAT별도)</dt>
+							<dd><span id="pay_str"></span>원</dd>
+						</dl>
 
-       <div class="payment_text_wrap">
-         <p>
-           <span class="num_style">6</span>
-           이용요금 할인
-         </p>
-         <p class="payment_text">
-           코인할인 결제를 이용하시는 경우 <span class="color_red">30초당 649원(최대 50%)</span> 할인이 적용되어 가격에 대한 부담을 해소하실 수 있습니다.
-         </p>
-       </div>
-       <div class="payment_text_wrap">
-         <p>
-           <span class="num_style">7</span>
-           회원등급부여
-         </p>
-         <p class="payment_text">
-           <ul class="member_rank">
-             <li>
-               <span><img src="/add_img/rank/rank_icon_01.png"></span>
-               <span>50만원</span>
-               <span>누적 시 나그네회원</span>
-               <span>10,000포인트 적립</span></li>
-             <li>
-               <span><img src="/add_img/rank/rank_icon_02.png"></span>
-               <span>100만원</span>
-               <span>누적 시 열심회원</span>
-               <span>30,000포인트 적립</span></li>
-             <li>
-               <span><img src="/add_img/rank/rank_icon_03.png"></span>
-               <span>400만원</span>
-               <span>누적 시 성실회원</span>
-               <span>50,000포인트 적립</span></li>
-             <li>
-               <span><img src="/add_img/rank/rank_icon_04.png"></span>
-               <span>500만원</span>
-               <span>누적 시 충성회원</span>
-               <span>70,000포인트 적립</span></li>
-             <li>
-               <span><img src="/add_img/rank/rank_icon_05.png"></span>
-               <span>1000만원</span>
-               <span>누적 시 신선회원</span>
-               <span>100,000포인트 적립</span></li>
-           </ul>
-         </p>
-       </div>
-
-       <div class="payment_text_wrap">
-         <p>
-           <span class="num_style">8</span>
-           마이페이지에서 확인 가능합니다.
-         </p>
-         <p class="payment_text">
-           <span class="color_gray">( 무료충전까지 할인혜택을 받을시 <span class="color_red">최대 60%</span>까지 할인을 받을 수 있습니다. )</span><br>
-           무료코인제공 기간은 1년이메 1년이 지날 시 회원등급은 일반회원으로 자동바뀜<br>
-           <span class="color_gray">( 추후 기간은 변경될 수 있습니다. )</span>
-         </p>
-       </div>
-     </div>
-   </div>
-
-  <!--코인충전 배너 끝-->
-
-  <!-- <script>
-  //계좌번호 나타나기
-    $(function(){
-      $("#PayMethod1, #PayMethod2, #PayMethod3").on("click",function(){
-        $(".account_info").hide();
-      });
-      $("#PayMethod4").on("click",function(){
-        $(".account_info").show();
-      });
-    });
-  </script> -->
-
-  <div class="coin_content">
-    <h2>결제방법 선택</h2>
-    <div class="coin_payment">
-      <div class="fleft">
-        <ul>
-          <li><label><input type="radio" name="PayMethod" id="PayMethod1" value="CARD" checked> 신용카드</label></li>
-          <li><label><input type="radio" name="PayMethod" id="PayMethod2" value="CARS"> ARS결제</label></li>
-          <li><label><input type="radio" name="PayMethod" id="PayMethod3" value="VBANK"> 가상계좌</label></li>
-		  <!--li><label><input type="radio" name="PayMethod" id="PayMethod4" value="무통장"> 무통장입금</label></li-->
-        </ul>
-        <!-- <div class="account_info">
-          <p>입금계좌 : 100-033-433393 신한은행</p>
-          <p>예금주 : 김두혁(와우엔터테인먼트)</p>
-          <p>무통장입금 가능한 시간 : 09:00~24:00 가능 합니다</p>
-        </div> -->
-      </div>
-      <div class="fright">
-        <h4>결제금액</h4>
-        <ol class="coin_notice">
-          <li>1원당 1코인 입니다.</li>
-        </ol>
-        <div class="total_payment">
-          <dl>
-            <dt>결제금액<span id="time_str"></dt>
-            <dd><strong class="blue_strong" id="amt_str"></strong>원</dd>
-          </dl>
-          <dl>
-            <dt>보유코인:                
-                <label><strong class="blue_strong" id="point_str" style="font-size: 22px"><?= $member['mb_point']?></strong>코인</label>
-                <input type="hidden" id="point_str2" value="<?= $member['mb_point']?>">
-                <span id="time_str"></span>
-            </dt>    
-            <dd><input type="text" class="payment_hp blue_strong" id="pointpay_str" name="BrowserType" style="width: 80px; text-align: right"><button type="button" class="btn_submit" style="padding: 5px" onclick="coin($('#pointpay_str').val())">코인적용</button></dd>
-          </dl>
-          <dl>
-            <dt>실제 결제금액(VAT별도)</dt>
-            <dd><strong class="blue_strong" id="pay_str"></strong>원</dd>
-          </dl>
-          <dl>
-            <dt>결제자 휴대폰번호</dt>
-            <dd><input type="tel" class="payment_hp" name="order_hp" value="<?=$member['mb_hp']?>" readOnly maxlength="12" placeholder="-없이 입력하세요"></dd>
-          </dl>
-          <dl>
-            <?php
-                $sql_common = " from g5_pointuse ";
-                $sql = " select * $sql_common ";
-                $result = sql_fetch($sql);
-            ?>
-              <dt><strong class="blue_strong" style="font-size: 18px"><?=$result['p01']?></strong>P코인 부터 사용이 가능합니다.</dt>
-            <dd></dd>
-          </dl>  
-        </div>
-      </div>
-    </div>
-	<input type="hidden" name="GoodsCnt" value="1" ><!-- 상품개수 -->
-	<input type="hidden" name="GoodsName" value="<?php echo $member['mb_name']; ?> 신선운세 코인구매" ><!-- 상품명 -->
-	<input type="hidden" name="Amt" value="0" ><!-- 상품가격 -->
-	<input type="hidden" name="Moid" value="<?php echo $moid; ?>"><!-- 가맹점주문번호 -->
-	<input type="hidden" name="MID" value="<?php echo $MID; ?>"><!-- 상점 MID -->
-	<input type="hidden" name="ReturnURL" value="<?php echo G5_URL; ?>/payment_result.php"> <!-- 결제결과전송 URL -->
-	<input type="hidden" name="ResultYN" value="N" ><!-- 결제결과창 유무 -->
-	<input type="hidden" name="RetryURL" value="https://pg.innopay.co.kr/pay/returnPay.jsp"><!-- 결제결과 RETRY URL -->
-	<input type="hidden" name="mallUserID" value="<?=$member['mb_id']?>"><!--상점 결제 회원 ID-->
-	<input type="hidden" name="BuyerName" value="<?=$member['mb_name']?>"><!-- 구매자명 -->
-	<input type="hidden" name="BuyerTel" value="<?=str_replace("-","",$member['mb_hp'])?>"><!-- 구매자 연락처 -->
-	<input type="hidden" name="BuyerEmail" value="<?=$member['mb_email']?>"><!-- 구매자 이메일 주소 -->
-	<input type="hidden" name="OfferingPeriod" value="<?php echo date("Y.m.d"); ?> ~ <?php echo date("Y.m.d", strtotime("+1 Days",time())); ?>"><!-- 제공기간 -->
-	<input type="hidden" name="VbankExpDate" id="VbankExpDate" value=""><!-- 입금예정일(가상계좌) -->
-	<input type="hidden" name="EncodingType" id="EncodingType" value="utf-8"><!-- 인코딩타입 -->
-	<input type="hidden" name="FORWARD" id="FORWARD" value="Y"><!-- 결제창 팝업유무 -->
-	<input type="hidden" name="ediDate" value=""><!-- 결제요청일시 제공된 js 내 setEdiDate 함수를 사용하거나 가맹점에서 설정 yyyyMMddHHmmss -->
-	<input type="hidden" name="MerchantKey" value="<?php echo $MerchantKey; ?>"><!-- 발급된 가맹점키 -->
-	<input type="hidden" name="EncryptData" value=""> <!-- 암호화데이터 -->
-	<input type="hidden" name="MallIP" value="127.0.0.1"/> <!-- 가맹점서버 IP 가맹점에서 설정-->
-	<input type="hidden" name="UserIP" value="127.0.0.1"> <!-- 구매자 IP 가맹점에서 설정-->
-	<input type="hidden" name="MallResultFWD"   value="N"> <!-- Y 인 경우 PG결제결과창을 보이지 않음 -->
-	<input type="hidden" name="device" value=""> <!-- 자동셋팅 -->
-	<!--hidden 데이타 옵션-->
-	<input type="hidden" name="BrowserType" value="">
-	<input type="hidden" name="MallReserved" value="">
-	<!-- 현재는 사용안함 -->
-	<input type="hidden" name="SUB_ID" value=""> <!-- 서브몰 ID -->
-	<input type="hidden" name="BuyerPostNo" value="" > <!-- 배송지 우편번호 -->
-	<input type="hidden" name="BuyerAddr" value=""> <!-- 배송지주소 -->
-	<input type="hidden" name="BuyerAuthNum">
-	<input type="hidden" name="ParentEmail">
-    <div class="conin_btn_wrap">
-	<?php
-	if ( $member['mb_id'] ) {
-	?>
-      <button type="button" name="submit_btn" id="submit_btn" class="btn_submit">결제하기</button>
-	<?php
-	}
-	else {
-	?>
-	  <button type="button" class="btn_submit" onClick="alert('로그인 후 이용해 주세요.')">결제하기</button>
-	<?php
-	}
-	?>
-    </div>
-  </div>
-</div>
+						<?php if($member['mb_id']) {?>
+						<dl>
+							<dt>결제자 휴대폰번호</dt>
+							<dd><input type="tel" class="payment_hp" name="order_hp" value="<?=$member['mb_hp']?>" readOnly maxlength="12" placeholder="-없이 입력하세요"></dd>
+						</dl>
+						<?php }else{ ?>
+						<dl>
+							<dt>결제자 휴대폰번호</dt>
+							<dd><input type="tel" class="payment_hp" name="order_hp" value="" maxlength="13" placeholder="010-1234-5678">
+						<!--<button type="button" id="" class="btn_frmline">인증번호 요청</button></dd>-->
+						</dl>
+						<?php } ?>	
+						<?php
+							$sql_common = " from g5_pointuse ";
+							$sql2 = " select * $sql_common ";
+							$result2 = sql_fetch($sql2);
+						?>
+						<?php if ( $member['mb_id'] ) {?>
+						<dl>
+							<dt><mark class="cb"><?=number_format($result2['p01'])?></mark><i class="capi_coin"></i> 부터 사용이 가능합니다.</dt>
+							<dd></dd>
+						</dl>
+						<?php } ?>
+							
+						
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="GoodsCnt" value="1" ><!-- 상품개수 -->
+					<input type="hidden" name="GoodsName" value="<?php echo $member['mb_name']; ?> 코인구매" ><!-- 상품명 -->
+					<input type="hidden" name="Amt" value="0" ><!-- 상품가격 -->
+					<input type="hidden" name="Moid" value="<?php echo $moid; ?>"><!-- 가맹점주문번호 -->
+					<input type="hidden" name="MID" value="<?php echo $MID; ?>"><!-- 상점 MID -->
+					<input type="hidden" name="ReturnURL" value="<?php echo G5_URL; ?>/payment_result.php"> <!-- 결제결과전송 URL -->
+					<input type="hidden" name="ResultYN" value="N" ><!-- 결제결과창 유무 -->
+					<input type="hidden" name="RetryURL" value="https://pg.innopay.co.kr/pay/returnPay.jsp"><!-- 결제결과 RETRY URL -->
+					<input type="hidden" name="mallUserID" value="<?=$member['mb_id']?>"><!--상점 결제 회원 ID-->
+					<input type="hidden" name="BuyerName" value="<?=$member['mb_name']?>"><!-- 구매자명 -->
+					<input type="hidden" name="BuyerTel" value="<?=str_replace("-","",$member['mb_hp'])?>"><!-- 구매자 연락처 -->
+					<input type="hidden" name="BuyerEmail" value="<?=$member['mb_email']?>"><!-- 구매자 이메일 주소 -->
+					<input type="hidden" name="OfferingPeriod" value="<?php echo date("Y.m.d"); ?> ~ <?php echo date("Y.m.d", strtotime("+1 Days",time())); ?>"><!-- 제공기간 ex) 2001.01.05 -->
+					<input type="hidden" name="VbankExpDate" id="VbankExpDate" value=""><!-- 입금예정일(가상계좌) -->
+					<input type="hidden" name="EncodingType" id="EncodingType" value="utf-8"><!-- 인코딩타입 -->
+					<input type="hidden" name="FORWARD" id="FORWARD" value="Y"><!-- 결제창 팝업유무 -->
+					<input type="hidden" name="ediDate" value=""><!-- 결제요청일시 제공된 js 내 setEdiDate 함수를 사용하거나 가맹점에서 설정 yyyyMMddHHmmss -->
+					<input type="hidden" name="MerchantKey" value="<?php echo $MerchantKey; ?>"><!-- 발급된 가맹점키 -->
+					<input type="hidden" name="EncryptData" value=""> <!-- 암호화데이터 -->
+					<input type="hidden" name="MallIP" value="127.0.0.1"/> <!-- 가맹점서버 IP 가맹점에서 설정-->
+					<input type="hidden" name="UserIP" value="127.0.0.1"> <!-- 구매자 IP 가맹점에서 설정-->
+					<input type="hidden" name="MallResultFWD"   value="N"> <!-- Y 인 경우 PG결제결과창을 보이지 않음 -->
+					<input type="hidden" name="device" value=""> <!-- 자동셋팅 -->
+					<!--hidden 데이타 옵션-->
+					<input type="hidden" name="BrowserType" value="">
+						<input type="hidden" name="MallReserved" value="">
+						<input type="hidden" name="BuyerAddr" value="">
+					<!-- 현재는 사용안함 -->
+					<input type="hidden" name="SUB_ID" value=""> <!-- 서브몰 ID -->
+					<input type="hidden" name="BuyerPostNo" value="" > <!-- 배송지 우편번호 -->
+					<input type="hidden" name="BuyerAuthNum">
+					<input type="hidden" name="ParentEmail">
+					<div class="ca_buttons">
+					<?php
+					if ( $member['mb_id'] ) {
+					?>
+						<button type="button" name="submit_btn" id="submit_btn" class="btn t1 big">결제하기</button>
+					<?php
+					}
+					else {
+					?>
+						<button type="button" id="non_submit_btn" class="btn t1 big" onClick="">비회원 결제하기</button>
+						<button type="button" id="submit_btn" style="display: none">결제하기</button>
+					<?php
+					}
+					?>
+		</div>
+	</div>
 </form>
-<?php
-if ( !$member['mb_id'] ) {
-?>
-  <div class="coin_sub_title">
-    <h3>로그인 후 결제가 가능합니다. <a href="/bbs/login.php">로그인하기</a></h3>
-  </div>
-<?php
-}
-?>
 <form id="arsfrm" name="arsfrm" action="<?php echo G5_URL; ?>/payment_ars_result.php">
 <table id="payTable" style="display:none;">
 <tr>
@@ -380,7 +301,7 @@ if ( !$member['mb_id'] ) {
 </td></tr><tr><td>
 <input type="hidden" name="pgMID" value="<?php echo $pgMID; ?>"> <!-- 필수: PG사 MID(인피니소프트 발급) -->
 </td></tr><tr><td>
-<input type="hidden" name="moid" value="<?php echo $moid; ?>"> <!-- 필수: 가맹점 주문번호 -->
+<input type="text" name="moid" value="<?php echo $moid; ?>"> <!-- 필수: 가맹점 주문번호 -->
 </td></tr><tr><td>
 <input type="hidden" name="buyerName" value="<?=$member['mb_name']?>"> <!-- 필수: 결제자 이름 -->
 </td></tr><tr><td>
@@ -407,14 +328,13 @@ $(document).ready(function() {
 			$("input[name=Amt]").val( amt );
 			document.arsfrm.amt.value = amt;
 			$("#amt_str").html( number_format($(this).data("amt")) );
-			//$("#coin_str").html( number_format($(this).data("point")) );
 			$("#time_str").html( " ("+time_str+"분)" );
                         $("input[name=MallReserved]").val( $(this).data("point")+"/"+$(this).data("time")+"/" );
 			$("input[name=od_pay_time]").val( $(this).data("time") );
                         $("#pay_str").html( number_format($(this).data("amt")) );
 		}
 	});
-	//alert ( $("input[name=Amt").val() );
+
 
 	$("input[name=coin_count]").click(function () {
 		var amt = eval( $(this).data("amt") + " + " + $(this).data("amt") + " / 10" );
@@ -422,11 +342,12 @@ $(document).ready(function() {
 		$("input[name=Amt]").val( amt );
 		document.arsfrm.amt.value = amt;
 		$("#amt_str").html( number_format($(this).data("amt")) );
-		//$("#coin_str").html( number_format($(this).data("point")) );
 		$("#time_str").html( " ("+time_str+"분)" );
-                $("input[name=MallReserved]").val( $(this).data("point")+"/"+$(this).data("time")+"/" );
+		$("input[name=MallReserved]").val( $(this).data("point")+"/"+$(this).data("time")+"/" );
 		$("input[name=od_pay_time]").val( $(this).data("time") );
                 $("#pay_str").html( number_format($(this).data("amt")) );
+		$(".ca_kind li").removeClass("on");
+		$(this).closest("li").addClass("on");
 	});
 
 	$("#frm").find("input[name=PayMethod]").change(function(){
@@ -440,6 +361,7 @@ $(document).ready(function() {
 
 	$("#submit_btn").click(function () {
 		//alert($("#frm").find("input[name=PayMethod]:checked").val());return;
+		//alert($("input[name=coin_count]:checked").val());return;
 		if ( $("#frm").find("input[name=PayMethod]:checked").val() != "CARD" && $("input[name=coin_count]:checked").val() == "7" ) {
 			alert ("1,000원 결제는 신용카드만 가능합니다.");
 			return;
@@ -461,9 +383,9 @@ $(document).ready(function() {
 					alert("해당 상품은 2번만 구매가 가능한 상품입니다.");
 					return;
 				}
-
+				//alert(is_auth);return;
 				if ( $("#frm").find("input[name=PayMethod]:checked").val() == "CARS" ) {
-					send()
+					send();
 				}
 				else if ( $("#frm").find("input[name=PayMethod]:checked").val() == "무통장" ) {
 					$("#frm").attr("action","./payment_bank_result.php");
@@ -930,14 +852,142 @@ if (typeof JSON !== "object") {
 }());
 </script>
 <?php
-/* 결제시 최소포인트 설정하는 로직. 20210129 추가*/
-$sql = "SELECT p01 FROM g5_pointuse ";		
-$p01= sql_fetch($sql);
+    /* 결제시 최소포인트 설정하는 로직. 20210129 추가
+     */
+     $sql = "SELECT p01 FROM g5_pointuse ";
+     $p01= sql_fetch($sql);
 ?>
-<script src="../js/payment.js"></script>		
-<script type="text/javascript">		
-</script>		
-<input type="hidden" value="<?=$p01['p01']?>" id="p01">		
-<?php		
-include_once(G5_PATH.'/tail.php');		
+<script type="text/javascript">
+  $("#coin-apply").on("click",function(){
+    let val = $('#pointpay_str').val();  
+    var checkNum = isNaN(val);
+        
+    switch(checkNum){
+        case true:
+            alert("잘못된 입력을 하셨습니다. 숫자로 입력해주세요.");  
+            location.reload();
+            break;
+        case false:
+            var amt =  parseInt($("#amt_str").html().replaceAll(",","") );
+            var point_hold = parseInt($("#point_str").html().replaceAll(",","") );
+            var point_hold2 = parseInt($("#point_str2").val());
+            var point_use =  parseInt($("#pointpay_str").val() );
+            var p01 = $("#p01").val();            
+            var amt_result = parseInt(amt)-parseInt(point_use);
+            var pa_point = $("input[name=MallReserved]").val();
+           
+            
+            $("#point_str").html( number_format(point_hold2-point_use) );            
+            $("#pay_str").html( number_format(amt_result) );            
+            $("input[name=MallReserved]").val(pa_point+point_use);
+            
+            if(parseInt(point_hold) < parseInt(point_use)){
+                alert("보유 코인보다 사용할 포인트가 많습니다.");
+                location.reload();
+            }
+            if(parseInt(point_use) <  p01 ){
+                alert("최소 "+p01+"코인 이상 사용해야합니다.");
+                location.reload();
+            }
+            if ( !Number.isInteger((parseInt(point_use)/1000)) ){
+                alert("1000원 단위로만 입력할 수 있습니다.");
+                location.reload();
+            }
+            if ( amt < point_use ){
+                alert("코인으로만 결제할 수 없습니다.");
+                location.reload();
+            }
+            //부가가치세 10% 추가.
+            var amt1 = amt_result + (amt_result / 10) ;
+            $("input[name=Amt]").val(amt1);          
+            break;
+        default :
+            alert("알수 없는 에러가 발생하였습니다. 숫자로 입력해주세요.");
+            break;
+    }      
+  });
+</script>
+<script type="text/javascript">
+  /*
+   * 비회원 결제 스크립트
+   */
+    let non_remember_payment = {
+        init:function(){
+            console.log("init:function");
+            $("#non_submit_btn").on("click",()=>{
+                let check_result = this.check();
+                switch(check_result){
+                    case true:
+//                        console.log("핸드폰값이 올바르니 입력할 값을 수정하고 버튼이벤트를 강제발생");
+                        let no_hyphen_phone = $("input[name=order_hp]").val().replaceAll("-","");
+                        let moid = $("input[name=Moid]").val();
+                        $("input[name=Moid]").val(moid+no_hyphen_phone);
+
+                        $.ajax({
+                            type : "POST",
+                            url : "<?php echo G5_URL; ?>/ajax_auth.php",
+                            data : "chk_val="+$("input[name=coin_count]:checked").val(),
+                            success : function(data){
+                                //console.log(data);
+                                is_auth = data;
+
+                                if (is_auth == "NO2") {
+                                    alert("해당 상품은 2번만 구매가 가능한 상품입니다.");
+                                    return;
+                                }
+                                //alert(is_auth);return;
+                                if ( $("#frm").find("input[name=PayMethod]:checked").val() == "CARS" ) {
+                                    send();
+                                }
+                                else if ( $("#frm").find("input[name=PayMethod]:checked").val() == "무통장" ) {
+                                    $("#frm").attr("action","./payment_bank_result.php");
+                                    $(this).hide();
+                                    $("#frm").submit();
+                                }
+                                else {
+                                    $("#frm").attr("action","./payment_result.php");
+                                    $(this).hide();
+                                    goPay(document.frm);
+                                }
+                            },
+                            error : function(data){
+                                console.log(data);
+                                //alert("통신에러");
+                            }
+                        });
+
+                        break;
+                    case false:
+//                        console.log("핸드폰입력값이 올바르지 않으니 휴대전화입력칸을 포커싱한다");
+                        alert("휴대폰번호를 입력해주세요.");
+                        $("input[name=order_hp]").select();
+                        break;
+                }
+            });            
+        }
+        ,
+        check:function(){
+//            console.log("check:function");
+            let non_member_tel = $("input[name=order_hp]").val();
+            const regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+            switch(regExp.test(non_member_tel)){
+                case true:
+                    return true;
+                case false:
+                    return false;
+            }
+        }
+    }
+    <?php if ( $member['mb_id'] == null ) {
+        $member['mb_id'] = "no_member:01054676757";
+        $sq = substr($member['mb_id'], 0, 9);
+        ?>
+        non_remember_payment.init();
+        console.log("non_remember_payment.init()");
+        console.log("<?=$sq?>");
+    <?php }?>
+</script>
+<input type="hidden" value="<?=$p01['p01']?>" id="p01">
+<?php
+include_once(G5_PATH.'/tail.php');
 ?>

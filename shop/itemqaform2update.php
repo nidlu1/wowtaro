@@ -22,12 +22,10 @@ if ($w == "" || $w == "u") {
 }
 
 if($is_mobile_shop)
-//    $url = './item.php?it_id='.$it_id.'&info=qa';
-        $url = "/shop/item.php?ca_id=$ca_id&it_id=$it_id";
+    $url = "/shop/item.php?ca_id=$ca_id&it_id=$it_id";
 else
-//    $url = "./item.php?it_id=$it_id&_=".get_token()."#sit_qa";
-        $url = "/shop/item.php?ca_id=$ca_id&it_id=$it_id";
-
+//    $url = "./shop/item.php?it_id=$it_id&_=".get_token()."#sit_qa";
+    $url = "/shop/item.php?ca_id=$ca_id&it_id=$it_id";
 if ($w == "")
 {
     $sql = "insert {$g5['g5_shop_item_qa_table']}

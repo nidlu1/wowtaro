@@ -70,6 +70,20 @@ if ($i > 0) {
     echo '</div>'.PHP_EOL;
 ?>
 
+<script>
+jQuery(function($){
+    var slider = $('.slide-wrap').show().bxSlider({
+        speed:800,
+        pagerCustom: '#bx_pager',
+        auto: true,
+        useCSS : false,
+        onSlideAfter : function(){
+            slider.startAuto(); 미사용페이지이므로 인식하기 쉽게 스크립트에러 발생시킴.
+        }
+    });
+});
+</script>
+
 <?php
 }
 ?>

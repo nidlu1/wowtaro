@@ -10,7 +10,6 @@ function get_mshop_category($ca_id, $len)
     if($ca_id)
         $sql .= " and ca_id like '$ca_id%' ";
     $sql .= " and length(ca_id) = '$len' order by ca_order, ca_id ";
-
     return $sql;
 }
 ?>
@@ -45,8 +44,8 @@ function get_mshop_category($ca_id, $len)
         <?php
         }
         ?>
+        <li class="cate_li_1"><a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=dream">무료꿈해몽</a></li>
         <li class="cate_li_1"><a href="<?php echo G5_SHOP_URL; ?>/itemuselist.php">상담후기</a></li>
-        <li class="cate_li_1"><a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=best">상담사례</a></li>
         <li class="cate_li_1 cate_li_long"><a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=event">이벤트/혜택</a></li>
         <li class="cate_li_1 cate_li_long"><a href="<?php echo G5_URL; ?>/shop/itemuselist.php?gubun=best">베스트후기</a></li>
         <?php

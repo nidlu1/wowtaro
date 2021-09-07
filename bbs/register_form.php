@@ -137,5 +137,6 @@ if ($config['cf_use_addr'])
     add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
 include_once($member_skin_path.'/register_form.skin.php');
+
 include_once('./_tail.php');
 ?>

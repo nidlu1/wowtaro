@@ -124,7 +124,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <input type="hidden" name="pg_cancel" value="0">
 
     <div class="tbl_head01 tbl_wrap">
-        <table>
+<!--        <table>
         <caption>주문 상품 목록</caption>
         <thead>
         <tr>
@@ -239,7 +239,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         }
         ?>
         </tbody>
-        </table>
+        </table>-->
     </div>
 
     <div class="btn_list02 btn_list">

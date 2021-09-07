@@ -37,7 +37,7 @@ if ($ResultCode == "3001" || $ResultCode == "4100") {
 //od_receipt_time='".substr($MOID, 0, 4)."-".substr($MOID, 4, 2)."-".substr($MOID, 6, 2)." ".substr($MOID, 8, 2).":".substr($MOID, 10, 2).":".substr($MOID, 12, 2)."'
 
     if (!$pointpay == "" || $pointpay != 0) {
-        insert_point($member['mb_id'], $pointpay * (-1), $MOID . ","."응답코드".$ResultCode.",".$pointpay . "포인트 결제", "@usePoint", $member['mb_id'], $PayMethod . ', ' . $pointpay . ' 포인트사용',$MOID);
+        insert_point($member['mb_id'], $pointpay * (-1), $MOID . "," . "응답코드".$ResultCode.",".$pointpay . "포인트 결제", "@usePoint", $member['mb_id'], $PayMethod .','.$pointpay . ' 포인트사용' ,$MOID);
 //                alert("pointpay실행:".$pointpay);
     }
 
@@ -75,7 +75,7 @@ if ($ResultCode == "3001" || $ResultCode == "4100") {
     if ($ResultCode == "3001") {
         include_once G5_PATH . "/update_charge_human.php";
         //CARD 결제 포인트 지급.
-        insert_point($member['mb_id'], $pa_point, "od_id:".$MOID . ","."응답코드:".$ResultCode.",". ', ' . $PayMethod . ', ' . $Amt . ' 충전', '@charge', $member['mb_id'], $PayMethod . ', ' . $Amt . ' 충전',$MOID); //insert_point 함수에도 060결제로직이 있어 중복결제 가능성때문에 주석처리.
+        insert_point($member['mb_id'], $pa_point, " ".$MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전', '@charge', $member['mb_id'], $PayMethod . ', ' . $Amt . ' 충전',$MOID); //insert_point 함수에도 060결제로직이 있어 중복결제 가능성때문에 주석처리.
         ?>
 
         <!-- Tracking Script Start 2.0 -->
@@ -150,14 +150,14 @@ if ($ResultCode == "3001" || $ResultCode == "4100") {
         </script>
 
         <script>
-            alert("와우엔터테먼트 (안내) 가상계좌<?php echo $VbankName; ?> <?php echo $VbankNum; ?> 예금주 : <?php echo $VBankAccountName; ?>\n원<?php echo $Amt; ?>\n가상계좌 입금 가능한 시간 : 24시간\nn와우타로 1522-7229번\n02-3433-1166(발신요금할인)\n코드번호# 누른후 상담");
+            alert("와우엔터테먼트 (안내) 가상계좌\n<?php echo $VbankName; ?> <?php echo $VbankNum; ?> 예금주 : <?php echo $VBankAccountName; ?>\n원<?php echo $Amt; ?>\n가상계좌 입금 가능한 시간 : 24시간\nn와우타로 1522-7229번\n02-3433-1166(발신요금할인)\n코드번호# 누른후 상담");
             opener.location.href = "<?php echo G5_URL; ?>/";
             window.close();
         </script>
         <?php
         
         //VBANK 결제 포인트 지급.
-        insert_point($member['mb_id'], $pa_point, "od_id:".$MOID . ","."응답코드:".$ResultCode.",". ', ' . $PayMethod . ', ' . $Amt . ' 충전', '@charge', $member['mb_id'], $MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전',$MOID);
+        insert_point($member['mb_id'], $pa_point, " ".$MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전', '@charge', $member['mb_id'], $MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전',$MOID);
     }
 } else if ($ResultCode == "4110") {
     $sql = "update " . $g5['g5_shop_order_table'] . "
@@ -203,8 +203,6 @@ if ($ResultCode == "3001" || $ResultCode == "4100") {
         wcs_do(_nasa);
     </script>
 
-    
-    
     <!-- Tracking Script Start 2.0 -->
     <script type="text/javascript" async="true">
         var dspu = "LI9c2luc2VvbnVuc2U";      // === (필수)광고주key (변경하지마세요) ===
@@ -231,8 +229,8 @@ if ($ResultCode == "3001" || $ResultCode == "4100") {
     <!-- Tracking Script End 2.0 -->
 
     <?php
-        //VBANK 입금
-    insert_point($member['mb_id'], $pa_point, $MOID .  ","."응답코드:".$ResultCode.",". ', ' . $PayMethod . ', ' . $Amt . ' 충전', '@charge', $member['mb_id'], $MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전',$MOID);
+    //VBANK 입금
+    insert_point($member['mb_id'], $pa_point, $MOID . ', '."응답코드:".$ResultCode."," . $PayMethod . ', ' . $Amt . ' 충전', '@charge', $member['mb_id'], $MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전',$MOID);
 } else {
     ?>
     <script>

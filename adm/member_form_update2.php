@@ -87,6 +87,7 @@ $sql_common = "  mb_name = '{$_POST['mb_name']}',
                  mb_1 = '".implode(",",$_POST['mb_1'])."',
                  mb_2 = '".implode(",",$_POST['mb_2'])."',
                  mb_9 = '{$_POST['mb_9']}',
+                 mb_hashtag = '{$_POST['mb_hashtag']}',
                  mb_10 = '{$_POST['mb_10']}' ";
 
 if ( $_POST['mb_status'] != 2 ) {
@@ -109,6 +110,7 @@ $sub_sql[] = file_up_func ( "mb_5", $image_regex, $upload_dir, $mb_no );
 $sub_sql[] = file_up_func ( "mb_6", $image_regex, $upload_dir, $mb_no );
 $sub_sql[] = file_up_func ( "mb_7", $image_regex, $upload_dir, $mb_no );
 $sub_sql[] = file_up_func ( "mb_8", $image_regex, $upload_dir, $mb_no );
+$sub_sql[] = file_up_func ( "mb_10", $image_regex, $upload_dir, $mb_no );
 $sub_sql = array_filter(array_map('trim',$sub_sql));
 
 if ( count($sub_sql) > 0 ) {
@@ -206,6 +208,11 @@ else if ($w == 'u')
     if ($del_mb_8) {
         @unlink(G5_DATA_PATH.'/temp/'.$mb['mb_no'].'/'.$mb['mb_8']);
 		$sql_common .= " ,mb_8=''";
+	}
+    // 계약서 삭제
+    if ($del_mb_10) {
+        @unlink(G5_DATA_PATH.'/temp/'.$mb['mb_no'].'/'.$mb['mb_10']);
+		$sql_common .= " ,mb_10=''";
 	}
 
     $image_regex = "/(\.(gif|jpe?g|png))$/i";

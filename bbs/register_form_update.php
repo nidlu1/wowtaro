@@ -4,6 +4,7 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include_once(G5_LIB_PATH.'/register.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
+include_once(G5_PATH.'/sms_send_register.php');
 
 // 리퍼러 체크
 referer_check();
@@ -259,7 +260,7 @@ if ($w == '') {
                     insert_point($mb_id, $config['cf_recommend_point'], '추천인 등록', '@member', $mb_recommend, $mb_id.' 추천');
                 }
 	}
-    //추천인($mb_recommend)에게 5분 무료코인 부여 및 주문내역추가. 20210125 추가.
+    //추천인($mb_recommend)에게 5분 무료코인 부여 및 주문내역추가. 20210125 추가
     if ($config['cf_use_recommend'] && $mb_recommend) {        
         $recommend_row = sql_fetch(" select count(*) as cnt from {$g5['member_table']} where mb_recommend = '$mb_recommend' ");
         if ($recommend_row['cnt'] == 1){
@@ -307,7 +308,7 @@ if ($w == '') {
                     od_cash_info=''
                     ";
 //                echo $sql.'<br>';
-//                sql_query($sql);
+                sql_query($sql);
 
         //{060 실행하는데 필요한 데이터를 변수에 답는 코드.}                    
                 $tel = $recommend_od_hp;
@@ -322,7 +323,7 @@ if ($w == '') {
                 $ch = curl_init($url);
                 curl_setopt($ch, CURLOPT_HEADER, false);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//                $ret = curl_exec($ch);
+                $ret = curl_exec($ch);
                 curl_close($ch);
                 echo $ret;
 
@@ -333,21 +334,21 @@ if ($w == '') {
                         $ch2 = curl_init($url2);
                         curl_setopt($ch2, CURLOPT_HEADER, false);
                         curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-//                        $ret2 = curl_exec($ch2);
+                        $ret2 = curl_exec($ch2);
                         curl_close($ch2);                
                         $return['code']	= $ret2;   
                         switch($ret2){
                             case 'ok':
                                 $sql_use_list = "update g5_shop_order set dc_status='승인완료', test='{$url2}' where od_id='{$recommend_od_id}'";
-//                                sql_query($sql_use_list);
+                                sql_query($sql_use_list);
                                 break;
                             case 'dif':
                                 $sql_use_list = "update g5_shop_order set dc_status='실패1', test='{$url2}' where od_id='{$recommend_od_id}'";
-//                                sql_query($sql_use_list);
+                                sql_query($sql_use_list);
                                 break;
                             default :
                                 $sql_use_list = "update g5_shop_order set dc_status='실패1-1', test='{$url2}' where od_id='{$recommend_od_id}'";
-//                                sql_query($sql_use_list);
+                                sql_query($sql_use_list);
                                 break;
                         }
                         break;
@@ -357,22 +358,22 @@ if ($w == '') {
                         $ch2 = curl_init($url2);
                         curl_setopt($ch2, CURLOPT_HEADER, false);
                         curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-//                        $ret2 = curl_exec($ch2);
+                        $ret2 = curl_exec($ch2);
                         curl_close($ch2);
                         $return['code']	= $ret2;
                         switch($ret2){
                             case 'ok':
                                 $return['msg'] =  "신규등록과 충전을 성공 하였습니다.";
                                 $sql_use_list = "update g5_shop_order set dc_status='신규승인', test='{$url2}' where od_id='{$recommend_od_id}'";
-//                                sql_query($sql_use_list);
+                                sql_query($sql_use_list);
                                 break;
                             case 'dup':
                                 $sql_use_list = "update g5_shop_order set dc_status='실패2', test='{$url2}' where od_id='{$recommend_od_id}'";
-//                                sql_query($sql_use_list);
+                                sql_query($sql_use_list);
                                 break;
                             default :
                                 $sql_use_list = "update g5_shop_order set dc_status='실패2-1', test='{$url2}' where od_id='{$recommend_od_id}'";
-//                                sql_query($sql_use_list);
+                                sql_query($sql_use_list);
                                 break;
                         }
                         break;                
@@ -383,6 +384,7 @@ if ($w == '') {
                 
         }
     }
+        
 
     // 회원님께 메일 발송
     if ($config['cf_email_mb_member']) {
@@ -424,7 +426,13 @@ if ($w == '') {
         set_session('ss_mb_id', $mb_id);
 
     set_session('ss_mb_reg', $mb_id);
-
+    
+    //축하문자 발송
+    sms_send_register($mb_hp, "안녕하세요 $mb_name 고객님\n신선운세에 가입하신 것을\n환영 합니다 고객님에게\n질 높은 상담으로 보답하겠습니다.\n고객님을 위해최선을 다 하겠습니다.\n http://sinseonunse.com \n 요금절약상담 02-3433-1177   
+");
+    
+    //관리자에게 안내문자 발송
+//    sms_send_register("", $mb_name."님께서 신선운세에 가입하셨습니다.");
 } else if ($w == 'u') {
     if (!trim($_SESSION['ss_mb_id']))
         alert('로그인 되어 있지 않습니다.');

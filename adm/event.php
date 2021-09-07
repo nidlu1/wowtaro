@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '100320';
+$sub_menu = '400310';
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
@@ -9,14 +9,16 @@ $g5['title'] = '5분/10분무료 설정';
 include_once('./admin.head.php');
 
 if (isset($_POST['act_mode']) && $_POST['act_mode'] == "y") {
+        echo '<script>alert("수정사항이 적용되었습니다.");</script>';
 	//echo "UPDATE ".$g5['config_table']." SET cf_1='".$_POST['min']."'";
 	sql_query("UPDATE ".$g5['config_table']." SET cf_1='".$_POST['min']."'");
 }
 if (isset($_POST['act_mode2']) && $_POST['act_mode2'] == "y") {
+        echo '<script>alert("수정사항이 적용되었습니다.");</script>';
 	sql_query("UPDATE ".$g5['config_table']." SET cf_2='".$_POST['eventcount']."'");
 }
 if (isset($_POST['act_mode3']) && $_POST['act_mode3'] == "y") {
-    echo '<script>alert("수정되었습니다");</script>';
+    echo '<script>alert("수정사항이 적용되었습니다.");</script>';
     $result = sql_query("SELECT * FROM g5_mungu");
     
     for ($i=0; $row=sql_fetch_array($result); $i++) {
@@ -29,6 +31,7 @@ if (isset($_POST['act_mode3']) && $_POST['act_mode3'] == "y") {
         $mg_content= $_POST['mg_content_'.$mg_id];
         $sql = "update g5_mungu set mg_content = '$mg_content', mg_YN = '$mg_YN' where mg_id = $mg_id ";
         sql_query($sql);
+//        echo $sql.'<br>';
     }
 }
 
@@ -89,7 +92,7 @@ $config = sql_fetch(" select * from {$g5['config_table']} ");
 	<input type="hidden" name="act_mode3" value="y">
         <fieldset id="fsendmailtest">
             <legend>문구 선택</legend>
-            <input type="submit" value="일괄적용" class="btn_submit" style="float: right;">
+            <input type="submit" value="일괄적용" class="btn_submit" id="submit" style="float: right;">
         <div class="tbl_head01 tbl_wrap">
             <table>
             <caption><?php echo $g5['title']; ?> 목록</caption>
@@ -97,7 +100,7 @@ $config = sql_fetch(" select * from {$g5['config_table']} ");
             <tr>
                 <th scope="col">번호</th>
                 <th scope="col">문구</th>
-                <th scope="col">사용여부</th>
+                <th scope="col" style="width: 80px;">사용여부</th>
             </tr>
             </thead>
             <tbody>
@@ -109,7 +112,7 @@ $config = sql_fetch(" select * from {$g5['config_table']} ");
             ?>
             <tr class="<?php echo $bg; ?>">
                 <td class="td_num"><?=$row['mg_id']; ?></td>
-                <td class="td_left"><input type="text" size="80" name="mg_content_<?=$row['mg_id']; ?>" value="<?= $row['mg_content']; ?>" ></td>
+                <td class="td_left"><input style="font-size: 16px;" type="text" size="80" name="mg_content_<?=$row['mg_id']; ?>" value="<?= $row['mg_content']; ?>" ></td>
                 <td class="td_num">
                     <select name="mg_YN_<?=$row['mg_id']; ?>">
                         <option value="Y" <?php echo $row['mg_YN'] == "Y" ? "selected" : ""; ?>>사용</option>
@@ -130,7 +133,11 @@ $config = sql_fetch(" select * from {$g5['config_table']} ");
         </fieldset>
     </form>
 </section>
-
+<script>
+    $("#submit").click(()=>{
+//        alert("수정사항이 적용되었습니다");
+    });
+</script>
 
 <?php
 include_once('./admin.tail.php');

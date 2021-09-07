@@ -20,10 +20,6 @@ if (($po_point < 0) && ($po_point * (-1) > $mb['mb_point']))
     alert('포인트를 깎는 경우 현재 포인트보다 작으면 안됩니다.', './point_list.php?'.$qstr);
 
 insert_point($mb_id, $po_point, $po_content, '@passive', $mb_id, $member['mb_id'].'-'.uniqid(''), $expire);
-echo $mb_id;
-echo $po_point;
-echo $po_content;
-echo $expire;
 
 goto_url('./point_list.php?'.$qstr);
 ?>

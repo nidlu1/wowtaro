@@ -124,47 +124,55 @@ $result = sql_query($sql);
 </div>
 
 
-<div class="sub_banner" id="sub_mypage">
-    <h2>나의 상담후기</h2>
-    <h3 style="color: white "><?=$member['mb_name']?> / <?=$member['mb_nick']?></h3>
+<div class="c_hero">
+	<strong>신선운세 <mark>나의 상담후기</mark></strong>
 </div>
-
-<div class="inner">
-  <div class="order-wr clearfix">
-    <ul class="mypage-tab">
-	<?php
-	include_once(G5_SHOP_PATH.'/mymenu.php');
-	?>
-    </ul>
-  <!-- 주문 내역 시작 { -->
-    <div id="sod_v">
-
-      <p id="sod_v_tit">나의 상담후기</p>
-
-      <div class="policy review_pop_open">
-        <p>상담후기 운영 정책</p>
-      </div>
-
-      <!--div class="myreview_tabs">
-        <ul>
-          <li class="active"><a href="/mypage_myreview.php">작성 가능한 상담후기(2)</a></li>
-          <li><a href="/mypage_myreview2.php">작성 완료한 상담 후기(1)</a></li>
-        </ul>
-      </div-->
-
-        <div class="tbl_head03 tbl_wrap">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">분류</th>
-				        <th scope="col">작성자</th>
-                <th scope="col">평점</th>
-                <th scope="col">제목</th>
-                <th scope="col">상담날짜</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
+<div class="c_list">
+	<div class="cl_menu">
+		<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span>마이페이지</span>
+		<span><mark><a href="/mypage_myreview2.php" class="sct_here">나의 상담후기</a></mark></span>
+	</div>
+	<div class="cl_function mypage">
+		<li>
+			<span><?php echo $member['mb_name']; ?>님</span>
+			<span><?php echo $member['mb_nick']; ?>님</span>
+		</li>
+	</div>
+</div>
+<div class="c_area">
+	<div class="wrap">
+		<ul id="mypage-tab">
+		<?php
+		include_once(G5_SHOP_PATH.'/mymenu.php');
+		?>
+		</ul>
+		<!-- 주문 내역 시작 { -->
+		<div id="mypage-content">
+		<p>나의 상담후기</p>
+		<div class="ca_policy mypage">
+			<a href="#review">상담후기 운영 정책</a>
+		</div>
+		<!--div class="myreview_tabs">
+			<ul>
+			  <li class="active"><a href="/mypage_myreview.php">작성 가능한 상담후기(2)</a></li>
+			  <li><a href="/mypage_myreview2.php">작성 완료한 상담 후기(1)</a></li>
+			</ul>
+		</div-->
+		<div class="ca_board">
+		  <table class="cab_table">
+			<thead>
+			  <tr>
+				<th class="w120">분류</th>
+				<th class="w120">작성자</th>
+				<th class="w120">평점</th>
+				<th scope="col">제목</th>
+				<th class="w120">상담날짜</th>
+				<th class="w120"></th>
+			  </tr>
+			</thead>
+			<tbody>
 <?php
 $thumbnail_width = 500;
 
@@ -183,49 +191,51 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 	$hash = md5($row['is_id'].$row['is_time'].$row['is_ip']);
 
-	//if ($i == 0) echo '<ol id="sit_use_ol">';
+	//if ($i == 0) echo '<ol>';
 	$star_str = "";
 	for ($jj = 1; $jj <= 5; $jj++) {
-		if ($jj <= $is_star) $star_str .= "<i class='xi-star'></i>";
-		else $star_str .= "<i class='xi-star-o'></i>";
+		if ($jj <= $is_star) $star_str .= "<i class='ca_icon on'></i>";
+		else $star_str .= "<i class='ca_icon off'></i>";
 	}
 ?>
-              <tr>
-                <td><?php echo $row['is_cat']; ?></td><!--할인상담/일반상담-->
+			<tr>
+				<td class="cg"><?php echo $row['is_cat']; ?></td><!--할인상담/일반상담-->
 				<td><?php echo $row['mb_nick']; ?></td>
-                <td class="myrev_score"><?php echo $star_str; ?></td>
-                <td class="myrev_txt"><?php echo $is_subject; // 사용후기 내용 ?></td>
-                <td><?php echo $is_time; ?></td>
-                <td><a href="#" class="myrev_btn load_col">자세히보기</a></td>
-              </tr>
-              <tr class="reply_col">
-                <td colspan="6">
-                  <div class="origin_text">
-                    <h3>후기내용</h3>
-                    <p>
-                      <?php echo $is_content; // 후기 내용 ?>
-                    </p>
-                <div class="sit_use_cmd">
-                  <?php if( $is_reply_subject ){  ?>
-                  <button type="button" class="toggle_reply">1개의 댓글이 있습니다.</button>
-                  <?php } ?>
-
-				<?php
-				if ($is_admin || $row['it_id'] == $member['mb_no']) {
-					$itemuse_form2 = "./shop/itemuseform2.php?it_id=".$row['it_id']."&is_cat2=".$row['is_cat2'];
-				?>
-                    <a href="<?php echo $itemuse_form2."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form btn01" onclick="return false;">답글</a>
-                <?php } ?>
-                </div>
-
-                <?php if( $is_reply_subject ){  //  사용후기 답변 내용이 있다면 ?>
-                <div class="sit_use_reply">
-                    <div class="use_reply_p">
-                        <?php echo $is_reply_content; // 답변 내용 ?>
-                    </div>
-                </div>
-                <?php } //end if ?>
-                  </div>
+				<td class="cabt_score"><?php echo $star_str; ?></td>
+				<td class="cabt_subject"><?php echo $is_subject; // 사용후기 내용 ?></td>
+				<td><?php echo $is_time; ?></td>
+				<td>
+					<button type="button" class="btn t2 little text small load_col cabt_btn open">자세히보기</button>
+					<button type="button" class="btn little text small cw load_col cabt_btn close">닫기</button>
+				</td>
+			</tr>
+			<tr class="reply_col">
+				<td colspan="6" class="reply">
+				<div class="cabt_reply">
+					<div class="cabtr_wrap">
+						<h3>후기내용</h3>
+						<p>
+						<?php echo $is_content; // 후기 내용 ?>
+						</p>
+						<div class="cabtr_comment">
+							<?php if( $is_reply_subject ){  ?>
+							<button type="button" class="toggle_reply">1개의 댓글이 있습니다.</button>
+							 <?php } ?>
+							<?php if( $is_reply_subject ){  //  사용후기 답변 내용이 있다면 ?>
+							<div class="cabtrc_txt">
+								<?php echo $is_reply_content; // 답변 내용 ?>
+							</div>
+							<?php } //end if ?>
+						 
+						<?php
+						if ($is_admin || $row['it_id'] == $member['mb_no']) {
+							$itemuse_form2 = "./shop/itemuseform2.php?it_id=".$row['it_id']."&is_cat2=".$row['is_cat2'];
+						?>
+							<a href="<?php echo $itemuse_form2."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form btn minor text tiny t2" onclick="return false;">답변</a>
+						<?php } ?>
+						</div>
+					</div>
+				</div>
                 </td>
               </tr>
 <?php
@@ -250,6 +260,11 @@ $(function() {
   $('.load_col').click(function(){
     var originParent = $(this).parents('tr');
     originParent.next('.reply_col').toggle();
+	if(originParent.hasClass("on")){
+		originParent.removeClass("on");
+	}else{
+		originParent.addClass("on");
+	}
   });
   $('.reply_cancel').click(function(){
     $(this).parents('.reply_col').hide();
@@ -268,13 +283,13 @@ $(function() {
 		return false;
 	});
 	$(".toggle_reply").click(function(){
-	  var $con = $(this).parents('.sit_use_cmd').next('.sit_use_reply');
+	  var $con = $(this).parents('.cabtr_comment').children().eq(1);
 	  if($con.is(":visible")) {
 		  $con.hide();
 		  $(this).html("1개의 댓글이 있습니다.");
 	  } else {
 		$con.show();
-		$(this).html("댓글접기");
+		$(this).html("접기");
 	  }
 	});
 });

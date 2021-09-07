@@ -15,14 +15,14 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 ?>
 
 <!-- 상품 정렬 선택 시작 { -->
-<section id="sct_sort">
-    <h2>상품 정렬</h2>
-    <ul id="ssch_sort">
-        <li><a href="<?php echo $sct_sort_href; ?>it_sum_qty&amp;sortodr=desc">조회순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_use_cnt&amp;sortodr=desc">후기많은순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_use_avg&amp;sortodr=desc">별점높은순</a></li>
-    </ul>
-</section>
+	<div class="cl_function">
+		<ul>
+			<li <?php if($sort == "it_sum_qty") {?> class="on" <?php }?>><a href="<?php echo $sct_sort_href; ?>it_sum_qty&amp;sortodr=desc"><i></i><span>조회높은순</span></a></li>
+			<li <?php if($sort == "it_use_cnt") {?> class="on" <?php }?>><a href="<?php echo $sct_sort_href; ?>it_use_cnt&amp;sortodr=desc"><i></i><span>후기많은순</span></a></li>
+			<li <?php if($sort == "it_use_avg") {?> class="on" <?php }?>><a href="<?php echo $sct_sort_href; ?>it_use_avg&amp;sortodr=desc"><i></i><span>별점높은순</span></a></li>
+		</ul>
+		<?php echo $sort_reset; ?>
+	</div>
 </div>
-</div>
+
 <!-- } 상품 정렬 선택 끝 -->

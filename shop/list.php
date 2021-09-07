@@ -12,7 +12,7 @@ if (G5_IS_MOBILE) {
     return;
 }
 
-$sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' and ca_use = '1'  ";
+$sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' and ca_use = '1' ";
 $ca = sql_fetch($sql);
 if (!$ca['ca_id'])
     alert('등록된 분류가 없습니다.');
@@ -71,25 +71,25 @@ else
   }
 //}
 ?>
-<div class="sub_banner" id="<?php echo $sub_img_str; ?>">
-  <!--서브 카테고리에 따라 id달림 :
-  타로 일때 : sub_taro (현재 예시로 설정해 놓음)
-  펫타로 일때 : sub_pet
-  꿈해몽 일떄 : sub_dream
-  사주 일떄 : sub_saju
-  신점 일때 : sub_sin
--->
-  <h2><?php echo $ca['ca_name'] ?></h2>
-  <!--div class="tag_list">
-    <button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == "" ) ? "active" : ""; ?>" id="ht_0" name="ht_no" data-no="">전체</button>
-	<?php
-	$qdt2 = get_hash_list();	// 세부분야내역 가져오기
-	for ($ii = 0; $ii < count($qdt2); $ii++) {
-	?>
-	<button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == $qdt2[$ii]['ht_no'] ) ? "active" : ""; ?>" id="ht_<?php echo $qdt2[$ii]['ht_no']; ?>" name="ht_no" data-no="<?php echo $qdt2[$ii]['ht_no']; ?>"><?php echo $qdt2[$ii]['ht_name']; ?></button>
-	<?php
-	}
-	?>
+<div class="c_hero" id="<?php echo $sub_img_str; ?>">
+	 <!--서브 카테고리에 따라 id달림 :
+	  타로 일때 : sub_taro (현재 예시로 설정해 놓음)
+	  펫타로 일때 : sub_pet
+	  꿈해몽 일떄 : sub_dream
+	  사주 일떄 : sub_saju
+	  신점 일때 : sub_sin
+	-->
+	<strong>신선운세 <mark><?php echo $ca['ca_name'] ?></mark></strong>
+	<!--div class="tag_list">
+		<button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == "" ) ? "active" : ""; ?>" id="ht_0" name="ht_no" data-no="">전체</button>
+		<?php
+		$qdt2 = get_hash_list();	// 세부분야내역 가져오기
+		for ($ii = 0; $ii < count($qdt2); $ii++) {
+		?>
+		<button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == $qdt2[$ii]['ht_no'] ) ? "active" : ""; ?>" id="ht_<?php echo $qdt2[$ii]['ht_no']; ?>" name="ht_no" data-no="<?php echo $qdt2[$ii]['ht_no']; ?>"><?php echo $qdt2[$ii]['ht_name']; ?></button>
+		<?php
+		}
+		?>
   </div-->
 </div>
 
@@ -140,7 +140,7 @@ $(document).ready(function() {
     include $nav_skin;
 
     // 상단 HTML
-    echo '<div id="sct_hhtml">'.conv_content($ca['ca_head_html'], 1).'</div>';
+   // echo '<div id="sct_hhtml">'.conv_content($ca['ca_head_html'], 1).'</div>';
     ?>
 <?php
     $cate_skin = $skin_dir.'/listcategory.skin.php';
@@ -154,14 +154,14 @@ $(document).ready(function() {
     else
         $order_by = 'it_order, it_id desc';
 
-    $error = '<p class="sct_noitem">등록된 선생님이 없습니다.</p>';
+    $error = '<p class="sct_noitem title t1 cg">등록된 선생님이 없습니다.</p>';
 
     // 리스트 스킨
     $skin_file = is_include_path_check($skin_dir.'/'.$ca['ca_skin']) ? $skin_dir.'/'.$ca['ca_skin'] : $skin_dir.'/list.10.skin.php';
 
     if (file_exists($skin_file)) {
 
-		echo '<div id="sct_sortlst">';
+		//echo '<div id="sct_sortlst">';
         $sort_skin = $skin_dir.'/list.sort.skin.php';
         if(!is_file($sort_skin))
             $sort_skin = G5_SHOP_SKIN_PATH.'/list.sort.skin.php';
@@ -172,7 +172,7 @@ $(document).ready(function() {
         if(!is_file($sub_skin))
             $sub_skin = G5_SHOP_SKIN_PATH.'/list.sub.skin.php';
         include $sub_skin;
-        echo '</div>';
+        //echo '</div>';
 
         // 총몇개 = 한줄에 몇개 * 몇줄
         $items = $ca['ca_list_mod'] * $ca['ca_list_row'];
@@ -219,23 +219,80 @@ $(document).ready(function() {
 		if ( $_REQUEST['ht_no'] ) {
 			$sub_where .= " AND INSTR(mb_2,'".$_REQUEST['ht_no']."') > 0 ";
 		}
-		$sql = "SELECT * FROM ".$g5['member_table']." WHERE mb_level='3' AND mb_hide='0' ".$sub_where." ORDER BY ".$orderby;
-		//echo $sql;
-		$result = sql_query($sql);
 
+
+        $sql_paging = "SELECT * FROM ".$g5['member_table']." WHERE mb_level='3' AND mb_hide='0' ".$sub_where." ORDER BY ".$orderby;
+        // echo $sql_paging;
+        $result_paging = sql_query($sql_paging);
+        $totalRecord = sql_num_rows($result_paging);
+        $curPage = empty( $_GET["curPage"])? 1 : $_GET["curPage"] ;
+        $listPage = 18;
+        $blockCnt = 5;
+        $blockNum = ceil($curPage/$blockCnt);
+        $blockStart = (($blockNum-1)*$blockCnt)+1;
+        $blockEnd = $blockStart + $blockCnt -1;
+
+        $pageStart = ($curPage-1)*$listPage;
+        $totalPage = ceil($totalRecord / $listPage);
+        if($blockEnd>$totalPage){
+            $blockEnd=$totalPage;
+        }
+        $totalBlock = ceil($totalPage/$blockCnt);        
+
+
+
+
+
+		$sql = "SELECT * FROM ".$g5['member_table']." WHERE mb_level='3' AND mb_hide='0' ".$sub_where." ORDER BY ".$orderby." limit $pageStart, $listPage";
+		// echo "\n".$sql;
+		$result = sql_query($sql);
+        
+
+
+
+
+        
+        $totalRecord = sql_num_rows($result);
         // where 된 전체 상담사수
+
         $total_count = sql_num_rows($result);
         // 전체 페이지 계산
         $total_page  = ceil($total_count / $items);
-//echo $skin_file;echo "<br>test<br>";
+// echo $skin_file;echo "<br>test<br>";
 		include $skin_file;
+
     }
     else
     {
         echo '<div class="sct_nofile">'.str_replace(G5_PATH.'/', '', $skin_file).' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
     }
     ?>
+    <nav class="pg_wrap shop">
+        <?php
+            if($curPage>1){
+                echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=1' class='pg_start'></a>";
+            }
+            if($curPage>1){
+                $pre = $curPage -1;
+                echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=$pre' class='pg_prev'></a>";
+            }
+            for($i = $blockStart; $i <= $blockEnd; $i++){
+                if($curPage == $i){
+                    echo "<strong class='pg_current'>$i</strong>";
+                }else {
+                    echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=$i'>$i</a>";
+                }
 
+            }
+            if($curPage<$totalPage){
+                $next = $curPage + 1;
+                echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=$next' class='pg_next'></a>";
+            }
+            if($curPage<$totalPage){
+                echo "<a href='/shop/list.php?ca_id=$ca_id&curPage=$totalPage' class='pg_end'></a>";
+            }
+        ?>
+    </nav>
     <?php
     $qstr1 .= 'ca_id='.$ca_id;
     $qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;

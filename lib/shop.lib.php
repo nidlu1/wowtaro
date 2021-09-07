@@ -1167,7 +1167,6 @@ function display_banner($position, $skin='')
 
     if (!$position) $position = '왼쪽';
     if (!$skin) $skin = 'boxbanner.skin.php';
-
     $skin_path = G5_SHOP_SKIN_PATH.'/'.$skin;
     if(G5_IS_MOBILE)
         $skin_path = G5_MSHOP_SKIN_PATH.'/'.$skin;
@@ -1183,6 +1182,7 @@ function display_banner($position, $skin='')
         $result = sql_query($sql);
 
         include $skin_path;
+        
     } else {
         echo '<p>'.str_replace(G5_PATH.'/', '', $skin_path).'파일이 존재하지 않습니다.</p>';
     }

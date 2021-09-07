@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #cbbca7;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="icon_download" class="cls-1" d="M20,21v2H10V21H8v4H22V21H20Zm-2-7h4l-7,8L8,14h4V5h6v9Z"/>
+</svg>

@@ -8,22 +8,22 @@ if ($board['bo_use_category']) {
     $is_category = true;
     $category_href = G5_BBS_URL.'/board.php?bo_table='.$bo_table;
 
-    $category_option .= '<li><a href="'.$category_href.'"';
+    $category_option .= '<li><a href="'.$category_href.'#ca_tabs"';
     if ($sca=='')
-        $category_option .= ' id="bo_cate_on"';
-    $category_option .= '>전체</a></li>';
+        $category_option .= ' class="on"';
+    $category_option .= '><span>전체</span></a></li>';
 
     $categories = explode('|', $board['bo_category_list']); // 구분자가 , 로 되어 있음
     for ($i=0; $i<count($categories); $i++) {
         $category = trim($categories[$i]);
         if ($category=='') continue;
-        $category_option .= '<li><a href="'.($category_href."&amp;sca=".urlencode($category)).'"';
+        $category_option .= '<li><a href="'.($category_href."&amp;sca=".urlencode($category)).'#ca_tabs"';
         $category_msg = '';
         if ($category==$sca) { // 현재 선택된 카테고리라면
-            $category_option .= ' id="bo_cate_on"';
+            $category_option .= ' class="on"';
             $category_msg = '<span class="sound_only">열린 분류 </span>';
         }
-        $category_option .= '>'.$category_msg.$category.'</a></li>';
+        $category_option .= '><span>'.$category_msg.$category.'</span></a></li>';
     }
 }
 
@@ -225,6 +225,7 @@ if($page_rows > 0) {
 }
 
 $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './board.php?bo_table='.$bo_table.$qstr.'&amp;page=');
+$write_pages_moblie = get_paging_moblie(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './board.php?bo_table='.$bo_table.$qstr.'&amp;page=');
 
 $list_href = '';
 $prev_part_href = '';
@@ -270,5 +271,4 @@ if ($board['bo_use_rss_view']) {
 
 $stx = get_text(stripslashes($stx));
 include_once($board_skin_path.'/list.skin.php');
-
 ?>

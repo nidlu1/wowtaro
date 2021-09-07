@@ -6,12 +6,12 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
-<div id="sit_qa_wbtn">
+<!-- <div id="sit_qa_wbtn">
     <a href="<?php echo $itemqa_form; ?>" class="itemqa_form qa_wr margin_top_05">상담문의 쓰기<span class="sound_only"> 새 창</span></a>
-</div>
+</div> -->
 
-<!-- 상담문의 목록 시작 { -->
-<div id="sit_qa_list">
+<!-- 상품문의 목록 시작 { -->
+
 
     <?php
     $thumbnail_width = 500;
@@ -47,31 +47,19 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         {
             $iq_answer = get_view_thumbnail(conv_content($row['iq_answer'], 1), $thumbnail_width);
             $iq_stats = '답변완료';
-            $iq_style = 'sit_qaa_done';
+            $iq_style = 'done';
             $is_answer = true;
         } else {
             $iq_stats = '답변대기';
-            $iq_style = 'sit_qaa_yet';
+            $iq_style = 'yet';
             $iq_answer = '답변이 등록되지 않았습니다.';
             $is_answer = false;
         }
-
-        if ($i == 0) echo '<table id="sit_qa_ol">';
+			 if ($i == 0) echo '<table id="sit_qa_ol">';
+          if ($i == 0) echo '<thead><tr><th>번호</th><th>상태</th><th>내용</th></tr></thead>';
+		   if ($i == 0) echo '<tbody>';
     ?>
-    <colgroup>
-      <col width="50px;">
-      <col width="80px;">
-      <col width="*">
-      <!-- <col width="75px;"> -->
-    </colgroup>
-    <tbody>
-      <tr>
-        <th>번호</th>
-        <th>상태</th>
-        <th>내용</th>
-        <!-- <th>날짜</th> -->
-      </tr>
-        <tr class="sit_qa_li">
+        <tr >
           <td>
             <?php echo $i+1; ?>
           </td>
@@ -79,7 +67,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
             <span class="<?php echo $iq_style; ?>"><?php echo $iq_stats; ?></span>
           </td>
           <td>
-            <button type="button" class="sit_qa_li_title"><?php echo $iq_subject; ?></button>
+            <button type="button" class="qa_li_title"><span><?php echo $iq_subject; ?><i></i></span></button>
           </td>
           <!-- <td class="date">
             <?php echo $iq_time; ?>
@@ -88,103 +76,102 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 
         <tr class="content_sit" id="sit_qa_con_<?php echo $i; ?>">
           <td colspan="4"  class="qa-wr">
-            <div id="sit_qa_con_<?php echo $i; ?>" class="sit_qa_con">
-                <div class="sit_qa_p">
-                    <div class="sit_qa_qaq">
-                        <span class="sit_alp">Q</span>
-                        <strong>문의내용</strong>
-                        <?php echo $iq_question; // 상품 문의 내용 ?>
-                    </div>
-                    <?php if(!$is_secret) { ?>
-                    <div class="sit_qa_qaa sps_section clearfix">
-                        <span class="sit_alp">A</span>
-                        <strong>답변</strong>
+		  	<div class="cabc_wrap">
+				<div class="cabc_area qustion">
+					<strong class="sound_only">문의내용</strong>
+					<div class="cabca_wrap">
+						<div class="qa_icon q"><i>Q</i></div>
+					</div>
+					<div class="cabca_txt">
+						<?php echo $iq_question; // 상품 문의 내용 ?>
+					</div>
+				</div>
+				<?php if(!$is_secret) { ?>
+				<div class="cabc_area answer clearfix">
+					<strong class="sound_only">답변</strong>
+					<div class="cabca_wrap <?php if ($is_admin || $it_id == $member['mb_no'] || ($row['iq_mb_id'] == $member['mb_id'] && !$is_answer)) { ?>on<?php }?>">
+						<div class="qa_icon a"><i>A</i></div>
+							<div class="cabca_info">
+								<a href="<?php echo G5_SHOP_URL; ?>/item.php?ca_id=&it_id=<?php echo $row['mb_no']; ?>">
+									<div class="cabcai_pic">
+										<img src="<?php echo G5_DATA_URL; ?>/temp/<?php echo $row['mb_no']; ?>/<?php echo $row['mb_8']; ?>" alt="<?php echo $row['mb_nick']; ?> <?php echo $row['mb_id']; ?>번">
+									</div>
+									<div class="cabcai_txt">
+									<!--카테고리 스타일2-->
+									
+										<!--타로일때-->
+										<p>
+											<?php echo $ca['ca_name'] ?>
+										</p>
 
-                        <!--상담후기랑 같은 이미지 넣어주세요~-->
-                        <div class="sps_section_title">
-                    			<a href="<?php echo G5_SHOP_URL; ?>/item.php?ca_id=&it_id=<?php echo $row['mb_no']; ?>">
-                            <div class="review_back teacher_back_common <?php echo $bcat_bg; ?>">
-                              <!-- 선생님 배경이미지 : 클래스, 배경이미지 바뀜(sct_img 뒤에 클래스 추가)
-                              타로 일때 : back_taro (현재 예시로 설정해 놓음)
-                              꿈해몽 일떄 : back_dream
-                              펫타로 일때 : back_taro
-                              사주 일떄 : back_saju
-                              신점 일때 : back_shinjeom -->
-                              <img src="<?php echo G5_DATA_URL; ?>/temp/<?php echo $row['mb_no']; ?>/<?php echo $row['mb_8']; ?>" height="145" alt="<?php echo $row['mb_nick']; ?> <?php echo $row['mb_id']; ?>번">
-                            </div>
-                            <div class="sps_section_title_title">
-                              <!--카테고리 스타일2-->
-                              <span class="sub_cate">
-                                <!--타로일때-->
-                                <span class="cate-<?php echo $bcat_str; ?>">
-                                  <?php echo $ca['ca_name'] ?>
-                                </span>
+										<!--사주일때
+										<span class="cate_saju">
+										  <?php echo $row['is_cat2']; ?>
+										</span>-->
 
-                                <!--사주일때
-                                <span class="cate-saju">
-                                  <?php echo $row['is_cat2']; ?>
-                                </span>-->
+										<!--신점일때
+										<span class="cate_sin">
+										  <?php echo $row['is_cat2']; ?>
+										</span>-->
 
-                                <!--신점일때
-                                <span class="cate-sin">
-                                  <?php echo $row['is_cat2']; ?>
-                                </span>-->
+										<!--꿈해몽일때
+										<span class="cate_dream">
+										  <?php echo $row['is_cat2']; ?>
+										</span>-->
 
-                                <!--꿈해몽일때
-                                <span class="cate-dream">
-                                  <?php echo $row['is_cat2']; ?>
-                                </span>-->
+										<!--펫타로일때
+										<span class="cate_dream">
+										  <?php echo $row['is_cat2']; ?>
 
-                                <!--펫타로일때
-                                <span class="cate-dream">
-                                  <?php echo $row['is_cat2']; ?>
-                                </span>-->
-
-                              </span>
-                              <br>
-                                <!--//카테고리 스타일2-->
-                              <?php echo $row['mb_nick']; ?>
-                              <?php echo $row['mb_id']; ?>번
-                            </div>
-                    			</a>
-                  			</div>
-                        <!--//상담후기랑 같은 이미지 넣어주세요~-->
-                        <div class="qa_answer">
-                          <?php echo $iq_answer; ?>
-                        </div>
-                    </div>
-                    <?php } ?>
-                </div>
-
-                <div class="sit_qa_cmd">
-				<?php if ($is_admin || ($row['iq_mb_id'] == $member['mb_id'] && !$is_answer)) { ?>
-                    <a href="<?php echo $itemqa_form."&amp;iq_id={$row['iq_id']}&amp;w=u"; ?>" class="itemqa_form btn01" onclick="return false;">수정</a>
-                    <a href="<?php echo $itemqa_formupdate."&amp;iq_id={$row['iq_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemqa_delete btn01">삭제</a>
-                <?php } ?>
-				<?php if ($is_admin || $it_id == $member['mb_no']) { ?>
-                  <a href="<?php echo $itemqa_form2."&amp;iq_id={$row['iq_id']}&amp;w=u"; ?>" class="itemuse_form btn01" onclick="return false;">답글</a>
+										<!--//카테고리 스타일2-->
+										<span class="cabcai_wrap">
+											<span><?php echo $row['mb_nick']; ?></span>
+											<span><mark><?php echo $row['mb_id']; ?>번</mark></span>
+										</span>
+									</div>
+								</a>
+							</div>
+					</div>
+					<div class="cabca_txt">
+					  <?php echo $iq_answer; ?>
+					</div>
+				</div>
 				<?php } ?>
-                </div>
-            </div>
+				<div class="cabc_edit">
+				  <?php if ($is_admin || ($row['iq_mb_id'] == $member['mb_id'] && !$is_answer)) { ?>
+					  <a href="<?php echo $itemqa_form."&amp;iq_id={$row['iq_id']}&amp;w=u"; ?>" class="cabce_btn fix" onclick="return false;">수정</a>
+					  <a href="<?php echo $itemqa_formupdate."&amp;iq_id={$row['iq_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="cabce_btn del">삭제</a>
+					  <!-- <button type="button" onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
+					  <button type="button" onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button> -->
+				  <?php } ?>
+				  <?php if ($is_admin || $it_id == $member['mb_no']) { ?>
+					  <a href="<?php echo $itemqa_form2."&amp;iq_id={$row['iq_id']}&amp;w=u"; ?>" class="cabce_btn reply" onclick="return false;">답글</a>
+				  <?php } ?>
+				</div>
+			</div>
           </td>
         </tr>
-      </tbody>
     <?php
         $iq_num--;
     }
+    if ($i > 0) echo '</tbody>';
     if ($i > 0) echo '</table>';
 
     if (!$i) echo '<p class="sit_empty">상담문의가 없습니다.</p>';
     ?>
 
-    <a href="<?php echo $itemqa_list; ?>" id="itemqa_list" class="more_wr">더보기</a>
+    <!--<a href="<?php echo $itemqa_list; ?>" id="itemqa_list" class="more_wr">더보기</a>-->
+
+
+
+<div class="cabc_buttons">
+	<?php
+		echo itemqa_page_moblie($config['cf_write_pages'], $pageqa, $total_page, "./item.php?ca_id=$ca_id&it_id=$it_id&amp;pageqa=", "#cab_qa");
+	?>
 </div>
-
-<?php
-echo itemqa_page($config['cf_mobile_pages'], $page, $total_page, "./item.php?it_id=$it_id&amp;page=", "");
-?>
-
-
+<div class="cabc_buttons">
+	<a href="<?php echo $itemqa_form; ?>" class="write_btn itemqa_form">문의하기<span class="sound_only"> 새 창</span></a>
+</div>
 <script>
 $(function(){
     $(".itemqa_form").click(function(){
@@ -192,24 +179,33 @@ $(function(){
         return false;
     });
 
-    $(".itemqa_delete").click(function(){
+    $(".cabce_btn.fix").click(function(){
+        window.open(this.href, "itemqa_form", "width=810,height=680,scrollbars=1");
+        return false;
+    });
+	
+	 $(".cabce_btn.reply").click(function(){
+        window.open(this.href, "itemqa_form", "width=810,height=680,scrollbars=1");
+        return false;
+    });
+
+    $(".cabce_btn.del").click(function(){
         return confirm("정말 삭제 하시겠습니까?\n\n삭제후에는 되돌릴수 없습니다.");
     });
 
-    $(".sit_qa_li_title").click(function(){
-        var $con = $(this).parents('tr').siblings(".content_sit");
-        if($con.is(":visible")) {
-            $con.slideUp();
-        } else {
-            $(".sit_qa_con:visible").hide();
-            $con.slideDown(
-                function() {
-                    // 이미지 리사이즈
-                    $con.viewimageresize2();
-                }
-            );
-        }
-    });
+     $('.qa_li_title').click(function(){
+		var originParent = $(this).parents('tr');
+		if(originParent.next('.content_sit').hasClass("on")){
+			originParent.next('.content_sit').removeClass("on")
+		}else{
+			originParent.next('.content_sit').addClass("on")
+		}
+		if($(this).hasClass("on")){
+			$(this).removeClass("on");
+		}else{
+			$(this).addClass("on");
+		}
+	  });
 
     $(".qa_page").click(function(){
         $("#itemqa").load($(this).attr("href"));
@@ -223,4 +219,4 @@ $(function(){
     });
 });
 </script>
-<!-- } 상담문의 목록 끝 -->
+<!-- } 상품문의 목록 끝 -->

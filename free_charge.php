@@ -1,5 +1,7 @@
 <?php
 include_once('./_common.php');
+include_once(G5_PATH.'/sms_send_register.php');
+
 
 $od_id = date("YmdHis")."S".str_replace("-","",$member['mb_hp']);
 $today=mktime(); 
@@ -10,30 +12,36 @@ $serviceId = "M1714254" ;   //테스트서버 : glx_api
 $orderDate = $today_time ; //(YYYYMMDDHHMMSS)
 $orderId = $od_id ;  
 $userId = $member['mb_id'] ; 
-$itemCode = "5분무료";
+$itemCode = $config['cf_1']."분무료";
 $amount = 0;
-$sec = 300;
+$sec = $config['cf_1']*60;
 $od_dc_pwd = substr($member['mb_hp'],-4) ;
+$aa = str_replace("-","",$member['mb_hp']);
 $mb_ip = $member['mb_ip'] ;
-$hp = $member['mb_hp'];
+
+
 if(strpos($hp,"-")!==false){
 $hp = str_replace("-","",$member['mb_hp']);
 }
 
-$sql = "select count(*)as cnt from ".$g5['g5_shop_order_table']." where is_free=1 and od_hp = '{$hp}'";
-$re = sql_fetch($sql);
-if($re['cnt']>0){
-	alert("이벤트는 한번만 참여가 가능합니다", G5_URL."/free_counsel.php");
-	exit;
-}
-/*
-$sql = "select count(*)as cnt from ".$g5['g5_shop_order_table']." where is_free=1 and od_ip ='{$mb_ip}'";
+
+
+
+
+ 
+$sql = "select count(*) as cnt from ".$g5['g5_shop_order_table']." where is_free=1 and od_hp = '{$hp}";
 $re = sql_fetch($sql);
 if($re['cnt']>0){
 	alert("이벤트는 한번만 참여가 가능합니다.", G5_URL."/free_counsel.php");
 	exit;
 }
-*/
+//$sql = "select count(*)as cnt from ".$g5['g5_shop_order_table']." where is_free=1 and od_ip ='{$mb_ip}'";
+//$re = sql_fetch($sql);
+//if($re['cnt']>0){
+//	alert("이벤트는 한번만 참여가 가능합니다.", G5_URL."/free_counsel.php");
+//	exit;
+//}
+
 $sql = "select count(*)as cnt from ".$g5['g5_shop_order_table']." where is_free=1 and od_time BETWEEN '".date("Y-m-d")." 00:00:00' AND '".date("Y-m-d")." 23:59:59' ";
 $re = sql_fetch($sql);
 if($re['cnt']>30){
@@ -41,10 +49,8 @@ if($re['cnt']>30){
 	exit;
 }
 
-
-/*
- * 2020-11-09 기능추가: 5분 무료 상담시, 해당 선생님의 상담후기에 '이벤트상담' 카테고리로 응원메세지를 등록하는 기능.
- * 작성자: 한승희 nidlu123@gmail.com
+/* 한승희
+ * 2020-11-10 기능추가: 5분 무료 상담시, 해당 선생님의 상담후기에 '이벤트상담' 카테고리로 응원메세지를 등록하는 기능.
  */
     $smb_id = explode("/", trim($_REQUEST['smb_id']));
     $it_id = $smb_id[0];
@@ -72,21 +78,7 @@ if($re['cnt']>30){
         case 50:
             $is_cat2 = "꿈해몽";
             break;
-            
     }
-//    echo "it_id:".$it_id.'<br>'; 
-//    echo "mb_id:".$mb_id.'<br>';  
-//    echo "is_score:".$is_score.'<br>';
-//    echo "is_name:".$is_name.'<br>';
-//    echo "is_password:".$is_password.'<br>';
-//    echo "is_subject:".$is_subject.'<br>';
-//    echo "is_content:".$is_content.'<br>';
-//    echo "is_cat:".$is_cat.'<br>';   
-//    echo "is_cat2:".$is_cat2.'<br>';
-//    echo "mb_1_str:".$mb_1_str.'<br>';
-
-    
-
     $sql = "insert {$g5['g5_shop_item_use_table']}
                set it_id = '$it_id',
                    mb_id = '$mb_id',
@@ -102,12 +94,10 @@ if($re['cnt']>30){
     if (!$default['de_item_use_use'])
         $sql .= ", is_confirm = '1' ";
     sql_query($sql);
-    
-    
-/* 
- * 끝.
- */
+//2020-11-10 기능추가: 5분 무료 상담시, 해당 선생님의 상담후기에 '이벤트상담' 카테고리로 응원메세지를 등록하는 기능 끝
 
+    
+    
 
 $sql = "insert into g5_shop_order set
 		od_id='{$od_id}',
@@ -154,7 +144,7 @@ $url = $chk_telnum_addr."?".$params;
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_HEADER, false);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$ret = curl_exec($ch);
+//$ret = curl_exec($ch);
 curl_close($ch);
 
 if($ret == "dup"){
@@ -182,7 +172,9 @@ if($ret == "dup"){
 		$sql_use_list = "update g5_shop_order set dc_status='실패1-1', test='{$url2}' where od_id='{$ORDER_ID}'";
 		sql_query($sql_use_list);
 	}
-
+        
+    //관리자에게 안내문자 발송
+//    sms_send_register("", $member['mb_name']."님께서".$config['cf_1']."분 무료 신청을 했습니다.");
 
 // 신규등록후 충전
 }else{
@@ -193,7 +185,7 @@ if($ret == "dup"){
 	$ch2 = curl_init($url2);
 	curl_setopt($ch2, CURLOPT_HEADER, false);
 	curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-	$ret2 = curl_exec($ch2);
+//	$ret2 = curl_exec($ch2);
 	curl_close($ch2);
 
 	$return['code']	= $ret2;
@@ -211,6 +203,14 @@ if($ret == "dup"){
 		$sql_use_list = "update g5_shop_order set dc_status='실패2-1', test='{$url2}' where od_id='{$ORDER_ID}'";
 		sql_query($sql_use_list);
 	}
+}
+
+//신청시 IP가 기록되어있다면 관리자에게 알려줌
+$remote_ip = $_SERVER["REMOTE_ADDR"];
+$sql_ip = "select count(*) as cnt from g5_member where mb_ip = '$remote_ip'";
+$re_ip = sql_fetch($sql_ip);
+if($re_ip['cnt']>0){
+//    sms_send_register($hp, "$userId 님께서 중복된 아이피로 5분 무료를 신청했습니다.\nIP주소: $remote_ip");
 }
 
 alert("신청되었습니다.", "./free_counsel.php");

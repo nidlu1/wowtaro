@@ -26,31 +26,41 @@ $sql = "select a.*, b.mb_no it_id, b.mb_nick it_name $sql_common order by iq_id 
 $result = sql_query($sql);
 ?>
 
-<div class="sub_banner" id="sub_mypage">
-  <h2>나의 상담문의</h2>
-    <h3 style="color: white "><?=$member['mb_name']?> / <?=$member['mb_nick']?></h3>
+<div class="c_hero">
+	<strong>신선운세 <mark>나의 상담문의</mark></strong>
 </div>
-
-  <div class="order-wr clearfix">
-    <ul class="mypage-tab">
+<div class="c_list">
+	<div class="cl_menu t1">
+		<span>마이페이지</span>
+		<span><mark>나의 상담문의</mark></span>
+	</div>
+	<button type="button" class="cl_btn"><span class="blind"></span></button>
+</div>
+<ul id="mypage-tab">
 	<?php
 	include_once(G5_SHOP_PATH.'/mymenu.php');
-  if ( $member['mb_level'] == 3 ) {}else{
 	?>
-  <li><a>&nbsp;</a></li>
-  <?php }  ?>
-    </ul>
+</ul>
+<div class="c_area mypage">
+	<div class="wrap">
+		<ul class="ca_function teacher">
+			<li><span><?php echo $member['mb_name']; ?>님</span></li>
+			<li><span><?php echo $member['mb_nick']; ?>님</span></li>
+		</ul>
   <!-- 주문 내역 시작 { -->
-    <div id="sod_v">
+    <div id="mypage-content">
 
-        <div class="tbl_head03 tbl_wrap">
-          <table>
+      <p>나의 상담문의</p>
+
+       <div class="ca_board">
+		  <table class="cab_table">
             <thead>
               <tr>
-                <th scope="col">상태</th>
-                <th scope="col">작성자</th>
-                <th scope="col">문의</th>
-                <th scope="col">날짜</th>
+                <th>상태</th>
+                <th>작성자</th>
+                <th>문의내용</th>
+                <th>문의날짜</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -67,12 +77,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 	if($row['iq_secret']) {
 		$iq_subject .= ' <img src="'.G5_SHOP_SKIN_URL.'/img/icon_secret.gif" alt="비밀글">';
 
-		if($is_admin || $member['mb_id' ] == $row['mb_id']) {
+		//if($is_admin || $member['mb_id' ] == $row['mb_id']) {
 			$iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), $thumbnail_width);
-		} else {
-			$iq_question = '비밀글로 보호된 문의입니다.';
-			$is_secret = true;
-		}
+		//} else {
+		//	$iq_question = '비밀글로 보호된 문의입니다.';
+		//	$is_secret = true;
+		//}
 	} else {
 		$iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), $thumbnail_width);
 	}
@@ -99,77 +109,87 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 	if ($i == 0) echo '<ol id="sit_qa_ol">';
 ?>
-              <tr>
-                <td><?php echo $iq_stats; ?></td><!--답변대기/답변완료-->
-                <td><?php echo $row['it_name']; ?></td>
-                <td class="myrev_txt detail_btn">
-                  <!-- 상담사 회원일 시에는 출력하지 않음 -->
-                  <a class="myrev_btn"><?php echo $iq_subject; ?></a>
-                  <!-- //상담사 회원일 시에는 출력하지 않음 -->
-                  <!-- 상담사 회원일 시 -->
-                  <!-- <button class="myrev_btn load_col">답변하기</button> -->
-                  <!-- //상담사 회원일 시 -->
-                </td>
-                <td><?php echo $iq_time; ?></td>
-              </tr>
-              <tr class="reply_col">
-                <td colspan="4">
-                  <div class="origin_text">
-                    <h3>문의내용</h3>
-                    <p>
-                      <?php echo $iq_question; // 상품 문의 내용 ?>
-                    </p>
-                  </div>
-				  <?php if(!$is_secret) { ?>
+				<tr>
+					<td class="cg"><strong>상태</strong><?php echo $iq_stats; ?></td><!--답변대기/답변완료-->
+					<td><strong>작성자</strong><?php echo $row['it_name']; ?></td>
+					<td><strong>문의내용</strong><?php echo $iq_subject; ?></td>
+					<td><strong>문의날짜</strong><?php echo $iq_time; ?></td>
+					<td>
+					<strong>상세</strong>
 					<?php if($member['mb_level'] == 3) { ?>
-                  <div class="reply_text">
-                    <h3>답변작성</h3>
-                    <form class="" method="post">
-                      <textarea name="name" class="reply_textarea" placeholder="답변내용을 입력하세요"><?php echo $iq_answer; // 상품 문의 내용 ?></textarea>
-                      <div class="button_area">
-                        <button type="button" name="button" class="btn_b01 reply_cancel">취소</button>
-                        <button type="submit" name="button" class="btn_submit">저장</button>
-                      </div>
-                    </form>
-                  </div>
+					<button type="button" class="btn t2 little text small load_col cabt_btn open">답변하기</button>
+					<button type="button" class="btn little text small cw load_col cabt_btn close">닫기</button>
 					<?php } else { ?>
-                  <div class="reply_text">
-                    <h3>답변내용</h3>
-                    <p>
-                      <?php echo $iq_answer; // 상품 문의 내용 ?>
-                    </p>
-                  </div>
+					<button type="button" class="btn t2 little text small load_col cabt_btn open">자세히보기</button>
+					<button type="button" class="btn little text small cw load_col cabt_btn close">닫기</button>
 					<?php } ?>
-				  <?php } ?>
-                </td>
-              </tr>
-<?php
-}
-?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-  </div><!--order-wr-->
+					</td>
+				</tr>
+				<tr class="reply_col">
+					<td colspan="5" class="reply">
+					<div class="cabt_reply">
+						<div class="cabtr_wrap">
+							<h3>문의내용</h3>
+							<?php echo $iq_question; // 상품 문의 내용 ?>
+
+						</div>
+					</div>
+					<?php if(!$is_secret) { ?>
+						<?php if($member['mb_level'] == 3) { ?>
+					<div class="cabt_txt">
+						<h3>답변작성</h3>
+						<form class="" method="post" action="./mypage_mycounsel2_update.php">
+						<input type="hidden" name="iq_id" value="<?php echo $row['iq_id']; ?>">
+						<textarea name="iq_answer" class="cabtt_wrap t1 reply_textarea" placeholder="답변내용을 입력하세요"><?php echo $iq_answer; // 상품 문의 내용 ?></textarea>
+						<div class="cabtt_buttons">
+							<button type="button" name="button" class="btn minor text tiny t2">취소</button>
+							<button type="submit" name="button" class="btn minor text tiny t1">저장</button>
+						</div>
+						</form>
+					</div>
+						<?php } else { ?>
+					<div class="cabt_txt">
+						<h3>답변내용</h3>
+						<div class="cabtt_wrap">
+						<?php echo $iq_answer; // 상품 문의 내용 ?>
+						</div>
+					</div>
+						<?php } ?>
+					<?php } ?>
+					</td>
+				</tr>
+	<?php
+	}
+	?>
+				</tbody>
+			</table>
+			</div>
+		</div>
+	</div><!--order-wr-->
+</div> <!--inner-->
 <!-- } 주문 내역 끝 -->
+
 
 <script>
 $(function() {
-  $('.load_col').click(function(){
+  /*$('.load_col').click(function(){
     var originParent = $(this).parents('tr');
     originParent.next('.reply_col').show();
-  });
+  });*/
   $('.reply_cancel').click(function(){
     $(this).parents('.reply_col').hide();
   });
-  $(".detail_btn").click(function(){
+  $(".load_col").click(function(){
     var originParent = $(this).parents('tr');console.log(originParent.next(".reply_col p").text());
     originParent.next('.reply_col').toggle();
+	if(originParent.hasClass("on")){
+		originParent.removeClass("on");
+	}else{
+		originParent.addClass("on");
+	}
   });
-
 });
 </script>
-
 
 <?php
 include_once(G5_PATH.'/tail.php');

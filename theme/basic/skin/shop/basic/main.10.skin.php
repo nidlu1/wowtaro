@@ -5,9 +5,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
+
 <!-- 상품진열 10 시작 { -->
-
-
   <!--pop2-->
   <div class="pop-bg2">
   <div class="pop2">
@@ -110,7 +109,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
 		<div class = "clearfix sct-tit">
 			<a href="<?php echo G5_SHOP_URL; ?>/item.php?ca_id=<?php echo $bcat_arr[$l]['ca_id']; ?>&it_id=<?php echo $row['mb_no']; ?>">
-				<div class="tel">
+				<div class="tel"> <?php // echo $row['mb_status']?>
 					<?php
 					//$mb_st = counsel_stat($row['mb_id']);
 					//var_dump($mb_st);
@@ -211,7 +210,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 		<div class="num-wr">
 	<?php
 	$sql = "SELECT AVG(is_score) is_score, COUNT(is_id) cnt, IFNULL(SUM( IF( is_reply_name<>'',1,0 ) ),0) re_cnt FROM ".$g5['g5_shop_item_use_table']." WHERE it_id='".$row['mb_no']."' AND is_cat2='".$bcat_arr[$l]['ca_name']."'";
-	//ptr2($sql);
+	ptr2($sql);
 	$use_dt = sql_fetch($sql);
 	$star_str = "";
 	for ($jj = 1; $jj <= 5; $jj++) {

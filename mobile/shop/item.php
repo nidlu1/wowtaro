@@ -94,7 +94,7 @@ $sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_
 $row = sql_fetch($sql);
 $item_use_count = $row['cnt'];
 
-// 상담문의의 개수를 얻음
+// 상품문의의 개수를 얻음
 $sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
@@ -254,92 +254,7 @@ if ( $member['mb_level'] == 2 ) {
 	curl_close($ch);
 }
 ?>
-<!--pop-->
-<div class="pop-bg1">
-  <div class="pop1">
-    <div class="tit_wr">
-      <span id="pop-css" class="pop_img teacher_back_small">
-        <!--
-        선생님 배경이미지 : 클래스, 배경이미지 바뀜(teacher_back_small 뒤에 클래스 추가)
-        타로 일때 : back_taro (현재 예시로 설정해 놓음)
-        꿈해몽 일떄 : back_dream
-        펫타로 일때 : back_taro
-        사주 일떄 : back_saju
-        신점 일때 : back_shinjeom -->
-        <img id="pop-img" src="" alt="당담자 사진">
-      </span>
 
-      <span class="tit">
-        [<span id="pop-cate"></span>]
-        <span id="pop-nick"></span>
-      </span>
-
-      <span class="pop-close">
-        <i class="xi-close"></i>
-      </span>
-    </div>
-    <div class="pop_con_wr">
-      <div class="discount">
-        <h3>할인상담<span>(코인충전)</span></h3>
-        <!--로그인 상태에서 안보이게-->
-        <p>
-          코인충전후 전화연결시 상담사 바로 연결됩니다.<br>
-          코인상담은 <a href="/bbs/login.php" class="login">로그인</a> 후 이용 가능합니다.
-        </p>
-        <!--//로그인 상태에서 안보이게 tel:1661-3439 -->
-        <a href="<?php echo $call_ret > 0 ? "tel:1661-3439" : G5_URL."/payment.php"; ?>" class="tel-box">
-          <img src="/m-fortune-img/call_icon.png" alt="전화번호">
-          <span>1661-3439</span>
-        </a>
-		<!-- tel:02-3433-1177 -->
-        <span class="relative">
-          <a href="<?php echo $call_ret > 0 ? "tel:02-3433-1177" : G5_URL."/payment.php"; ?>" class="tel-box">
-            <img src="/m-fortune-img/call_icon.png" alt="전화번호">
-            <span>02-3433-1177</span>
-          </a>
-          <i class="xi-help help-btn"></i>
-        </span>
-
-      </div>
-      <div class="baro">
-        <h3>060 바로상담<span>(후불)</span></h3>
-        <p>
-          전화연결시 고유번호 입력후 상담사와 바로연결됩니다.
-        </p>
-        <a href="tel:060-300-6700" class="tel-box red">
-          <img src="/m-fortune-img/call_icon.png" alt="전화번호">
-          <span>060-300-6700</span>
-        </a>
-      </div>
-    </div><!--pop_con_wr-->
-  </div>
-</div>
-
-<!--pop-->
-
-<div class="pop-bg2 tip_pop">
-  <div class="pop2">
-
-    <div class="tit_wr">
-      <i class="xi-help"></i>
-      <span class="tit">
-        발신요금절약 TIP
-      </span>
-      <span class="pop-close">
-        <i class="xi-close"></i>
-      </span>
-    </div>
-
-    <div class="pop_con_wr">
-        <p>
-          할인상담시 <span>02-3433-1177</span> 이용하시면 발신요금을 절약하실 수 있습니다.<br>
-          휴대폰 음성 무제한 요금제 사용 고객은 발신 요금이 무료이며 요금제에 따라
-          발신료 무료 시간이 다르므로 발신요금의 대한자세한 내용은 가입하신
-          통신사 홈페이지를 참조하세요.
-        </p>
-    </div><!--pop_con_wr-->
-  </div>
-</div>
 <script>
   $(function(){
 	<?php
@@ -419,321 +334,249 @@ if ( $member['mb_level'] == 2 ) {
     window.history.back();
   }
 </script>
-
-<div class="navi clearfix">
-  <div class="left" onclick="goBack();">
-    <a href="javascript:void(0)" onclick="javascript:history.back();">
-      <i class="xi-angle-left"></i><span>목록으로</span>
-    </a>
-  </div>
-
-  <div class="right">
-    <a href="/index.php" class="home"><i class="xi-home"></i></a>
-    <i class="xi-angle-right-min"></i>
-    <a href="/shop/list.php?ca_id=<?php echo $ca['ca_id'] ?>" class="txt"><?php echo $ca['ca_name'] ?></a>
-  </div>
-</div><!--navi-->
-
-<div class="inner">
-  <div id="sit_ov_wrap">
-  <div class="sit-buttons clearfix">
-    <div class="counsel">
-	<?php
-	$mb_st = counsel_stat($it['mb_id']);
-	//var_dump($mb_st);
-	if ( $mb_st ) $it['mb_status'] = $mb_st;
-
-	if ( $it['mb_status'] == 2 ) {
-		$mb_status = "상담가능";
-		$mb_status_css = "status_possible";
-	}
-	else if ( $it['mb_status'] == 1 ) {
-		$mb_status = "상담중";
-		$mb_status_css = "status_ing";
-	}
-	else {
-		$mb_status = "예약대기";
-		$mb_status_css = "status_impossible";
-	}
-	?>
-
-  <!--상담가능 : status_possible, 예약대기 :status_impossible, 상담중 : status_ing
-  class달라짐-->
-      <div class="<?php echo $mb_status_css; ?>" data-img="<?php echo G5_DATA_URL.'/temp/'.$it['mb_no'].'/'.$it['mb_8']; ?>" data-cate="<?php echo $bcat_arr[$l]['ca_name']; ?>" data-nick="<?php echo $it['mb_nick']." ".$it['mb_id']; ?>" data-css="<?php echo $bcat_bg; ?>">
-        <p><?php echo $mb_status; ?></p>
-      </div>
-
-    </div>
-    <div class="regular-cus">
-        <a href="javascript:item_wish(document.fitem, '<?php echo $it['mb_no']; ?>');"><i class="xi-home-o"></i><spsan>단골등록</spsan></a>
-    </div>
-  </div>
-
-  <!--상품 이미지 시작-->
-  <div class="sit_img teacher_back_common <?php echo $bcat_bg; ?>">
-    <!-- 선생님 배경이미지 : 클래스, 배경이미지 바뀜(sct_img 뒤에 클래스 추가)
-    타로 일때 : back_taro (현재 예시로 설정해 놓음)
-    꿈해몽 일떄 : back_dream
-    펫타로 일때 : back_pettaro
-    사주 일떄 : back_saju
-    신점 일때 : back_shinjeom -->
-
-    <!--카테고리 추가-->
-    <div class="teacher_cate">
-		<!--타로일때, 클래스와 배경 바뀜-->
-      <p class="cate-<?php echo $bcat_str; ?>"><?php echo $bcat_arr[$l]['ca_name']; ?></p>
-      <!--사주일때, 클래스와 배경 바뀜
-       <p class="cate-saju">사주</p> -->
-      <!-- 신점일때, 클래스와 배경 바뀜
-      <p class="cate-sin">신점</p> -->
-      <!--꿈해몽일때, 클래스와 배경 바뀜
-      <p class="cate-dream">꿈해몽</p> -->
-      <!-- 펫타로일때, 클래스와 배경 바뀜
-      <p class="cate-pet">펫타로</p> -->
-    </div>
-    <!--//카테고리 추가-->
-
-    <?php
-    // 이미지(중) 썸네일
-    $thumb_img = '';
-    /*$thumb_img_w = 450; // 넓이
-    $thumb_img_h = 248; // 높이
-    for ($i=1; $i<=10; $i++)
-    {
-        if(!$it['it_img'.$i])
-            continue;
-
-        $thumb = get_it_thumbnail($it['it_img'.$i], $thumb_img_w, $thumb_img_h);
-
-        if(!$thumb)
-            continue;
-
-        $thumb_img .= '<li>';
-        $thumb_img .= '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image slide_img" target="_blank">'.$thumb.'</a>';
-        $thumb_img .= '</li>'.PHP_EOL;
-    }*/
-    //if ($thumb_img)
-    //{
-		$thumb_img .= '<li>';
-        $thumb_img .= '<img src="'.G5_DATA_URL.'/temp/'.$it['mb_no'].'/'.$it['mb_8'].'" width="450" alt="">';
-        $thumb_img .= '</li>'.PHP_EOL;
-        echo '<div id="sit_pvi">'.PHP_EOL;
-        // echo '<button type="button" id="sit_pvi_prev" class="sit_pvi_btn" >이전</button>'.PHP_EOL;
-        // echo '<button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>'.PHP_EOL;
-        echo '<ul id="sit_pvi_slide">'.PHP_EOL;
-        echo $thumb_img;
-        echo '</ul>'.PHP_EOL;
-        echo '</div>';
-    //}
-    ?>
-  </div><!--sit-img-->
-
-  <div class="sit_ov_top">
-    <h2 id="sit_title"><?php echo stripslashes($it['mb_nick']); ?> <span class="teacher_number"><?php echo stripslashes($it['mb_id']); ?>번</span>
-		<!--span class="sct_icon"-->
+<?php
+  switch ($ca_id) {
+    case '10' :
+      $sub_img_str = "sub_taro";
+      break;
+    case '20' :
+      $sub_img_str = "sub_sin";
+      break;
+    case '30' :
+      $sub_img_str = "sub_saju";
+      break;
+    case '40' :
+      $sub_img_str = "sub_pet";
+      break;
+    case '50' :
+      $sub_img_str = "sub_dream";
+      break;
+    default :
+      $sub_img_str = "sub_taro";
+      break;
+  }
+?>
+<div class="c_hero" id="<?php echo $sub_img_str; ?>">
+	 <!--서브 카테고리에 따라 id달림 :
+	  타로 일때 : sub_taro (현재 예시로 설정해 놓음)
+	  펫타로 일때 : sub_pet
+	  꿈해몽 일떄 : sub_dream
+	  사주 일떄 : sub_saju
+	  신점 일때 : sub_sin
+	-->
+	<strong>신선운세 <mark><?php echo $ca['ca_name'] ?></mark></strong>
+	<!--div class="tag_list">
+		<button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == "" ) ? "active" : ""; ?>" id="ht_0" name="ht_no" data-no="">전체</button>
 		<?php
-		if ( $it['mb_type1'] == "1" ) {
-			$icon = "shop_icon_1";
-			$icon_str = "성실";
-			echo "<span class=\"sct_icon\"><span class=\"shop_icon ".$icon."\">".$icon_str."</span></span>\n";
-		}
-		else if ( $it['mb_type2'] == "1" ) {
-			$icon = "shop_icon_2";
-			$icon_str = "추천";
-			echo "<span class=\"sct_icon\"><span class=\"shop_icon ".$icon."\">".$icon_str."</span></span>\n";
-		}
-		else if ( $it['mb_type3'] == "1" ) {
-			$icon = "shop_icon_3";
-			$icon_str = "NEW";
-			echo "<span class=\"sct_icon\"><span class=\"shop_icon ".$icon."\">".$icon_str."</span></span>\n";
-		}
-		else {
-			$icon = "";
-			$icon_str = "";
-			echo "";
-		}
+		$qdt2 = get_hash_list();	// 세부분야내역 가져오기
+		for ($ii = 0; $ii < count($qdt2); $ii++) {
 		?>
-		<!--/span-->
-	</h2>
-    <p id="sit_desc"><?php echo $it['mb_9']; ?></p>
-    <!-- <p id="sit_url">https://www.sinsun.com/profile/홍길동 <button type="button" class="url_copy">URL복사</button></p> -->
-
-    <!--공유하기 버튼 추가-->
-    <button type="button" class="share" id="ViewLink"> <i class="xi-share-alt-o"></i></button>
-    <!--//공유하기 버튼 추가-->
-
-  </div>
-
-  <div class="sit_ov_middle">
-    <ul>
-		<?php
-		$profile_arr = explode("\n", $it['mb_profile']);
-		//print_r($profile_arr);
-		for ($i = 0; $i < count($profile_arr); $i++) {
-		?>
-		<li><?php echo $profile_arr[$i]; ?></li>
+		<button type="button" class="tag_button <?php echo ( $_REQUEST['ht_no'] == $qdt2[$ii]['ht_no'] ) ? "active" : ""; ?>" id="ht_<?php echo $qdt2[$ii]['ht_no']; ?>" name="ht_no" data-no="<?php echo $qdt2[$ii]['ht_no']; ?>"><?php echo $qdt2[$ii]['ht_name']; ?></button>
 		<?php
 		}
 		?>
-    </ul>
-  </div>
+  </div-->
+</div>
+<div class="c_list">
+	<div class="cl_menu">
+		<a href='<?php echo G5_URL; ?>/'><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span><mark><a href="/shop/list.php?ca_id=<?php echo $ca['ca_id'] ?>"><?php echo $ca['ca_name'] ?></a></mark></span>
+	</div>
+</div>
+<div class="c_area view">
+	<div class="wrap">
+		<ul class="ca_function t1">
+			<li class="caf_item favorite"><a href="javascript:item_wish(document.fitem, '<?php echo $it['mb_no']; ?>');" class="cafi_btn"><span>단골등록</span></a></li>
+			<li class="caf_item share"><button type="button" class="cafi_btn" id="ViewLink"><span>공유하기</span></button></li>
+		</ul>
+		<div class="ca_member">
+			<form name="fitem" method="post" action="./cartupdate.php" onsubmit="return fitem_submit(this);">
+			<input type="hidden" name="it_id[]" value="<?php echo $it['mb_no']; ?>">
+			<input type="hidden" name="sw_direct">
+			<input type="hidden" name="url">
+			<input id="clip_target" type="text" value="" style="position:absolute;top:-9999em;"/>
+				<div class="cam_area">
+					<div class="cam_wrap">
+						<div class="cam_pic">
+							<div>
+								<img src="<?php echo G5_DATA_URL; ?>/temp/<?php echo $it['mb_no']; ?>/<?php echo $it['mb_8']; ?>" alt="<?php echo $it['mb_nick']; ?> <?php echo $it['mb_id']; ?>번">
+							
+								<?php
+									if ( $mb_st ) $it['mb_status'] = $mb_st;
 
-  <!--분류 추가-->
-  <div class="sorting">
-	<?php
-	$scat_arr = s_cat_func($it['mb_2']);
-	for ($j = 0; $j < 3; $j++) {
-	?>
-	<span><?php echo $scat_arr[$j]['ht_name']; ?></span>
-	<?php
-	}
-	?>
-  </div>
+									if ( $it['mb_status'] == 2 ) {
+										$mb_status = "상담가능";
+										$mb_status_css = "tel-avail";
+										$mb_status_img = "1";
+									}
+									else if ( $it['mb_status'] == 1 ) {
+										$mb_status = "상담중";
+										$mb_status_css = "tel-ing";
+										$mb_status_img = "2";
+									}
+									else {
+										$mb_status = "예약대기";
+										$mb_status_css = "tel-disabled";
+										$mb_status_img = "3";
+									}
+								?>
+								<div class="camp_status <?php echo $mb_status_css ?>">
+									<span><?php echo $mb_status ?></span>
+								</div>
+							</div>
+						</div>
+						<div class="cam_info">
+							<div class="cami_title">
+								<span><?php echo $it['mb_nick']; ?> <mark><?php echo $it['mb_id']; ?>번</mark></span>
+							</div>
+							<div class="cami_txt">
+								<span><?php echo $it['mb_9']; ?></span>
+							</div>
+						</div>
+						<!--분류 추가-->
+						<div class="cam_sort">
+							<?php
+							for ($j = 0; $j < 3; $j++) {
+							?>
+							<span><?php echo $scat_arr[$j]['ht_name']; ?></span>
+							<?php
+							}
+							?>
+						</div>
+						<div class="cam_review">
+							<ul>
+								<?php
+								$profile_arr = explode("\n", $it['mb_profile']);
+								//print_r($profile_arr);
+								for ($i = 0; $i < count($profile_arr); $i++) {
+								?>
+								<li><span><?php echo $profile_arr[$i]; ?></span></li>
+								<?php
+								}
+								?>
+							</ul>
+						</div>
+						<div class="cam_score">
+							<?php
+							$sql = "SELECT AVG(is_score) is_score, COUNT(is_id) cnt, IFNULL(SUM( IF( is_reply_name<>'',1,0 ) ),0) re_cnt FROM ".$g5['g5_shop_item_use_table']." WHERE it_id='".$it['mb_no']."' AND is_cat2='".$bcat_arr[$l]['ca_name']."'";
+							$use_dt = sql_fetch($sql);
 
-<!--전화연결 시작
-  <div class="call-wr">
-    <div class="btn-wr clearfix">
-      <a class="" href="tel:060-300-6700">
-        일반전화상담
-      </a>
-      <a class="discount" href="tel:1661-3439">
-        할인전화상담
-      </a>
-    </div>
-전화연결 끝-->
+							$star_str = "";
+							for ($jj = 1; $jj <= 5; $jj++) {
+								if ($jj <= intval($use_dt['is_score'])) $star_str .= "<i class='cam_icon on'></i>";
+								else $star_str .= "<i class='cam_icon off'></i>";
+							}
+							?>
+							<span class="cams_star"><?php echo $star_str; ?>
+								<mark><?php echo number_format($use_dt['is_score'],1); ?></mark>
+							</span>
+							<span class="cams_total">
+								<span><span>상담후기</span><mark><?php echo $use_dt['cnt']; ?></mark></span>
+							</span>
+						</div>
+					</div>
+				</div>
+				<ul class="cam_buttons">
+					<li><a href="#counsel_detail" class="tel">바로상담</a></li>
+					<li><a href="#counsel_detail" class="tel">할인상담</a></li>
+				</ul>
+			</form>
+		</div>
+		<div class="ca_board">
+			<!-- 상담사 정보 시작 { -->
+			<div class="cab_wrap" id="cab_info">
+				<ul>
+					<li class="on"><a href="#cab_info">인사말</a></li>
+					<li><a href="#cab_review">상담후기</a></li>
+					<li><a href="#cab_qa">상담문의</a></li>
+				</ul>
+				<section class="cab_content">
+					<h2 class="blind">상담사 정보</h2>
+					<h3 class="blind">상담사 상세설명</h3>
+					<div class="cabc_txt">
+						<p><?php echo $it['mb_memo']; ?></p>
+					</div>
+				</section>
+			</div>
+			<!-- } 상담사 정보 끝 -->
 
-  <div class="clearfix">
-    <span class="txt">전화연결 후 + 고유번호 <?php echo $it['mb_id']; ?>번을 눌러주세요.</span>
-    <span class="tip_button help_btn">TIP</span>
-  </div>
-
-  </div>
-
-  <div class="num-wr">
-    <span class="txt_wr">
-      <?php echo $star_str; ?> 평점 <b><?php echo number_format($use_dt['is_score'],1); ?></b>
-    </span>
-    <span class="txt_wr">
-      상담후기 <b><?php echo $use_dt['cnt']; ?></b>
-    </span>
-
-    <span class="txt_wr">
-      상담사 댓글 <b><?php echo $use_dt['re_cnt']; ?></b>
-    </span>
-</div><!--num-wr-->
+			<!-- 사용후기 시작 { -->
+			<div class="cab_wrap" id="cab_review">
+				<ul>
+					<li><a href="#cab_info">인사말</a></li>
+					<li class="on"><a href="#cab_review">상담후기</a></li>
+					<li><a href="#cab_qa">상담문의</a></li>
+				</ul>
+				<section class="cab_content">
+					<!-- <h2>사용후기</h2> -->
+					<div id="itemuse">
+						<?php
+						include "itemuse.php";
+						?>
+					</div>
+				</section>
+			</div>
+			<!-- 상담사문의 시작 { -->
+			<div class="cab_wrap" id="cab_qa">
+				<ul>
+					<li><a href="#cab_info">인사말</a></li>
+					<li><a href="#cab_review">상담후기</a></li>
+					<li class="on"><a href="#cab_qa">상담문의</a></li>
+				</ul>
+				<section class="cab_content">
+					<h2 class="blind">상담문의</h2>
+					<div class="cabc_qa">
+						<?php
+						include "itemqa.php";
+						?>
+					</div>
+				</section>
+			</div>
+			<!-- } 상담문의 끝 -->
+		</div>
+	</div>
 </div>
 
+	
 
-
-    <!-- 다른 상품 보기 시작 { -->
-    <!-- <div id="sit_siblings"> -->
-        <!-- <?php
-        if ($prev_href || $next_href) {
-            $prev_title = '<i class="fa fa-caret-left" aria-hidden="true"></i> '.$prev_title;
-            $next_title = $next_title.' <i class="fa fa-caret-right" aria-hidden="true"></i>';
-
-            echo $prev_href.$prev_title.$prev_href2;
-            echo $next_href.$next_title.$next_href2;
-        } else {
-            echo '<span class="sound_only">이 분류에 등록된 다른 상품이 없습니다.</span>';
-        }
-        ?> -->
-        <!-- <a href="<?php echo G5_SHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;no=1" target="_blank" class="popup_item_image "><i class="fa fa-search-plus" aria-hidden="true"></i><span class="sound_only">확대보기</span></a>
-    </div> -->
-    <!-- } 다른 상품 보기 끝 -->
-
-    <!-- <div id="sit_star_sns">
-        <?php
-        $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
-        $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$it['it_id'];
-
-        if ($score = get_star_image($it['it_id'])) { ?>
-        <span class="sound_only">고객평점 <?php echo $score?>개</span>
-        <img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $score?>.png" alt="" class="sit_star" width="100"> <span class="st_bg"></span>
-        <?php } ?>
-
-
-         <i class="fa fa-commenting-o" aria-hidden="true"></i><span class="sound_only">리뷰</span> <?php echo $it['it_use_cnt']; ?>
-
-
-        <span class="st_bg"></span> <i class="fa fa-heart-o" aria-hidden="true"></i><span class="sound_only">위시</span> <?php echo get_wishlist_count_by_item($it['it_id']); ?>
-        <button type="button" class="btn_sns_share"><i class="fa fa-share-alt" aria-hidden="true"></i><span class="sound_only">sns 공유</span></button>
-        <div class="sns_area">-->
-            <!-- <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/facebook.png'); ?>
-            <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/twitter.png'); ?>
-            <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/gplus.png'); ?>
-            <?php echo get_sns_share_link('kakaotalk', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_kakao.png'); ?>
-            <?php
-            $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
-            ?> -->
-            <!-- <a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec"><i class="fa fa-envelope-o" aria-hidden="true"></i><span class="sound_only">추천하기</span></a></div>
-        </div>
-    <script>
-    $(".btn_sns_share").click(function(){
-        $(".sns_area").show();
-    });
-    $(document).mouseup(function (e){
-        var container = $(".sns_area");
-        if( container.has(e.target).length === 0)
-        container.hide();
-    });
-
-
-  </script>-->
-</div><!--inner-->
-
-<div id="sit_tt"></div>
-
-<div id="sit_tab">
-    <ul class="tab_tit">
-        <li><button type="button" rel="#sit_inf" <?php echo $anchor == "sit_inf" || $anchor == "" ? 'class="selected"' : ''; ?>>인사말</button></li>
-        <li><button type="button" rel="#sit_use" <?php echo $anchor == "sit_use" ? 'class="selected"' : ''; ?>>상담후기</button></li>
-        <li><button type="button" rel="#sit_qa" <?php echo $anchor == "sit_qa" ? 'class="selected"' : ''; ?>>상담문의</button></li>
-    </ul>
-    <ul class="tab_con">
-
-        <!-- 인사말 시작 { -->
-        <li id="sit_inf">
-            <h2 class="contents_tit"><span>인사말</span></h2>
-
-            <h3>상품 상세설명</h3>
-            <div id="sit_inf_explan">
-                <?php echo $it['mb_memo']; ?>
-
-                <!--솔팅추가-->
-                <div class="sorting">
-                <?php
-                $scat_arr = s_cat_func($it['mb_2']);
-                for ($j = 3; $j < count($scat_arr); $j++) {
-                ?>
-                <span><?php echo $scat_arr[$j]['ht_name']; ?></span>
-                <?php
-                }
-                ?>
-                <!--//솔팅추가-->
-                </div>
-            </div>
-
-
-        </li>
-        <!-- 상담후기 시작 { -->
-        <li id="sit_use">
-            <h2>상담후기</h2>
-            <div id="itemuse"><?php include_once(G5_SHOP_PATH.'/itemuse.php'); ?></div>
-        </li>
-        <!-- } 사용후기 끝 -->
-
-        <!-- 상담문의 시작 { -->
-        <li id="sit_qa">
-            <h2>상담문의</h2>
-
-            <div id="itemqa"><?php include_once(G5_SHOP_PATH.'/itemqa.php'); ?></div>
-        </li>
-        <!-- } 상담문의 끝 -->
-
-
-    </ul>
+<!-- 팝업, 신선운세 상담 S -->
+<div class="popup t2 counsel_detail">
+	<div class="p_box">
+		<a href="#!" class="p_close"><span class="blind">닫기</span></a>
+		<div class="p_wrap">
+			<div class="p_head t1">
+				<h3>바로상담</h3>
+				<p>
+					<span><a href="tel:0603006700"><i></i>060-300-6700</a> + 전화연결 후 + <?php echo $it['mb_id']; ?></span>
+				</p>
+			</div>
+			<div class="p_body">
+				<p>
+					<span><mark>30초당 1300원이 부과</mark>됩니다.</span>
+					<span>보다 부담없는 요금으로 신선운세를 이용하시려면, <strong>할인상담</strong>을 권해드립니다.</span>
+					<span><strong>할인상담 시 30~50%의 요금이 할인</strong>됩니다.</span>
+				</p>
+			</div>
+			<div class="p_head t2">
+				<h3>할인상담</h3>
+				<p>
+					<span><a href="tel:16613439"><i class="t1"></i>1661-3439</a> + 전화연결 후 + <?php echo $it['mb_id']; ?></span>
+					<span><a href="tel:0234331177"><i class="t2"></i>02-3433-1177</a> + 전화연결 후 + <?php echo $it['mb_id']; ?></span>
+				</p>
+			</div>
+			<div class="p_body">
+				<p>
+					<span>할인상담 시 <strong><a href="tel:0234331177">02-3433-1177</a> 이용하시면 발신요금을 절약</strong>하실 수 있습니다.</span>
+					<span>요금제나 통신사에 따라 무료 발신요금이 다를 수 있으며, 자세한 내용은</span>
+					<span>해당 통신사 홈페이지를 참고하세요.</span>
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
+<!-- 팝업, 신선운세 상담 E -->
+
 <script>
 $(function (){
     $(".tab_con>li").hide();
@@ -741,8 +584,8 @@ $(function (){
 	if ( $anchor ) {
 	?>
     $("#<?php echo $anchor; ?>").show();
-	var offset = $("#sit_tab").offset();
-	$('html, body').animate({scrollTop : offset.top}, 400);
+	//var offset = $("#sit_tab").offset();
+	//$('html, body').animate({scrollTop : offset.top}, 400);
 	<?php
 	}
 	else {
@@ -996,9 +839,9 @@ function fitem_submit(f)
 
 </div>
 
-
 <?php
 // 하단 HTML
 echo conv_content($it['it_mobile_tail_html'], 1);
+
 include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

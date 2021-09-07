@@ -12,8 +12,6 @@ $hp = $arrMOID[1];
     $pa_point = $arrPoint[0];
     $PAY_TYPE = $arrPoint[1];
     $pointpay = $arrPoint[2];
-
-
 $ErrorCode = $_REQUEST["ErrorCode"];
 $ErrorMsg = $_REQUEST["ErrorMsg"];
 $PayMethod = $_REQUEST["PayMethod"];
@@ -99,6 +97,8 @@ $ret = $sms->send($sms_to2, $sms_from, $sms_msg2, $sms_date, $sms_type);
 //                alert("pointpay실행:".$pointpay);
     }
     //무통장 결제 포인트 지급.
-    insert_point($member['mb_id'], $pa_point, "od_id:".$MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전', '@charge', $member['mb_id'], $MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전'); //insert_point 함수에도 060결제로직이 있어 중복결제 가능성때문에 주석처리.
+    if (substr($member['mb_id'], 0, 9) != "no_member") {
+        insert_point($member['mb_id'], $pa_point, "od_id".$MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전', '@charge', $member['mb_id'], $MOID . ', ' . $PayMethod . ', ' . $Amt . ' 충전'); //insert_point 함수에도 060결제로직이 있어 중복결제 가능성때문에 주석처리.
+    }
 
 ?>

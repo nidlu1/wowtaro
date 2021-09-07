@@ -54,7 +54,6 @@ function get_mshop_category($ca_id, $len)
         ?>
     </div>
 </div>
-
 <script>
 $(function (){
     var $category = $("#category");

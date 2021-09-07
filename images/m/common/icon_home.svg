@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #cbbca7;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="icon_home" class="cls-1" d="M20,16v5H16V18H14v3H10V16H8l7-7,7,7H20Z"/>
+</svg>

@@ -1,0 +1,9 @@
+/*
+ * 20210420 비회원 결제 추가로직 (DB not null 제약으로 인한 강제할당값)
+ */
+if($member['mb_id']==null){$member['mb_id']="no_member:".$od_hp;}
+if($member['mb_name']==null){$member['mb_name']="no_member:".$od_hp;}
+if($member['mb_password']==null){$member['mb_password']="no_member";}
+
+        if(substr($member['mb_id'], 0, 9)!="no_member"){
+                }

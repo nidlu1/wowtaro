@@ -25,35 +25,46 @@ else // 그렇지 않다면 로그인으로 가기
 }
 
 $g5['title'] = '공지사항';
+$current_isboard = true;
 include_once('./_head.php');
 ?>
 <!--타이틀영역-->
-<div id="review">
-  <div class="sub_banner" id="sub_mypage">
-    <h2>공지사항</h2>
-  </div>
+<div class="c_hero">
+	<strong>신선운세 <mark>공지사항</mark></strong>
 </div>
-
-
-<div class="inner">
-  <div class="order-wr clearfix">
-      <ul class="mypage-tab">
+<div class="c_list">
+	<div class="cl_menu">
+		<a href="<?php echo G5_URL; ?>"><i></i><span class="blind">HOME</span></a>
+		<span>신선운세</span>
+		<span>마이페이지</span>
+		<span><mark><a href="/myboard.php?bo_table=notice2" class="sct_here">공지사항</a></mark></span>
+	</div>
+	<div class="cl_function mypage">
+		<li>
+			<span><?php echo $member['mb_name']; ?>님</span>
+			<span><?php echo $member['mb_nick']; ?>님</span>
+		</li>
+	</div>
+</div>
+<div class="c_area">
+  <div class="wrap">
+	<ul id="mypage-tab">
 	<?php
 	include_once(G5_SHOP_PATH.'/mymenu.php');
 	?>
-      </ul>
+    </ul>
   <!-- 주문 내역 시작 { -->
-    <div id="sod_v">
-        <p id="sod_v_tit">공지사항</p>
+    <div id="mypage-content">
+        <p>공지사항</p>
 
         <?php
 		$_REQUEST['bo_table'] = "notice2";
         include G5_BBS_PATH."/board.php";
         ?>
 
-    </div>
-  </div><!--order-wr-->
-</div> <!--inner-->
+		</div>
+	</div>
+</div>
 <!-- } 주문 내역 끝 -->
 
 <?php

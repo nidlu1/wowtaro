@@ -35,7 +35,8 @@ if( $bn_bimg || $bn_bimg_name ){
 }
 
 $bn_url = clean_xss_tags($bn_url);
-$bn_alt = function_exists('clean_xss_attributes') ? clean_xss_attributes(strip_tags($bn_alt)) : strip_tags($bn_alt);
+//$bn_alt = function_exists('clean_xss_attributes') ? clean_xss_attributes(strip_tags($bn_alt)) : strip_tags($bn_alt);
+$bn_alt = $_POST["bn_alt"];
 
 if ($w=="")
 {
@@ -85,7 +86,9 @@ else if ($w=="d")
 
 if ($w == "" || $w == "u")
 {
-    if ($_FILES['bn_bimg']['name']) upload_file($_FILES['bn_bimg']['tmp_name'], $bn_id, G5_DATA_PATH."/banner");
+    if ($_FILES['bn_bimg']['name']) {
+        move_uploaded_file($_FILES['bn_bimg']['tmp_name'], G5_DATA_PATH . '/banner/' . $bn_id);
+    }
 
     goto_url("./bannerform.php?w=u&amp;bn_id=$bn_id");
 } else {

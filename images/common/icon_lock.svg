@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #cbbca7;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="icon_lock" class="cls-1" d="M13.667,14.333V13a1.333,1.333,0,1,1,2.667,0v1.333H17V13a2,2,0,0,0-4,0v1.333h0.667Zm4,4H12.333v-4h5.334v4ZM15,7a8,8,0,1,0,8,8A8,8,0,0,0,15,7Zm0,1.333A6.667,6.667,0,1,1,8.333,15,6.675,6.675,0,0,1,15,8.333Z"/>
+</svg>

@@ -10,29 +10,34 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 
 
 <!-- 상품 사용후기 시작 { -->
-<div class="total-score">
-  <h3>전체후기 평점</h3>
-  <div class="score-wr">
-    <i class="xi-star"></i><i class="xi-star"></i><i class="xi-star"></i><i class="xi-star"></i><i class="xi-star"></i>
-    <span>5.0</span>
-  </div>
+<div class="cabc_score">
+	<!--별점 하드코딩-->
+	<h4>전체후기 평점</h4>
+	<?php
+		$star_str = "";
+		for ($jj = 1; $jj <= 5; $jj++) {
+			if ($jj <= intval($use_dt['is_score'])) $star_str .= "<i class='cabcs_icon on'></i>";
+			else $star_str .= "<i class='cabcs_icon off'></i>";
+		}
+	?>
+	<span class="cabcs_star"><?php echo $star_str; ?>
+		<mark><?php echo number_format($use_dt['is_score'],1); ?></mark>
+	</span>
 </div>
 
-<div id="sit_use_wbtn">
+<!-- <div id="sit_use_wbtn">
     <a href="<?php echo $itemuse_form; ?>" class="qa_wr itemuse_form " onclick="return false;">상담후기 쓰기<span class="sound_only"> 새 창</span></a>
+</div> -->
+
+
+<div class="cabc_tabs" id="ca_tab">
+	<ul>
+		<li class="on"><span>전체상담후기</span></li>
+		<li><span>할인상담후기</span></li>
+		<li><span>일반상담후기</span></li>
+	</ul>
 </div>
 
-<ul class="use-tab clearfix">
-  <li class="on">
-    전체상담후기
-  </li>
-  <li>
-    할인상담후기
-  </li>
-  <li>
-    일반상담후기
-  </li>
-</ul>
 <div class="sit-use-wr">
   <!--전체상담후기-->
   <div class="sit_use_list sit_use_list1">
@@ -53,10 +58,11 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
           $is_reply_content = !empty($row['is_reply_content']) ? get_view_thumbnail(conv_content($row['is_reply_content'], 1), $thumbnail_width) : '';
           $is_time    = substr($row['is_time'], 2, 8);
           $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
-/*
- * 모바일 상담후기 카테고리를 결정하는 기능.
- * 작성자: 한승희 nidlu123@gmail.comC:\xampp\htdocs\신선운세\theme\basic\mobile\skin\shop\basic\itemuse.skin.php
- */
+		           
+        /*
+         * 모바일 상담후기 카테고리를 결정하는 기능.
+         * 작성자: 한승희 nidlu123@gmail.com
+         */
 //          $is_cat    = get_text($row['is_cat']) == "일반상담" ? '<span class="counsel-cate counsel-cate1">일반상담</span>' : '<span class="counsel-cate counsel-cate2">할인상담</span>';
           switch (get_text($row['is_cat'])){
               case "일반상담":
@@ -72,50 +78,47 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
                   $is_cat = '<span class="counsel-cate counsel-cate1">이벤트상담</span>';
                   break;
           }
-
           $hash = md5($row['is_id'].$row['is_time'].$row['is_ip']);
 
           if ($i == 0) echo '<ol id="sit_use_ol">';
       ?>
 
-          <li class="sit_use_li">
-              <!-- <button type="button" class="sit_use_li_title"><?php echo $is_subject; ?></button> -->
-              <div class="sit_use_div">
-                  <span class="counsel-cate-wr">
-				    <?php echo $is_cat; ?>
-                    <!--<span class="counsel-cate counsel-cate1">일반상담</span>
-                     할인상담일때 글씨, 배경색 달라짐
-                     <span class="counsel-cate counsel-cate2">할인상담</span> -->
-                  </span>
-                  <span><?php echo $row['is_best'] == 1 ? "[Best]" : ""; ?><?php echo $is_name; ?></span>
-                  <span class="sit_use_star"><img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></span>
-              </div>
+		<li>
+			<div class="cabc_state">
+				<span class="cabcs_category"><?php echo $is_cat; ?></span>
+				<h2 class="cabcs_name"><?php echo $row['is_best'] == 1 ? "[Best]" : ""; ?><?php echo $is_name; ?></h2>
+				 <span class="cabcs_star"><?php echo $star_str; ?></span>
+			</div>
+			<div id="sit_use_con_<?php echo $i; ?>" class="cabc_txt">
+				<div class="cabc_review">
+					<?php echo $is_content; // 사용후기 내용 ?>
+				</div>
 
-              <div id="sit_use_con_<?php echo $i; ?>" class="sit_use_con">
-                  <div class="sit_use_p">
-                      <?php echo $is_content; // 사용후기 내용 ?>
-                  </div>
+				<div class="cabc_comment">
+					<div class="cabcc_wrap">
+						<?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
+							<a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="cabcc_btn fix" onclick="return false;">수정</a>
+							<a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="cabcc_btn del">삭제</a>
+						<?php } ?>
+						<?php if ($is_admin || $it_id == $member['mb_no']) { ?>
+							<a href="<?php echo $itemuse_form2."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="cabcc_btn reply" onclick="return false;">답글</a>
+						<?php } ?>
+					</div>
+					<?php if( $is_reply_subject ){  ?>
+						<button type="button" class="toggle_button">1개의 댓글이 있습니다.</button>
+					<?php } ?>
+				</div>
 
-                  <?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
-                  <div class="sit_use_cmd">
-                      <a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form btn01" onclick="return false;">수정</a>
-                      <a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemuse_delete btn01">삭제</a>
-                  <?php } ?>
-				  <?php if ($is_admin || $it_id == $member['mb_no']) { ?>
-                    <a href="<?php echo $itemuse_form2."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form btn01" onclick="return false;">답글</a>
-                <?php } ?>
-
-                  <?php if( $is_reply_subject ){  //  사용후기 답변 내용이 있다면 ?>
-				  <button type="button" class="toggle_reply">1개의 댓글이 있습니다.</button>
-
-                  <div class="sit_use_reply">
-                      <div class="use_reply_p">
-                          <?php echo $is_reply_content; // 답변 내용 ?>
-                      </div>
-                  </div>
-                  <?php } //end if ?>
-              </div>
-          </li>
+				<?php if( $is_reply_subject ){  //  사용후기 답변 내용이 있다면 ?>
+				<div class="cabc_reply">
+					<div class="cabcr_txt">
+						<strong><?php echo $it['mb_nick']; ?></strong>
+						<?php echo $is_reply_content; // 답변 내용 ?>
+					</div>
+				</div>
+				<?php } //end if ?>
+			</div>
+		</li>
 
       <?php }
 
@@ -124,7 +127,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
       if (!$i) echo '<p class="sit_empty">상담후기가 없습니다.</p>';
       ?>
 
-      <a href="/shop/item.php?ca_id=<?php echo $ca_id; ?>&it_id=<?php echo $it_id; ?>&anchor=sit_use&page=<?php echo $page+1 ?>" id="itemuse_list" class="more_wr">더보기</a>
+      <a href="/shop/item.php?ca_id=<?php echo $ca_id; ?>&it_id=<?php echo $it_id; ?>&anchor=sit_use&page=<?php echo $page+1 ?>#ca_tab" id="itemuse_list" class="more_wr btn t1 big mt20">더보기</a>
   </div><!--sit_use_list1-->
 
 <!--할인상담후기 더미-->
@@ -153,41 +156,43 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
           if ($i == 0) echo '<ol id="sit_use_ol">';
       ?>
 
-          <li class="sit_use_li">
-              <!-- <button type="button" class="sit_use_li_title"><?php echo $is_subject; ?></button> -->
-              <div class="sit_use_div">
-                  <span class="counsel-cate-wr">
-                    <?php echo $is_cat; ?>
-                    <!--<span class="counsel-cate counsel-cate1">일반상담</span>
-                     할인상담일때 글씨, 배경색 달라짐
-                     <span class="counsel-cate counsel-cate2">할인상담</span> -->
-                  </span>
-                  <span><?php echo $row['is_best'] == 1 ? "[Best]" : ""; ?><?php echo $is_name; ?></span>
-                  <span class="sit_use_star"><img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></span>
-              </div>
+		<li>
+			<div class="cabc_state">
+				<span class="cabcs_category"><?php echo $is_cat; ?></span>
+				<h2 class="cabcs_name"><?php echo $row['is_best'] == 1 ? "[Best]" : ""; ?><?php echo $is_name; ?></h2>
+				 <span class="cabcs_star"><?php echo $star_str; ?></span>
+			</div>
+			<div id="sit_use_con_<?php echo $i; ?>" class="cabc_txt">
+				<div class="cabc_review">
+					<?php echo $is_content; // 사용후기 내용 ?>
 
-              <div id="sit_use_con_<?php echo $i; ?>" class="sit_use_con">
-                  <div class="sit_use_p">
-                      <?php echo $is_content; // 사용후기 내용 ?>
-                  </div>
+				</div>
 
-                  <?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
-                  <div class="sit_use_cmd">
-                      <a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form btn01" onclick="return false;">수정</a>
-                      <a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemuse_delete btn01">삭제</a>
-                  <?php } ?>
+				<div class="cabc_comment">
+					<div class="cabcc_wrap">
+						<?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
+							<a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="cabcc_btn fix" onclick="return false;">수정</a>
+							<a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="cabcc_btn del">삭제</a>
+						<?php } ?>
+						<?php if ($is_admin || $it_id == $member['mb_no']) { ?>
+							<a href="<?php echo $itemuse_form2."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="cabcc_btn reply" onclick="return false;">답글</a>
+						<?php } ?>
+					</div>
+					<?php if( $is_reply_subject ){  ?>
+						<button type="button" class="toggle_button">1개의 댓글이 있습니다.</button>
+					<?php } ?>
+				</div>
 
-                  <?php if( $is_reply_subject ){  //  사용후기 답변 내용이 있다면 ?>
-				  <button type="button" class="toggle_reply">1개의 댓글이 있습니다.</button>
-
-                  <div class="sit_use_reply">
-                      <div class="use_reply_p">
-                          <?php echo $is_reply_content; // 답변 내용 ?>
-                      </div>
-                  </div>
-                  <?php } //end if ?>
-              </div>
-          </li>
+				<?php if( $is_reply_subject ){  //  사용후기 답변 내용이 있다면 ?>
+				<div class="cabc_reply">
+					<div class="cabcr_txt">
+						<strong><?php echo $it['mb_nick']; ?></strong>
+						<?php echo $is_reply_content; // 답변 내용 ?>
+					</div>
+				</div>
+				<?php } //end if ?>
+			</div>
+		</li>
 
       <?php }
 
@@ -196,7 +201,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
       if (!$i) echo '<p class="sit_empty">상담후기가 없습니다.</p>';
       ?>
 
-      <a href="/shop/item.php?ca_id=<?php echo $ca_id; ?>&it_id=<?php echo $it_id; ?>&anchor=sit_use&page=<?php echo $page+1 ?>" id="itemuse_list" class="more_wr">더보기</a>
+     <a href="/shop/item.php?ca_id=<?php echo $ca_id; ?>&it_id=<?php echo $it_id; ?>&anchor=sit_use&page=<?php echo $page+1 ?>#ca_tab" id="itemuse_list" class="more_wr btn t1 big mt20">더보기</a>
   </div><!--sit_use_list2-->
 
 
@@ -226,41 +231,43 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
           if ($i == 0) echo '<ol id="sit_use_ol">';
       ?>
 
-          <li class="sit_use_li">
-              <!-- <button type="button" class="sit_use_li_title"><?php echo $is_subject; ?></button> -->
-              <div class="sit_use_div">
-                  <span class="counsel-cate-wr">
-                    <?php echo $is_cat; ?>
-                    <!--<span class="counsel-cate counsel-cate1">일반상담</span>
-                     할인상담일때 글씨, 배경색 달라짐
-                     <span class="counsel-cate counsel-cate2">할인상담</span> -->
-                  </span>
-                  <span><?php echo $row['is_best'] == 1 ? "[Best]" : ""; ?><?php echo $is_name; ?></span>
-                  <span class="sit_use_star"><img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></span>
-              </div>
+		<li>
+			<div class="cabc_state">
+				<span class="cabcs_category"><?php echo $is_cat; ?></span>
+				<h2 class="cabcs_name"><?php echo $row['is_best'] == 1 ? "[Best]" : ""; ?><?php echo $is_name; ?></h2>
+				 <span class="cabcs_star"><?php echo $star_str; ?></span>
+			</div>
+			<div id="sit_use_con_<?php echo $i; ?>" class="cabc_txt">
+				<div class="cabc_review">
+					<?php echo $is_content; // 사용후기 내용 ?>
 
-              <div id="sit_use_con_<?php echo $i; ?>" class="sit_use_con">
-                  <div class="sit_use_p">
-                      <?php echo $is_content; // 사용후기 내용 ?>
-                  </div>
+				</div>
 
-                  <?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
-                  <div class="sit_use_cmd">
-                      <a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form btn01" onclick="return false;">수정</a>
-                      <a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemuse_delete btn01">삭제</a>
-                  <?php } ?>
+				<div class="cabc_comment">
+					<div class="cabcc_wrap">
+						<?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
+							<a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="cabcc_btn fix" onclick="return false;">수정</a>
+							<a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="cabcc_btn del">삭제</a>
+						<?php } ?>
+						<?php if ($is_admin || $it_id == $member['mb_no']) { ?>
+							<a href="<?php echo $itemuse_form2."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="cabcc_btn reply" onclick="return false;">답글</a>
+						<?php } ?>
+					</div>
+					<?php if( $is_reply_subject ){  ?>
+						<button type="button" class="toggle_button">1개의 댓글이 있습니다.</button>
+					<?php } ?>
+				</div>
 
-                  <?php if( $is_reply_subject ){  //  사용후기 답변 내용이 있다면 ?>
-				  <button type="button" class="toggle_reply">1개의 댓글이 있습니다.</button>
-
-                  <div class="sit_use_reply">
-                      <div class="use_reply_p">
-                          <?php echo $is_reply_content; // 답변 내용 ?>
-                      </div>
-                  </div>
-                  <?php } //end if ?>
-              </div>
-          </li>
+				<?php if( $is_reply_subject ){  //  사용후기 답변 내용이 있다면 ?>
+				<div class="cabc_reply">
+					<div class="cabcr_txt">
+						<strong><?php echo $it['mb_nick']; ?></strong>
+						<?php echo $is_reply_content; // 답변 내용 ?>
+					</div>
+				</div>
+				<?php } //end if ?>
+			</div>
+		</li>
 
       <?php }
 
@@ -269,11 +276,18 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
       if (!$i) echo '<p class="sit_empty">상담후기가 없습니다.</p>';
       ?>
 
-      <a href="/shop/item.php?ca_id=<?php echo $ca_id; ?>&it_id=<?php echo $it_id; ?>&anchor=sit_use&page=<?php echo $page+1 ?>" id="itemuse_list" class="more_wr">더보기</a>
+    <a href="/shop/item.php?ca_id=<?php echo $ca_id; ?>&it_id=<?php echo $it_id; ?>&anchor=sit_use&page=<?php echo $page+1 ?>#ca_tab" id="itemuse_list" class="more_wr btn t1 big mt20">더보기</a>
   </div><!--sit_use_list3-->
 
 
-
+	<!-- <div class="cabc_buttons">
+		  <?php
+		  echo itemuse_page_moblie($config['cf_write_pages'], $page, $total_page, "./item.php?ca_id=$ca_id&it_id=$it_id&amp;page=", "#cab_review");
+		  ?>
+	</div> -->
+	<div class="cabc_buttons">
+		  <a href="<?php echo $itemuse_form; ?>" class="write_btn itemuse_form">후기등록<span class="sound_only"> 새 창</span></a>
+	</div>
 </div><!--sit-use-wr-->
 <?php
 //echo itemuse_page($config['cf_mobile_pages'], $page, $total_page, "./item.php?it_id=$it_id&amp;page=", "");
@@ -281,8 +295,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 
 <script>
 $(function(){
-  $(".toggle_reply").click(function(){
-      var $con = $(this).next('.sit_use_reply');
+  $(".toggle_button").click(function(){
+     var $con = $(this).parents('.cabc_comment').next('.cabc_reply');
       if($con.is(":visible")) {
           $con.hide();
           $(this).html("1개의 댓글이 있습니다.");
@@ -294,14 +308,14 @@ $(function(){
 
 
 $(function() {
-			$('.use-tab li').click(function() {
+		$('.cabc_tabs li').click(function() {
         var idx = $(this).index();
 
         $(".sit_use_list").hide();
         $(".sit_use_list").eq(idx).show();
 
-        $(".use-tab li").removeClass("on");
-        $(".use-tab li").eq(idx).addClass("on");
+        $(".cabc_tabs li").removeClass("on");
+        $(".cabc_tabs li").eq(idx).addClass("on");
 			});
 		});
 
@@ -310,7 +324,17 @@ $(function() {
         return false;
     });
 
-    $(".itemuse_delete").click(function(){
+    $(".cabcc_btn.fix").click(function(){
+        window.open(this.href, "itemuse_form", "width=810,height=680,scrollbars=1");
+        return false;
+    });
+
+	 $(".cabcc_btn.reply").click(function(){
+        window.open(this.href, "itemuse_form", "width=810,height=680,scrollbars=1");
+        return false;
+    });
+
+    $(".cabcc_btn.del").click(function(){
         if (confirm("정말 삭제 하시겠습니까?\n\n삭제후에는 되돌릴수 없습니다.")) {
             return true;
         } else {

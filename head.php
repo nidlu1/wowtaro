@@ -21,7 +21,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 ?>
 
 
-<!-- 상단 시작 { -->
+<!-- 상단 시작123 { -->
 <div id="hd">
     <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
 

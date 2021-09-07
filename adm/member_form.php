@@ -265,7 +265,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 		$mb_con_arr = explode(":",$mb['mb_con_time']);
 		$mb_con2_arr = explode(":",$mb['mb_con_time2']);
 		?>
-        <th scope="row">예약대기건수</th>
+        <th scope="row">예약대기 건수</th>
         <td>
             일반상담 <input type="text" name="mb_miss" value="<?php echo $mb['mb_miss'] ?>" id="mb_miss">, 할인상담 <input type="text" name="mb_miss2" value="<?php echo $mb['mb_miss2'] ?>" id="mb_miss2">
         </td>
