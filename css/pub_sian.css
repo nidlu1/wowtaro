@@ -1,0 +1,112 @@
+#wrap {
+    width: 100%;
+    min-width: 1000px;
+}
+
+.header_wrap {
+    height: 100px;
+    background-color: #ffffff;
+    min-width: 1000px;
+}
+
+#header {
+    margin: 50px 350px auto;
+    width: 1000px;
+}
+
+.logo {
+    float: left;
+    margin-top: 22px;
+}
+
+.project_manager {
+    float: right;
+    width: 200px;
+    margin-top: 14px;
+}
+
+#container_wrap {
+    width: 100%;
+    height: 100%;
+}
+
+.container_porfolio {
+    height: 900px;
+    margin: 0 auto;
+    width: 1200px;
+}
+
+.container_porfolio h1 {
+    font-size: 36px
+}
+
+.porfolio_w {
+    margin-top: 30px;
+}
+
+.porfolio_w1 {
+    height: 385px;
+    width: 480px;
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 40px;
+}
+
+.porfolio_w3 {
+   height: 385px;
+    width: 480px;
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 40px;
+}
+
+.porfolio_w2 {
+   height: 385px;
+    width: 480px;
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 40px;
+}
+
+.pf_img {
+    width: 480px;
+    height: 315px;
+    top: 0;
+    overflow: hidden;
+}
+
+.pf_img:hover {border:2px solid #000000}
+
+
+.pf_txt {
+    height: 75px;
+    background-color: #f4f4f4;
+    margin-top: 5px;
+    font-weight: bold;
+    padding: 20px 0 0 20px;
+}
+
+
+.sian_container {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sian_container4 {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sian_container1 {
+    background: url(../sian/design1_bg.jpg);
+    width: 100%;
+    margin: 0 auto;
+}
+
+.sian_container3 {
+    background: url(../sian/design3_bg.jpg);
+    width: 100%;
+    margin: 0 auto;
+}
